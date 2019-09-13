@@ -1,0 +1,90 @@
+{
+	"points": [
+		{
+			"uuid": "c_S",
+			"type": "carSource",
+			"targetLane": "cl_A"
+		},
+		{
+			"uuid": "c_D",
+			"type": "destination",
+			"lanes": [
+				"cl_B"
+			]
+		},
+		{
+			"uuid": "t_S",
+			"type": "tramSource",
+			"targetLane": "tl_A"
+		},
+		{
+			"uuid": "t_D",
+			"type": "destination",
+			"lanes": [
+				"tl_B"
+			]
+		},
+		{
+			"uuid": "cp",
+			"type": "trafficLight",
+			"constraints": {
+				"cl_A": [
+					{
+						"destination": "cl_B",
+						"crossingTime": {
+							"type": "uniform",
+							"min": 4.0,
+							"max": 6.0
+						},
+						"weight": 1.0
+					}
+				],
+				"tl_A": [
+					{
+						"destination": "tl_B",
+						"crossingTime": {
+							"type": "constant",
+							"value": 5.0
+						},
+						"weight": 1.0
+					}
+				]
+			},
+			"trafficLights": {
+				"cl_A": {
+					"type": "sensor",
+					"activators": [
+						"tl_A"
+					],
+					"anticipation": 5
+				}
+			}
+		}
+	],
+	"lanes": [
+		{
+			"uuid": "cl_A",
+			"type": "car",
+			"source": "c_S",
+			"destination": "cp"
+		},
+		{
+			"uuid": "cl_B",
+			"type": "car",
+			"source": "cp",
+			"destination": "c_D"
+		},
+		{
+			"uuid": "tl_A",
+			"type": "tram",
+			"source": "t_S",
+			"destination": "cp"
+		},
+		{
+			"uuid": "tl_B",
+			"type": "tram",
+			"source": "cp",
+			"destination": "t_D"
+		}
+	]
+}

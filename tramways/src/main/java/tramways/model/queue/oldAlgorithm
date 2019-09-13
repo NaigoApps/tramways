@@ -1,0 +1,18 @@
+  
+//        for (int t = 1; t < result.length; t++) {
+//            result[t][0] = result[t - 1][0]
+//                    + result[t - 1][1] * availability.get((t - 1) * fps) * pService
+//                    - result[t - 1][0] * pArrival;
+//
+//            for (int k = 1; k < queue.getCapacity(); k++) {
+//                result[t][k] = result[t - 1][k]
+//                        - result[t - 1][k] * availability.get((t - 1) * fps) * pService
+//                        - result[t - 1][k] * pArrival
+//                        + result[t - 1][k + 1] * availability.get((t - 1) * fps) * pService
+//                        + result[t - 1][k - 1] * pArrival;
+//            }
+//            //Case k = QUEUE_SIZE
+//            result[t][queue.getCapacity()] = result[t - 1][queue.getCapacity()]
+//                    - result[t - 1][queue.getCapacity()] * availability.get((t - 1) * fps) * pService
+//                    + result[t - 1][queue.getCapacity() - 1] * pArrival;
+//        }

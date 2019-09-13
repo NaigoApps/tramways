@@ -1,0 +1,29 @@
+{
+	"points": [
+		{
+			"uuid": "S",
+			"type": "tramSource",
+			"targetLane": "A",
+			"period": 5
+		},
+		{
+			"uuid": "D",
+			"type": "destination",
+			"lanes": [
+				"A"
+			]
+		}
+	],
+	"lanes": [
+		{
+			"uuid": "A",
+			"type": "tram",
+			"source": "S",
+			"destination": "D",
+			"length": 1.0,
+			"vehicleMaxSpeed": 2.0,
+			"vehicleMinGap": 3.0,
+			"vehicleLength": 4.0
+		}
+	]
+}
