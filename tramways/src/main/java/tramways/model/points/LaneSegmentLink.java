@@ -2,7 +2,7 @@ package tramways.model.points;
 
 import org.apache.commons.math3.distribution.RealDistribution;
 
-import tramways.model.streets.LaneSegment;
+import tramways.model.lanes.LaneSegment;
 
 public class LaneSegmentLink {
 

@@ -2,7 +2,7 @@ package tramways.mapper;
 
 public class TramwaySystemMapper {
 
-//	private Marking marking;
+//	private Marking marking;*
 //	private List<PetriNet> nets;
 //
 //	private TramwaySystem system;

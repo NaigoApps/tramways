@@ -41,17 +41,30 @@ public class RoadMapDto {
 		}
 	}
 	
-	public RelevantPointDto getPoint(String uuid) {
+	public <P extends RelevantPointDto> P getPoint(String uuid, Class<P> pointClass) {
 		if(pointsMap == null) {
 			initializeMaps();
 		}
-		return pointsMap.get(uuid);
+		if(pointClass.isInstance(pointsMap.get(uuid))) {			
+			return pointClass.cast(pointsMap.get(uuid));
+		}
+		return null;
 	}
 	
 	public LaneSegmentDto getLane(String uuid) {
-		if(pointsMap == null) {
+		if(lanesMap == null) {
 			initializeMaps();
 		}
 		return lanesMap.get(uuid);
+	}
+	
+	public <L extends LaneSegmentDto> L getLane(String uuid, Class<L> laneClass) {
+		if(lanesMap == null) {
+			initializeMaps();
+		}
+		if(laneClass.isInstance(lanesMap.get(uuid))) {			
+			return laneClass.cast(lanesMap.get(uuid));
+		}
+		return null;
 	}
 }

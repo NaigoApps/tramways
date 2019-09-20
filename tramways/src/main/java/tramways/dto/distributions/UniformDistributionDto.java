@@ -1,6 +1,6 @@
 package tramways.dto.distributions;
 
-public class UniformDistributionDto implements RealDistributionDto {
+public class UniformDistributionDto implements DistributionDto {
 	private Double min;
 	private Double max;
 
@@ -18,5 +18,10 @@ public class UniformDistributionDto implements RealDistributionDto {
 
 	public void setMax(Double max) {
 		this.max = max;
+	}
+	
+	@Override
+	public void accept(DistributionDtoVisitor visitor) {
+		visitor.visit(this);
 	}
 }

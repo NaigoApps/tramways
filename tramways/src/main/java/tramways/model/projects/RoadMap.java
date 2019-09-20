@@ -5,7 +5,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.Lob;
 
 @Embeddable
-public class RoadMapEntity {
+public class RoadMap {
 
 	@Lob
 	@Column(name = "raw_map")

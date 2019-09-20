@@ -2,9 +2,7 @@ package tramways.model.points;
 
 import org.apache.commons.math3.distribution.RealDistribution;
 
-import tramways.model.streets.CarLaneSegment;
-
-public class CarSourcePoint extends SourcePoint<CarLaneSegment> {
+public class CarSourcePoint extends SourcePoint {
 
 	private RealDistribution arrivalRate;
 	

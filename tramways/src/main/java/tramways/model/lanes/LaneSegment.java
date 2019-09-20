@@ -1,11 +1,14 @@
-package tramways.model.streets;
+package tramways.model.lanes;
 
-import tramways.model.Identifiable;
+import tramways.model.AbstractIdentifiable;
 import tramways.model.points.RelevantPoint;
 
-public class LaneSegment extends Identifiable {
+public class LaneSegment extends AbstractIdentifiable {
 
+	private LaneSegmentType type;
+	
 	private RelevantPoint source;
+	
 	private RelevantPoint destination;
 	
 	private Double length;
@@ -60,6 +63,14 @@ public class LaneSegment extends Identifiable {
 
 	public void setVehicleLength(Double vehicleLength) {
 		this.vehicleLength = vehicleLength;
+	}
+	
+	public LaneSegmentType getType() {
+		return type;
+	}
+	
+	public void setType(LaneSegmentType type) {
+		this.type = type;
 	}
 	
 }

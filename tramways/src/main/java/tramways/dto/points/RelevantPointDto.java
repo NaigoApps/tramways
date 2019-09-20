@@ -1,6 +1,7 @@
 package tramways.dto.points;
 
-import tramways.dto.Dto;
+import tramways.dto.ConfigurableDto;
 
-public class RelevantPointDto extends Dto{
+public class RelevantPointDto extends ConfigurableDto {
+
 }

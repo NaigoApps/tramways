@@ -2,9 +2,16 @@
 	"points": [
 		{
 			"uuid": "S",
-			"type": "tramSource",
+			"type": "source",
+			"kind": "TRAM",
 			"targetLane": "A",
-			"period": 5
+			"properties": [
+				{
+					"type": "integer",
+					"name": "period",
+					"value": 5
+				}
+			]
 		},
 		{
 			"uuid": "D",
@@ -20,10 +27,28 @@
 			"type": "tram",
 			"source": "S",
 			"destination": "D",
-			"length": 1.0,
-			"vehicleMaxSpeed": 2.0,
-			"vehicleMinGap": 3.0,
-			"vehicleLength": 4.0
+			"properties": [
+				{
+					"type": "decimal",
+					"name": "length",
+					"value": 1.0
+				},
+				{
+					"type": "decimal",
+					"name": "vehicleMaxSpeed",
+					"value": 2.0
+				},
+				{
+					"type": "decimal",
+					"name": "vehicleMinGap",
+					"value": 3.0
+				},
+				{
+					"type": "decimal",
+					"name": "vehicleLength",
+					"value": 4.0
+				}
+			]
 		}
 	]
 }

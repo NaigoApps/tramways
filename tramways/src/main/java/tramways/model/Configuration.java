@@ -1,6 +1,59 @@
 package tramways.model;
 
-public interface Configuration<T> {
-	public String getName();
-	public void configure(T obj);
+import java.util.List;
+
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.Table;
+
+import tramways.model.properties.Property;
+
+@Entity
+@Table(name = "configurations")
+public class Configuration extends BaseEntity {
+
+	private String name;
+
+	@ElementCollection
+	@JoinTable(name = "configuration_properties", joinColumns = { @JoinColumn(name = "configuration_id") })
+	private List<Property> properties;
+
+	public List<Property> getProperties() {
+		return properties;
+	}
+
+	public void setProperties(List<Property> properties) {
+		this.properties = properties;
+	}
+
+	public Long getIntegerProperty(String name) {
+		return getProperty(name, Long.class);
+	}
+
+	public Double getDecimalProperty(String name) {
+		return getProperty(name, Double.class);
+	}
+
+	public String getStringProperty(String name) {
+		return getProperty(name, String.class);
+	}
+
+	private <T> T getProperty(String name, Class<T> valueClass) {
+		for (Property prop : properties) {
+			if (prop.getName().equals(name)) {
+				return valueClass.cast(prop.getValue());
+			}
+		}
+		return null;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

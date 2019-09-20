@@ -3,9 +3,7 @@ package tramways.model.points;
 import org.apache.commons.math3.distribution.ConstantRealDistribution;
 import org.apache.commons.math3.distribution.RealDistribution;
 
-import tramways.model.streets.TramLaneSegment;
-
-public class TramSourcePoint extends SourcePoint<TramLaneSegment> {
+public class TramSourcePoint extends SourcePoint {
 
 	private int period;
 

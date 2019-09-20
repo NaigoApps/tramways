@@ -1,4 +1,4 @@
-package tramways.dto.mapper;
+package tramways.mapper;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -7,26 +7,27 @@ import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 import tramways.dto.RoadMapDto;
 import tramways.dto.distributions.ConstantDistributionDto;
 import tramways.dto.distributions.ExponentialDistributionDto;
-import tramways.dto.distributions.RealDistributionDto;
+import tramways.dto.distributions.DistributionDto;
 import tramways.dto.distributions.UniformDistributionDto;
-import tramways.dto.lanes.CarLaneSegmentDto;
-import tramways.dto.lanes.LaneSegmentDto;
-import tramways.dto.lanes.TramLaneSegmentDto;
-import tramways.dto.points.CarSourcePointDto;
 import tramways.dto.points.CrossingPointDto;
 import tramways.dto.points.DestinationPointDto;
 import tramways.dto.points.RelevantPointDto;
-import tramways.dto.points.TramSourcePointDto;
+import tramways.dto.points.SourcePointDto;
 import tramways.dto.points.trafficlight.SensorTrafficLightDto;
 import tramways.dto.points.trafficlight.TimedTrafficLightDto;
 import tramways.dto.points.trafficlight.TrafficLightCrossingPointDto;
 import tramways.dto.points.trafficlight.TrafficLightDto;
+import tramways.dto.properties.DecimalPropertyDto;
+import tramways.dto.properties.DistributionPropertyDto;
+import tramways.dto.properties.IntegerPropertyDto;
+import tramways.dto.properties.PropertyDto;
+import tramways.dto.properties.StringPropertyDto;
 
-public class RoadMapDtoMapper {
+public class Json2RoadMapDtoMapper {
 	
 	private Gson mapper;
 	
-	public RoadMapDtoMapper() {
+	public Json2RoadMapDtoMapper() {
 		mapper = initMapper();
 	}
 	
@@ -37,19 +38,13 @@ public class RoadMapDtoMapper {
 	private Gson initMapper() {
 		RuntimeTypeAdapterFactory<RelevantPointDto> pointsFactory = RuntimeTypeAdapterFactory
 				.of(RelevantPointDto.class)
+				.registerSubtype(SourcePointDto.class, "source")
 				.registerSubtype(CrossingPointDto.class, "crossing")
 				.registerSubtype(TrafficLightCrossingPointDto.class, "trafficLight")				
-				.registerSubtype(DestinationPointDto.class, "destination")
-				.registerSubtype(CarSourcePointDto.class, "carSource")
-				.registerSubtype(TramSourcePointDto.class, "tramSource");
+				.registerSubtype(DestinationPointDto.class, "destination");
 
-		RuntimeTypeAdapterFactory<LaneSegmentDto> lanesFactory = RuntimeTypeAdapterFactory
-				.of(LaneSegmentDto.class)
-				.registerSubtype(CarLaneSegmentDto.class, "car")
-				.registerSubtype(TramLaneSegmentDto.class, "tram");
-		
-		RuntimeTypeAdapterFactory<RealDistributionDto> distributionsFactory = RuntimeTypeAdapterFactory
-				.of(RealDistributionDto.class)
+		RuntimeTypeAdapterFactory<DistributionDto> distributionsFactory = RuntimeTypeAdapterFactory
+				.of(DistributionDto.class)
 				.registerSubtype(ConstantDistributionDto.class, "constant")
 				.registerSubtype(UniformDistributionDto.class, "uniform")
 				.registerSubtype(ExponentialDistributionDto.class, "exponential");
@@ -59,11 +54,18 @@ public class RoadMapDtoMapper {
 				.registerSubtype(TimedTrafficLightDto.class, "timed")
 				.registerSubtype(SensorTrafficLightDto.class, "sensor");
 		
+		RuntimeTypeAdapterFactory<PropertyDto> propertyFactory = RuntimeTypeAdapterFactory
+				.of(PropertyDto.class)
+				.registerSubtype(IntegerPropertyDto.class, "integer")
+				.registerSubtype(DecimalPropertyDto.class, "decimal")
+				.registerSubtype(StringPropertyDto.class, "text")
+				.registerSubtype(DistributionPropertyDto.class, "distribution");
+		
 		return new GsonBuilder().setPrettyPrinting()
 			.registerTypeAdapterFactory(pointsFactory)
-			.registerTypeAdapterFactory(lanesFactory)
 			.registerTypeAdapterFactory(distributionsFactory)
 			.registerTypeAdapterFactory(trafficLightsFactory)
+			.registerTypeAdapterFactory(propertyFactory)
 			.create();
 	}
 	

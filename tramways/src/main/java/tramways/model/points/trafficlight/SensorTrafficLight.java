@@ -3,7 +3,7 @@ package tramways.model.points.trafficlight;
 import java.util.HashSet;
 import java.util.Set;
 
-import tramways.model.streets.LaneSegment;
+import tramways.model.lanes.LaneSegment;
 
 public class SensorTrafficLight implements TrafficLight{
 

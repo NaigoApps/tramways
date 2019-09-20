@@ -4,20 +4,19 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import tramways.model.lanes.LaneSegment;
 import tramways.model.points.CrossingPoint;
-import tramways.model.streets.CarLaneSegment;
-import tramways.model.streets.TramLaneSegment;
 
 public class CrossroadTest {
 
 	@Test
 	public void testBuild() {
 		
-		TramLaneSegment tA = new TramLaneSegment();
-		TramLaneSegment tB = new TramLaneSegment();
+		LaneSegment tA = new LaneSegment();
+		LaneSegment tB = new LaneSegment();
 		
-		CarLaneSegment cA = new CarLaneSegment();
-		CarLaneSegment cB = new CarLaneSegment();
+		LaneSegment cA = new LaneSegment();
+		LaneSegment cB = new LaneSegment();
 		
 		CrossingPoint crossing = new CrossingPoint();
 		

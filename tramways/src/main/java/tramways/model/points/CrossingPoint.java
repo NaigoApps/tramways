@@ -9,9 +9,11 @@ import java.util.Set;
 import org.apache.commons.math3.distribution.ConstantRealDistribution;
 import org.apache.commons.math3.distribution.RealDistribution;
 
-import tramways.model.streets.LaneSegment;
+import tramways.model.AbstractIdentifiable;
+import tramways.model.BaseEntity;
+import tramways.model.lanes.LaneSegment;
 
-public class CrossingPoint implements RelevantPoint {
+public class CrossingPoint extends AbstractIdentifiable implements RelevantPoint {
 
 	private Map<LaneSegment, Set<LaneSegmentLink>> constraints;
 

@@ -7,17 +7,18 @@ import java.util.Set;
 
 import org.apache.commons.math3.distribution.RealDistribution;
 
-import tramways.model.streets.LaneSegment;
+import tramways.model.AbstractIdentifiable;
+import tramways.model.lanes.LaneSegment;
 
-public abstract class SourcePoint<L extends LaneSegment> implements RelevantPoint {
+public abstract class SourcePoint extends AbstractIdentifiable implements RelevantPoint {
+	
+	private LaneSegment targetLine;
 
-	private L targetLine;
-
-	public void setTargetLine(L targetLine) {
+	public void setTargetLine(LaneSegment targetLine) {
 		this.targetLine = targetLine;
 	}
 	
-	public L getTargetLine() {
+	public LaneSegment getTargetLine() {
 		return targetLine;
 	}
 

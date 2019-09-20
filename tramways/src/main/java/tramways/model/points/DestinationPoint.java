@@ -6,9 +6,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import tramways.model.streets.LaneSegment;
+import tramways.model.AbstractIdentifiable;
+import tramways.model.lanes.LaneSegment;
 
-public class DestinationPoint implements RelevantPoint {
+public class DestinationPoint extends AbstractIdentifiable implements RelevantPoint {
 
 	private List<LaneSegment> lines;
 	

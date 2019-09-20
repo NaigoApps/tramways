@@ -3,8 +3,8 @@ package tramways.model.points.trafficlight;
 import java.util.HashMap;
 import java.util.Map;
 
+import tramways.model.lanes.LaneSegment;
 import tramways.model.points.CrossingPoint;
-import tramways.model.streets.LaneSegment;
 
 public class TrafficLightCrossingPoint extends CrossingPoint{
 	private Map<LaneSegment, TrafficLight> trafficLights;

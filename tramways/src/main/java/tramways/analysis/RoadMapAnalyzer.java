@@ -1,16 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package tramways.mapper;
+package tramways.analysis;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.enterprise.inject.Instance;
+import javax.inject.Inject;
+
+import tramways.dto.RoadMapDto;
 
 /**
  *
  * @author naigo
  */
-public class ModelAnalyzer {
+public class RoadMapAnalyzer {
 
+	private RoadMapDto roadMap;
+	
+	@Inject
+	private Instance<AnalysisProvider> analyzers;
+	
+	public List<Analysis> listAvailableAnalysis(){
+		List<Analysis> result = new ArrayList<>();
+		analyzers.forEach(analyzer -> result.addAll(analyzer.availableAnalysis(roadMap)));
+		return result;
+	}
 //	private static final int FPS = 1;
 //	
 //	private TramwaySystem system;

@@ -16,13 +16,13 @@ public class Project extends BaseEntity {
 	private User owner;
 
 	@Embedded
-	private RoadMapEntity map;
+	private RoadMap map;
 	
-	public RoadMapEntity getMap() {
+	public RoadMap getMap() {
 		return map;
 	}
 	
-	public void setMap(RoadMapEntity map) {
+	public void setMap(RoadMap map) {
 		this.map = map;
 	}
 }

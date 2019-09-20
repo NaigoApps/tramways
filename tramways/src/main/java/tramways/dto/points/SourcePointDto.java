@@ -1,6 +1,8 @@
 package tramways.dto.points;
 
-public abstract class SourcePointDto extends RelevantPointDto {
+public class SourcePointDto extends RelevantPointDto {
+
+	private SourcePointType kind;
 
 	private String targetLane;
 
@@ -10,5 +12,13 @@ public abstract class SourcePointDto extends RelevantPointDto {
 
 	public void setTargetLane(String targetLane) {
 		this.targetLane = targetLane;
+	}
+
+	public SourcePointType getKind() {
+		return kind;
+	}
+
+	public void setKind(SourcePointType kind) {
+		this.kind = kind;
 	}
 }
