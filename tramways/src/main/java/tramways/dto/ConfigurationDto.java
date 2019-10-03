@@ -2,13 +2,13 @@ package tramways.dto;
 
 import java.util.List;
 
-import tramways.dto.properties.PropertyDto;
+import tramways.dto.properties.PropertyWrapper;
 
 public class ConfigurationDto extends Dto{
 
 	private String name;
 
-	private List<PropertyDto> properties;
+	private List<PropertyWrapper> properties;
 
 	public String getName() {
 		return name;
@@ -18,11 +18,11 @@ public class ConfigurationDto extends Dto{
 		this.name = name;
 	}
 
-	public List<PropertyDto> getProperties() {
+	public List<PropertyWrapper> getProperties() {
 		return properties;
 	}
 
-	public void setProperties(List<PropertyDto> properties) {
+	public void setProperties(List<PropertyWrapper> properties) {
 		this.properties = properties;
 	}
 
@@ -39,7 +39,7 @@ public class ConfigurationDto extends Dto{
 	}
 
 	<T> T getProperty(String name, Class<T> valueClass) {
-		for (PropertyDto prop : properties) {
+		for (PropertyWrapper prop : properties) {
 			if (prop.getName().equals(name)) {
 				return valueClass.cast(prop.getValue());
 			}

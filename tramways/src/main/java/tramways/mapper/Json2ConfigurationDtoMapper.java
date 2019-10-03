@@ -9,11 +9,12 @@ import tramways.dto.distributions.ConstantDistributionDto;
 import tramways.dto.distributions.ExponentialDistributionDto;
 import tramways.dto.distributions.DistributionDto;
 import tramways.dto.distributions.UniformDistributionDto;
-import tramways.dto.properties.DecimalPropertyDto;
-import tramways.dto.properties.DistributionPropertyDto;
-import tramways.dto.properties.IntegerPropertyDto;
-import tramways.dto.properties.PropertyDto;
-import tramways.dto.properties.StringPropertyDto;
+import tramways.dto.properties.DecimalPropertyWrapper;
+import tramways.dto.properties.DistributionPropertyWrapper;
+import tramways.dto.properties.IntegerPropertyWrapper;
+import tramways.dto.properties.PropertyWrapper;
+import tramways.dto.properties.StringPropertyWrapper;
+import tramways.model.properties.PropertyType;
 
 public class Json2ConfigurationDtoMapper {
 	
@@ -34,12 +35,12 @@ public class Json2ConfigurationDtoMapper {
 				.registerSubtype(UniformDistributionDto.class, "uniform")
 				.registerSubtype(ExponentialDistributionDto.class, "exponential");
 		
-		RuntimeTypeAdapterFactory<PropertyDto> propertyFactory = RuntimeTypeAdapterFactory
-				.of(PropertyDto.class)
-				.registerSubtype(IntegerPropertyDto.class, "integer")
-				.registerSubtype(DecimalPropertyDto.class, "decimal")
-				.registerSubtype(StringPropertyDto.class, "string")
-				.registerSubtype(DistributionPropertyDto.class, "distribution");
+		RuntimeTypeAdapterFactory<PropertyWrapper> propertyFactory = RuntimeTypeAdapterFactory
+				.of(PropertyWrapper.class, "type", true)
+				.registerSubtype(IntegerPropertyWrapper.class, PropertyType.INTEGER.name())
+				.registerSubtype(DecimalPropertyWrapper.class, PropertyType.DECIMAL.name())
+				.registerSubtype(StringPropertyWrapper.class, PropertyType.STRING.name())
+				.registerSubtype(DistributionPropertyWrapper.class, PropertyType.DISTRIBUTION.name());
 		
 		return new GsonBuilder().setPrettyPrinting()
 			.registerTypeAdapterFactory(distributionsFactory)

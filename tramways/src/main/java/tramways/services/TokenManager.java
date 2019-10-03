@@ -3,45 +3,28 @@ package tramways.services;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.inject.Inject;
-
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 
-import tramways.dao.UserDao;
 import tramways.model.auth.Role;
 import tramways.model.auth.User;
 
 public class TokenManager {
 
-	@Inject
-	private UserDao uDao;
-
-	public User token2User(String jwt) {
+	public String token2User(String jwt) {
 		try {
 			JWTVerifier verifier = JWT.require(Algorithm.HMAC256("tramways")).build();
 
 			DecodedJWT result = verifier.verify(jwt);
-			String uuid = result.getClaim("userId").asString();
-			return uDao.findByUuid(uuid);
+			return result.getClaim("userId").asString();
 		} catch (JWTDecodeException ex) {
 			return null;
 		}
 	}
 
-	public User authenticate(String username, String password) {
-		User user = uDao.findByUsername(username);
-		
-		if (user != null && user.passwordMatches(password)) {
-			return user;
-		}
-
-		return null;
-	}
-	
 	public String requestToken(User user) {
 		return createJWT(user);
 	}

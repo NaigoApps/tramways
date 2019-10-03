@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Set;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.ext.Provider;
 
+import tramways.inbound.UserService;
 import tramways.model.auth.Role;
 import tramways.model.auth.User;
 import tramways.rs.annotations.Roles;
@@ -32,14 +34,19 @@ public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilt
 	private RequestSession authService;
 
 	@Inject
+	private UserService userService;
+	
+	@Inject
 	private TokenManager tokenManager;
 
 	@Override
+	@Transactional
 	public void filter(ContainerRequestContext requestContext) throws IOException {
-		User user = null;
-		if ((user = extractUser(requestContext)) != null) {
-			authService.setLoggedUserUuid(user.getUuid());
-			if (!hasPermission(user.listRoles())) {
+		String userUuid = null;
+		if ((userUuid = extractUser(requestContext)) != null) {
+			authService.setLoggedUserUuid(userUuid);
+			User current = userService.getSessionData();
+			if (!hasPermission(current.listRoles())) {
 				throw new BadRequestException("Unauthorized");
 			}
 		} else if (!isUnsecure()) {
@@ -66,7 +73,7 @@ public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilt
 		return resourceInfo.getResourceMethod().isAnnotationPresent(Unsecure.class);
 	}
 
-	private User extractUser(ContainerRequestContext context) {
+	private String extractUser(ContainerRequestContext context) {
 		String authorizationHeader = context.getHeaderString(HttpHeaders.AUTHORIZATION);
 		if (authorizationHeader != null) {
 			String token = authorizationHeader.substring("Bearer".length()).trim();

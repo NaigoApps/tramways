@@ -10,8 +10,6 @@ import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.swing.SwingUtilities;
 
 import tramways.plotter.SimplePlotter;

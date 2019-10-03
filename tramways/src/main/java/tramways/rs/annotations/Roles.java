@@ -11,11 +11,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import javax.enterprise.util.Nonbinding;
-import javax.inject.Qualifier;
 
 import tramways.model.auth.Role;
 
-@Qualifier
 @Target({ TYPE, METHOD, PARAMETER, FIELD })
 @Retention(RUNTIME)
 @Documented

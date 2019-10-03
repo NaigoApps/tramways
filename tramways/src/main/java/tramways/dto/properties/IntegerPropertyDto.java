@@ -8,13 +8,8 @@ public class IntegerPropertyDto extends PropertyDto {
 		this.value = value;
 	}
 
-	@Override
 	public Long getValue() {
 		return value;
 	}
-
-	@Override
-	public void accept(PropertyDtoVisitor visitor) {
-		visitor.visit(this);
-	}
+	
 }

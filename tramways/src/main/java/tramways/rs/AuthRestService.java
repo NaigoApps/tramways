@@ -1,33 +1,28 @@
 package tramways.rs;
 
-import java.security.NoSuchAlgorithmException;
-
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.GET;
+import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
 import tramways.dto.LoginData;
 import tramways.dto.UserDto;
-import tramways.dto.Wrapper;
+import tramways.exceptions.DuplicateUserException;
+import tramways.exceptions.LoginException;
+import tramways.inbound.UserService;
 import tramways.mapper.UserMapper;
 import tramways.model.auth.Role;
 import tramways.model.auth.User;
 import tramways.rs.annotations.Roles;
 import tramways.rs.annotations.Unsecure;
-import tramways.services.RequestSession;
 import tramways.services.TokenManager;
-import tramways.services.UserService;
 
 @Path("auth")
 @Transactional
 public class AuthRestService {
-
-	@Inject
-	private RequestSession service;
 
 	@Inject
 	private UserService userService;
@@ -41,39 +36,39 @@ public class AuthRestService {
 	@POST
 	@Path("login")
 	@Unsecure
-	public Response login(LoginData data) {
-		User user = tokenManager.authenticate(data.getUserName(), data.getPassword());
-		if(user != null) {
-			service.setLoggedUserUuid(user.getUuid());
+	public Response login(LoginData data) throws LoginException {
+		User loggedUser = userService.login(data.getUserName(), data.getPassword());
+		if(loggedUser != null) {
 			return Response.ok()
-					.header("Authorization", "Bearer " + tokenManager.requestToken(user))
+					.header("Authorization", "Bearer " + tokenManager.requestToken(loggedUser))
 					.build();
-		}else {
-			throw new BadRequestException("Username or password not correct");
+		} else {
+			throw new LoginException();
 		}
 	}
 	
 	@GET
-	@Path("logged-user")
+	@Path("session-info")
 	public UserDto getLoggedUser() {
-		return userMapper.map(userService.findByUuid(service.getLoggedUserUuid()));
+		return userMapper.map(userService.getSessionData());
 	}
 
 	@POST
 	@Path("register-user")
 	@Roles(Role.ADMIN)
-	public Wrapper<String> register(LoginData data) throws NoSuchAlgorithmException {
+	public UserDto register(LoginData data) throws DuplicateUserException {
 		User user = userService.register(data.getUserName(), data.getPassword());
-		service.setLoggedUserUuid(user.getUuid());
-		return new Wrapper<>(tokenManager.requestToken(user));
+		if (user != null) {
+			return userMapper.map(user);
+		} else {
+			throw new InternalServerErrorException("Couldn't register user");
+		}
 	}
 
-	@GET
+	@POST
 	@Path("reset-password")
-	public void resetPassword(LoginData data) throws NoSuchAlgorithmException {
-		if(!userService.resetPassword(data.getUserName(), data.getPassword(), data.getNewPassword())) {
-			throw new BadRequestException("Username or password not correct");
-		}
+	public void resetPassword(LoginData data) {
+		userService.resetPassword(data.getPassword(), data.getNewPassword());
 	}
 
 }

@@ -35,4 +35,8 @@ public abstract class BaseEntity implements Identifiable {
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
+	
+	public void assignUuid() {
+		this.uuid = UUID.randomUUID().toString();
+	}
 }

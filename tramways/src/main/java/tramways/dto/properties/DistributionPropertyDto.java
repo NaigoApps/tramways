@@ -10,13 +10,8 @@ public class DistributionPropertyDto extends PropertyDto {
 		this.value = value;
 	}
 
-	@Override
 	public DistributionDto getValue() {
 		return value;
 	}
 
-	@Override
-	public void accept(PropertyDtoVisitor visitor) {
-		visitor.visit(this);
-	}
 }

@@ -11,19 +11,19 @@ import tramways.model.lanes.LaneSegment;
 
 public class DestinationPoint extends AbstractIdentifiable implements RelevantPoint {
 
-	private List<LaneSegment> lines;
+	private List<LaneSegment> lanes;
 	
 	public DestinationPoint() {
-		lines = new ArrayList<>();
+		lanes = new ArrayList<>();
 	}
 	
-	public void addLine(LaneSegment l) {
-		this.lines.add(l);
+	public void addLane(LaneSegment l) {
+		this.lanes.add(l);
 	}
 
 	@Override
 	public Set<LaneSegment> getSources() {
-		return new HashSet<>(lines);
+		return new HashSet<>(lanes);
 	}
 
 	@Override

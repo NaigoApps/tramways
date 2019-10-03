@@ -4,13 +4,12 @@ public class DecimalPropertyDto extends PropertyDto {
 
 	private Double value;
 
-	@Override
+	public void setValue(Double value) {
+		this.value = value;
+	}
+
 	public Double getValue() {
 		return value;
 	}
 
-	@Override
-	public void accept(PropertyDtoVisitor visitor) {
-		visitor.visit(this);
-	}
 }

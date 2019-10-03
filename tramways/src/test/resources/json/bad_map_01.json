@@ -1,0 +1,48 @@
+{
+	"points": [
+		{
+			"uuid": "S",
+			"type": "source",
+			"kind": "CAR",
+			"targetLane": "A",
+			"properties": [
+				{
+					"type": "distribution",
+					"name": "arrivalRate",
+					"value": {
+						"type": "exponential",
+						"mean": 1.0
+					}
+				}
+			]
+		}
+	],
+	"lanes": [
+		{
+			"uuid": "A",
+			"source": "S",
+			"properties": [
+				{
+					"type": "decimal",
+					"name": "length",
+					"value": 1.0
+				},
+				{
+					"type": "decimal",
+					"name": "vehicleMaxSpeed",
+					"value": 2.0
+				},
+				{
+					"type": "decimal",
+					"name": "vehicleMinGap",
+					"value": 3.0
+				},
+				{
+					"type": "decimal",
+					"name": "vehicleLength",
+					"value": 4.0
+				}
+			]
+		}
+	]
+}

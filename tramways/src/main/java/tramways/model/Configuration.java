@@ -41,12 +41,12 @@ public class Configuration extends BaseEntity {
 	}
 
 	private <T> T getProperty(String name, Class<T> valueClass) {
-		for (Property prop : properties) {
-			if (prop.getName().equals(name)) {
-				return valueClass.cast(prop.getValue());
-			}
-		}
-		return null;
+		return properties.stream()
+			.filter(prop -> name.equals(prop.getName()))
+			.filter(prop -> valueClass.isInstance(prop.getValue()))
+			.map(prop -> valueClass.cast(prop.getValue()))
+			.findFirst()
+			.orElse(null);
 	}
 
 	public String getName() {

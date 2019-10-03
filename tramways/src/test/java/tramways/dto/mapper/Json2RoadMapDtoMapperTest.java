@@ -2,11 +2,7 @@ package tramways.dto.mapper;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import static tramways.Utils.readJson;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -140,15 +136,6 @@ public class Json2RoadMapDtoMapperTest {
 		assertEquals(1, trafficLight.getActivators().size());
 		assertEquals(tl1.getUuid(), trafficLight.getActivators().iterator().next());
 
-	}
-
-	private String readJson(String file) {
-		try {
-			byte[] raw = Files.readAllBytes(Paths.get("src/test/resources/" + file));
-			return new String(raw, StandardCharsets.UTF_8);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 }

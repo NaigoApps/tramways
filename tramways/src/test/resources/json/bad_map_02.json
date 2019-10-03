@@ -1,0 +1,77 @@
+{
+	"points": [
+		{
+			"uuid": "c_S",
+			"type": "source",
+			"kind": "CAR",
+			"targetLane": "cl_A"
+		},
+		{
+			"uuid": "t_S",
+			"type": "source",
+			"kind": "TRAM",
+			"targetLane": "tl_A"
+		},
+		{
+			"uuid": "D",
+			"type": "destination",
+			"lanes": [
+				"cl_A",
+				"tl_B"
+			]
+		},
+		{
+			"uuid": "cp",
+			"type": "trafficLight",
+			"constraints": {
+				"cl_A": [
+					{
+						"destination": "l_B",
+						"weight": 1.0,
+						"crossingTime": {
+							"type": "uniform",
+							"min": 4.0,
+							"max": 6.0
+						}
+					}
+				],
+				"tl_A": [
+					{
+						"destination": "l_B",
+						"weight": 1.0,
+						"crossingTime": {
+							"type": "constant",
+							"value": 5.0
+						}
+					}
+				]
+			},
+			"trafficLights": {
+				"cl_A": {
+					"anticipation": 5,
+					"type": "sensor",
+					"activators": [
+						"tl_A"
+					]
+				}
+			}
+		}
+	],
+	"lanes": [
+		{
+			"uuid": "cl_A",
+			"source": "c_S",
+			"destination": "cp"
+		},
+		{
+			"uuid": "tl_A",
+			"source": "t_S",
+			"destination": "cp"
+		},
+		{
+			"uuid": "l_B",
+			"source": "cp",
+			"destination": "D"
+		}
+	]
+}

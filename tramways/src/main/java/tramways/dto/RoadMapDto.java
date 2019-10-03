@@ -3,6 +3,7 @@ package tramways.dto;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import tramways.dto.lanes.LaneSegmentDto;
 import tramways.dto.points.RelevantPointDto;
@@ -26,6 +27,13 @@ public class RoadMapDto {
 		return points;
 	}
 	
+	public <T extends RelevantPointDto> List<T> getPoints(Class<T> pointClass){
+		return points.stream()
+				.filter(pointClass::isInstance)
+				.map(pointClass::cast)
+				.collect(Collectors.toList());
+	}
+	
 	public List<LaneSegmentDto> getLanes() {
 		return lanes;
 	}
@@ -39,6 +47,13 @@ public class RoadMapDto {
 		if(this.lanes != null) {
 			this.lanes.forEach(lane -> lanesMap.put(lane.getUuid(), lane));
 		}
+	}
+
+	public RelevantPointDto getPoint(String uuid) {
+		if(pointsMap == null) {
+			initializeMaps();
+		}
+		return pointsMap.get(uuid);
 	}
 	
 	public <P extends RelevantPointDto> P getPoint(String uuid, Class<P> pointClass) {

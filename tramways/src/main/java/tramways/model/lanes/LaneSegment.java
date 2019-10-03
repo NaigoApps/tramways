@@ -1,22 +1,22 @@
 package tramways.model.lanes;
 
-import tramways.model.AbstractIdentifiable;
+import tramways.model.AbstractConfigurable;
 import tramways.model.points.RelevantPoint;
+import tramways.model.properties.Property;
 
-public class LaneSegment extends AbstractIdentifiable {
+public class LaneSegment extends AbstractConfigurable {
 
+	private static final String LENGTH_PROPERTY = "length";
+	private static final String MAX_SPEED_PROPERTY = "maxSpeed";
+	private static final String MIN_GAP_PROPERTY = "minGap";
+	private static final String VEHICLE_LENGTH_PROPERTY = "vehicleLength";
+	
 	private LaneSegmentType type;
 	
 	private RelevantPoint source;
 	
 	private RelevantPoint destination;
 	
-	private Double length;
-	
-	private Double vehicleMaxSpeed;
-	private Double vehicleMinGap;
-	private Double vehicleLength;
-
 	public RelevantPoint getSource() {
 		return source;
 	}
@@ -34,35 +34,35 @@ public class LaneSegment extends AbstractIdentifiable {
 	}
 
 	public Double getLength() {
-		return length;
+		return getDecimalProperty(LENGTH_PROPERTY);
 	}
 
 	public void setLength(Double length) {
-		this.length = length;
+		apply(Property.create(LENGTH_PROPERTY, length));
 	}
 
 	public Double getVehicleMaxSpeed() {
-		return vehicleMaxSpeed;
+		return getDecimalProperty(MAX_SPEED_PROPERTY);
 	}
 
 	public void setVehicleMaxSpeed(Double vehicleMaxSpeed) {
-		this.vehicleMaxSpeed = vehicleMaxSpeed;
+		apply(Property.create(MAX_SPEED_PROPERTY, vehicleMaxSpeed));
 	}
 
 	public Double getVehicleMinGap() {
-		return vehicleMinGap;
+		return getDecimalProperty(MIN_GAP_PROPERTY);
 	}
 
 	public void setVehicleMinGap(Double vehicleMinGap) {
-		this.vehicleMinGap = vehicleMinGap;
+		apply(Property.create(MIN_GAP_PROPERTY, vehicleMinGap));
 	}
 
 	public Double getVehicleLength() {
-		return vehicleLength;
+		return getDecimalProperty(VEHICLE_LENGTH_PROPERTY);
 	}
 
 	public void setVehicleLength(Double vehicleLength) {
-		this.vehicleLength = vehicleLength;
+		apply(Property.create(VEHICLE_LENGTH_PROPERTY, vehicleLength));
 	}
 	
 	public LaneSegmentType getType() {

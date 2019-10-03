@@ -6,8 +6,8 @@ import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 
 import tramways.dto.RoadMapDto;
 import tramways.dto.distributions.ConstantDistributionDto;
-import tramways.dto.distributions.ExponentialDistributionDto;
 import tramways.dto.distributions.DistributionDto;
+import tramways.dto.distributions.ExponentialDistributionDto;
 import tramways.dto.distributions.UniformDistributionDto;
 import tramways.dto.points.CrossingPointDto;
 import tramways.dto.points.DestinationPointDto;

@@ -19,5 +19,9 @@ public class CrossingPointDto extends RelevantPointDto {
 	public void setConstraints(Map<String, Set<LaneSegmentLinkDto>> constraints) {
 		this.constraints = constraints;
 	}
+
+	public Set<LaneSegmentLinkDto> getConstraints(String laneUuid) {
+		return constraints.get(laneUuid);
+	}
 	
 }

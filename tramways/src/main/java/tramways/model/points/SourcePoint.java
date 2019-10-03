@@ -7,19 +7,19 @@ import java.util.Set;
 
 import org.apache.commons.math3.distribution.RealDistribution;
 
-import tramways.model.AbstractIdentifiable;
+import tramways.model.AbstractConfigurable;
 import tramways.model.lanes.LaneSegment;
 
-public abstract class SourcePoint extends AbstractIdentifiable implements RelevantPoint {
+public abstract class SourcePoint extends AbstractConfigurable implements RelevantPoint {
 	
-	private LaneSegment targetLine;
+	private LaneSegment targetLane;
 
-	public void setTargetLine(LaneSegment targetLine) {
-		this.targetLine = targetLine;
+	public void setTargetLane(LaneSegment targetLane) {
+		this.targetLane = targetLane;
 	}
 	
-	public LaneSegment getTargetLine() {
-		return targetLine;
+	public LaneSegment getTargetLane() {
+		return targetLane;
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public abstract class SourcePoint extends AbstractIdentifiable implements Releva
 
 	@Override
 	public Set<LaneSegment> getDestinations() {
-		return new HashSet<>(Arrays.asList(targetLine));
+		return new HashSet<>(Arrays.asList(targetLane));
 	}
 
 	public abstract RealDistribution getRate();
