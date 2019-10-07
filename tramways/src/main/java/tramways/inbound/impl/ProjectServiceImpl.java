@@ -9,6 +9,7 @@ import tramways.dto.RoadMapDto;
 import tramways.inbound.ProjectService;
 import tramways.mapper.Json2RoadMapDtoMapper;
 import tramways.model.projects.Project;
+import tramways.model.projects.RawMap;
 import tramways.outbound.ProjectRepository;
 import tramways.services.MessageCollector;
 import tramways.services.RoadMapValidator;
@@ -36,7 +37,7 @@ public class ProjectServiceImpl implements ProjectService {
 		project.assignUuid();
 		project.setOwner(uService.getSessionData());
 
-		validateMap(project.getMap());
+		project.listMaps().forEach(this::validateMap);
 
 		repository.create(project);
 	}
@@ -46,10 +47,10 @@ public class ProjectServiceImpl implements ProjectService {
 		repository.delete(uuid);
 	}
 
-	private void validateMap(String rawMap) {
+	private void validateMap(RawMap rawMap) {
 		RoadMapValidator validator = new RoadMapValidator();
 		Json2RoadMapDtoMapper mapper = new Json2RoadMapDtoMapper();
-		RoadMapDto map = mapper.map(rawMap);
+		RoadMapDto map = mapper.map(rawMap.getMap());
 		validator.setMap(map);
 		MessageCollector collector = new DefaultMessageCollector();
 		if (!validator.validate(collector)) {

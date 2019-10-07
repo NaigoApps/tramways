@@ -7,10 +7,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import tramways.model.properties.PropertyType;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
-@JsonSubTypes({ @Type(value = IntegerPropertyWrapper.class, name = "integer"),
-		@Type(value = DecimalPropertyWrapper.class, name = "decimal"),
-		@Type(value = StringPropertyWrapper.class, name = "string"),
-		@Type(value = DistributionPropertyWrapper.class, name = "distribution") })
+@JsonSubTypes({ @Type(value = IntegerPropertyWrapper.class, name = "INTEGER"),
+		@Type(value = DecimalPropertyWrapper.class, name = "DECIMAL"),
+		@Type(value = StringPropertyWrapper.class, name = "STRING"),
+		@Type(value = DistributionPropertyWrapper.class, name = "DISTRIBUTION") })
 public abstract class PropertyWrapper {
 
 	private String type;

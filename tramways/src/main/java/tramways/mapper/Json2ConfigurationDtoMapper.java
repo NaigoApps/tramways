@@ -42,10 +42,10 @@ public class Json2ConfigurationDtoMapper {
 				.registerSubtype(StringPropertyWrapper.class, PropertyType.STRING.name())
 				.registerSubtype(DistributionPropertyWrapper.class, PropertyType.DISTRIBUTION.name());
 		
-		return new GsonBuilder().setPrettyPrinting()
-			.registerTypeAdapterFactory(distributionsFactory)
-			.registerTypeAdapterFactory(propertyFactory)
-			.create();
+		return new GsonBuilder()
+				.registerTypeAdapterFactory(distributionsFactory)
+				.registerTypeAdapterFactory(propertyFactory)
+				.create();
 	}
 	
 }

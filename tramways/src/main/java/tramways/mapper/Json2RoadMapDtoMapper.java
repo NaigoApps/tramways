@@ -17,11 +17,12 @@ import tramways.dto.points.trafficlight.SensorTrafficLightDto;
 import tramways.dto.points.trafficlight.TimedTrafficLightDto;
 import tramways.dto.points.trafficlight.TrafficLightCrossingPointDto;
 import tramways.dto.points.trafficlight.TrafficLightDto;
-import tramways.dto.properties.DecimalPropertyDto;
-import tramways.dto.properties.DistributionPropertyDto;
-import tramways.dto.properties.IntegerPropertyDto;
-import tramways.dto.properties.PropertyDto;
-import tramways.dto.properties.StringPropertyDto;
+import tramways.dto.properties.DecimalPropertyWrapper;
+import tramways.dto.properties.DistributionPropertyWrapper;
+import tramways.dto.properties.IntegerPropertyWrapper;
+import tramways.dto.properties.PropertyWrapper;
+import tramways.dto.properties.StringPropertyWrapper;
+import tramways.model.properties.PropertyType;
 
 public class Json2RoadMapDtoMapper {
 	
@@ -54,12 +55,12 @@ public class Json2RoadMapDtoMapper {
 				.registerSubtype(TimedTrafficLightDto.class, "timed")
 				.registerSubtype(SensorTrafficLightDto.class, "sensor");
 		
-		RuntimeTypeAdapterFactory<PropertyDto> propertyFactory = RuntimeTypeAdapterFactory
-				.of(PropertyDto.class)
-				.registerSubtype(IntegerPropertyDto.class, "integer")
-				.registerSubtype(DecimalPropertyDto.class, "decimal")
-				.registerSubtype(StringPropertyDto.class, "text")
-				.registerSubtype(DistributionPropertyDto.class, "distribution");
+		RuntimeTypeAdapterFactory<PropertyWrapper> propertyFactory = RuntimeTypeAdapterFactory
+				.of(PropertyWrapper.class)
+				.registerSubtype(IntegerPropertyWrapper.class, PropertyType.INTEGER.name())
+				.registerSubtype(DecimalPropertyWrapper.class, PropertyType.DECIMAL.name())
+				.registerSubtype(StringPropertyWrapper.class, PropertyType.STRING.name())
+				.registerSubtype(DistributionPropertyWrapper.class, PropertyType.DISTRIBUTION.name());
 		
 		return new GsonBuilder().setPrettyPrinting()
 			.registerTypeAdapterFactory(pointsFactory)

@@ -35,10 +35,10 @@ public class ConfigurationRS {
 	}
 
 	@POST
-	public Long createConfiguration(ConfigurationDto dto) {
+	public String createConfiguration(ConfigurationDto dto) {
 		Configuration conf = mapper.map(dto);
 		service.createConfiguration(conf);
-		return conf.getId();
+		return conf.getUuid();
 	}
 
 	@DELETE

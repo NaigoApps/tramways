@@ -1,22 +1,23 @@
 package tramways.dto.properties;
 
+import tramways.dto.distributions.DistributionDto;
 import tramways.model.distributions.Distribution;
 import tramways.model.properties.PropertyType;
 
 public class DistributionPropertyWrapper extends PropertyWrapper {
 
-	private Distribution value;
+	private DistributionDto value;
 
 	public DistributionPropertyWrapper() {
 		setType(PropertyType.DISTRIBUTION);
 	}
 	
-	public void setValue(Distribution value) {
+	public void setValue(DistributionDto value) {
 		this.value = value;
 	}
 
 	@Override
-	public Distribution getValue() {
+	public DistributionDto getValue() {
 		return value;
 	}
 
