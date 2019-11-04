@@ -2,7 +2,7 @@ package tramways.outbound;
 
 import java.util.List;
 
-import tramways.model.projects.Project;
+import tramways.model.persistable.projects.Project;
 
 public interface ProjectRepository {
 	public Project create(Project p);

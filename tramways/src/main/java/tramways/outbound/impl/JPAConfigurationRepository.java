@@ -2,8 +2,8 @@ package tramways.outbound.impl;
 
 import java.util.List;
 
-import tramways.dao.AbstractJPARepository;
-import tramways.model.Configuration;
+import tramways.model.persistable.configurations.Configuration;
+import tramways.outbound.AbstractJPARepository;
 import tramways.outbound.ConfigurationRepository;
 
 public class JPAConfigurationRepository extends AbstractJPARepository<Configuration> implements ConfigurationRepository {

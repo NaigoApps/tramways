@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import tramways.model.lanes.LaneSegment;
-import tramways.model.points.CrossingPoint;
+import tramways.model.roadmap.lanes.LaneSegment;
+import tramways.model.roadmap.points.CrossingPoint;
 
 public class CrossroadTest {
 

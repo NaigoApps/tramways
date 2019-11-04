@@ -2,18 +2,18 @@ package tramways.dto;
 
 import java.util.List;
 
-import tramways.dto.distributions.DistributionDto;
-import tramways.dto.properties.PropertyWrapper;
+import tramways.model.distributions.Distribution;
+import tramways.model.properties.Property;
 
 public class ConfigurableDto extends Dto {
 
-	private List<PropertyWrapper> properties;
+	private List<Property> properties;
 
-	public List<PropertyWrapper> getProperties() {
+	public List<Property> getProperties() {
 		return properties;
 	}
 
-	public void setProperties(List<PropertyWrapper> properties) {
+	public void setProperties(List<Property> properties) {
 		this.properties = properties;
 	}
 
@@ -29,12 +29,12 @@ public class ConfigurableDto extends Dto {
 		return getProperty(name, String.class);
 	}
 
-	public DistributionDto getDistributionProperty(String name) {
-		return getProperty(name, DistributionDto.class);
+	public Distribution getDistributionProperty(String name) {
+		return getProperty(name, Distribution.class);
 	}
 
 	<T> T getProperty(String name, Class<T> valueClass) {
-		for (PropertyWrapper prop : properties) {
+		for (Property prop : properties) {
 			if (prop.getName().equals(name)) {
 				return valueClass.cast(prop.getValue());
 			}

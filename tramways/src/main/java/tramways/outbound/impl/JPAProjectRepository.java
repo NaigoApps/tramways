@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaQuery;
 
-import tramways.dao.AbstractJPARepository;
 import tramways.model.auth.User_;
-import tramways.model.projects.Project;
+import tramways.model.persistable.projects.Project;
 import tramways.model.projects.Project_;
+import tramways.outbound.AbstractJPARepository;
 import tramways.outbound.ProjectRepository;
 
 public class JPAProjectRepository extends AbstractJPARepository<Project> implements ProjectRepository {

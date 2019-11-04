@@ -1,9 +1,15 @@
 package tramways.dto;
 
+import java.util.UUID;
+
 public class Dto {
 
 	private Long id;
 	private String uuid;
+	
+	public Dto() {
+		uuid = UUID.randomUUID().toString();
+	}
 
 	public String getUuid() {
 		return uuid;

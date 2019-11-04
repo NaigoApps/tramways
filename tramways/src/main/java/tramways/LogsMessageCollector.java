@@ -10,9 +10,10 @@ import tramways.services.MessageCollector;
 public class LogsMessageCollector implements MessageCollector{
 
 	@Override
-	public void addMessage(String message) {
+	public boolean addMessage(String message) {
 		System.out.println(message);
 		LoggerFactory.getLogger(getClass()).info(message);
+		return false;
 	}
 
 	@Override

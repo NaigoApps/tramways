@@ -1,12 +1,12 @@
 package tramways.dto;
 
 public class LoginData {
-	private String userName;
+	private String username;
 	private String password;
 	private String newPassword;
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String userName) {
+		this.username = userName;
 	}
 
 	public void setPassword(String password) {
@@ -17,8 +17,8 @@ public class LoginData {
 		return password;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
 	public void setNewPassword(String newPassword) {

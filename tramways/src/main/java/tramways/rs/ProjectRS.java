@@ -13,9 +13,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
 import tramways.dto.ProjectDto;
+import tramways.dto.Wrapper;
 import tramways.inbound.ProjectService;
 import tramways.mapper.ProjectMapper;
-import tramways.model.projects.Project;
+import tramways.model.persistable.projects.Project;
 import tramways.services.RequestSession;
 
 @Path("projects")
@@ -55,6 +56,24 @@ public class ProjectRS {
 	@Path("{projectUuid}")
 	public void updateProject(@PathParam("projectUuid") String uuid, ProjectDto dto) {
 		service.updateProject(uuid, dto.getName());
+	}
+	
+	@POST
+	@Path("{projectUuid}/maps/{mapUuid}/clone")
+	public void duplicateMap(@PathParam("projectUuid") String projectUuid, @PathParam("mapUuid") String mapUuid, Wrapper<String> name) {
+		service.duplicateMap(projectUuid, mapUuid, name.getValue());
+	}
+	
+	@PUT
+	@Path("{projectUuid}/maps/{mapUuid}")
+	public void editMap(@PathParam("projectUuid") String projectUuid, @PathParam("mapUuid") String mapUuid, String map) {
+		service.editMap(projectUuid, mapUuid, map);
+	}
+	
+	@DELETE
+	@Path("{projectUuid}/maps/{mapUuid}")
+	public void deleteMap(@PathParam("projectUuid") String projectUuid, @PathParam("mapUuid") String mapUuid) {
+		service.deleteMap(projectUuid, mapUuid);
 	}
 	
 	@DELETE

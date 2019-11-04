@@ -2,25 +2,25 @@ package tramways.mapper;
 
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 
-import tramways.dto.properties.DecimalPropertyWrapper;
-import tramways.dto.properties.DistributionPropertyWrapper;
-import tramways.dto.properties.IntegerPropertyWrapper;
-import tramways.dto.properties.PropertyWrapper;
-import tramways.dto.properties.StringPropertyWrapper;
+import tramways.model.properties.DecimalProperty;
+import tramways.model.properties.DistributionProperty;
+import tramways.model.properties.IntegerProperty;
+import tramways.model.properties.Property;
 import tramways.model.properties.PropertyType;
+import tramways.model.properties.StringProperty;
 
 public class PropertyAdapterFactory {
 	
 	private PropertyAdapterFactory() {
 	}
 	
-	public static RuntimeTypeAdapterFactory<PropertyWrapper> getFactory(){
+	public static RuntimeTypeAdapterFactory<Property> getFactory(){
 		return RuntimeTypeAdapterFactory
-				.of(PropertyWrapper.class, "type", true)
-				.registerSubtype(IntegerPropertyWrapper.class, PropertyType.INTEGER.name())
-				.registerSubtype(DecimalPropertyWrapper.class, PropertyType.DECIMAL.name())
-				.registerSubtype(StringPropertyWrapper.class, PropertyType.STRING.name())
-				.registerSubtype(DistributionPropertyWrapper.class, PropertyType.DISTRIBUTION.name());
+				.of(Property.class, "type", true)
+				.registerSubtype(IntegerProperty.class, PropertyType.INTEGER.name())
+				.registerSubtype(DecimalProperty.class, PropertyType.DECIMAL.name())
+				.registerSubtype(StringProperty.class, PropertyType.STRING.name())
+				.registerSubtype(DistributionProperty.class, PropertyType.DISTRIBUTION.name());
 	}
 	
 }

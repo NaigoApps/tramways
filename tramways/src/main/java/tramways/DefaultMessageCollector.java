@@ -14,8 +14,9 @@ public class DefaultMessageCollector implements MessageCollector{
 	}
 	
 	@Override
-	public void addMessage(String message) {
+	public boolean addMessage(String message) {
 		messages.add(message);
+		return false;
 	}
 
 	@Override

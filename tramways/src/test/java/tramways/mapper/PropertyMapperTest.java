@@ -7,8 +7,8 @@ import javax.inject.Inject;
 import org.junit.Test;
 
 import tramways.CDITest;
-import tramways.dto.properties.IntegerPropertyWrapper;
-import tramways.dto.properties.PropertyWrapper;
+import tramways.model.persistable.properties.PropertyWrapper;
+import tramways.model.properties.IntegerProperty;
 import tramways.model.properties.Property;
 
 public class PropertyMapperTest extends CDITest {
@@ -19,7 +19,7 @@ public class PropertyMapperTest extends CDITest {
 	@Test
 	public void testMap() {
 		
-		IntegerPropertyWrapper dto = new IntegerPropertyWrapper();
+		IntegerProperty dto = new IntegerProperty();
 		dto.setName("name");
 		dto.setValue(5L);
 		
@@ -27,7 +27,7 @@ public class PropertyMapperTest extends CDITest {
 		assertEquals("name", prop.getName());
 		assertEquals(5L, prop.getValue());
 
-		PropertyWrapper result = mapper.map(prop);
+		Property result = mapper.map(prop);
 		assertEquals("name", result.getName());
 		assertEquals(5L, result.getValue());
 	}

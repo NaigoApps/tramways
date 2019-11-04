@@ -6,7 +6,7 @@ import java.util.List;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
-import tramways.dto.RoadMapDto;
+import tramways.dto.RoadMap;
 
 /**
  *
@@ -14,7 +14,7 @@ import tramways.dto.RoadMapDto;
  */
 public class RoadMapAnalyzer {
 
-	private RoadMapDto roadMap;
+	private RoadMap roadMap;
 	
 	@Inject
 	private Instance<AnalysisProvider> analyzers;

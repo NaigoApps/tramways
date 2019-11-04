@@ -11,6 +11,7 @@ import tramways.Utils;
 import tramways.dto.ConfigurationDto;
 import tramways.mapper.ConfigurationMapper;
 import tramways.mapper.Json2ConfigurationDtoMapper;
+import tramways.model.persistable.configurations.Configuration;
 
 public class ConfigurableEntityTest extends CDITest{
 

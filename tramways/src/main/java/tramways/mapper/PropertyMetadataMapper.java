@@ -2,8 +2,8 @@ package tramways.mapper;
 
 import org.mapstruct.Mapper;
 
-import tramways.dto.properties.PropertyMetadataDto;
-import tramways.model.properties.PropertyMetadata;
+import tramways.model.persistable.properties.PropertyMetadata;
+import tramways.model.properties.PropertyMetadataDto;
 
 @Mapper(config = MapperConfiguration.class)
 public interface PropertyMetadataMapper {

@@ -7,7 +7,7 @@
 			"targetLane": "A",
 			"properties": [
 				{
-					"type": "distribution",
+					"type": "DISTRIBUTION",
 					"name": "arrivalRate",
 					"value": {
 						"type": "exponential",
@@ -31,22 +31,22 @@
 			"destination": "D",
 			"properties": [
 				{
-					"type": "decimal",
+					"type": "DECIMAL",
 					"name": "length",
 					"value": 1.0
 				},
 				{
-					"type": "decimal",
+					"type": "DECIMAL",
 					"name": "vehicleMaxSpeed",
 					"value": 2.0
 				},
 				{
-					"type": "decimal",
+					"type": "DECIMAL",
 					"name": "vehicleMinGap",
 					"value": 3.0
 				},
 				{
-					"type": "decimal",
+					"type": "DECIMAL",
 					"name": "vehicleLength",
 					"value": 4.0
 				}

@@ -18,7 +18,7 @@ import javax.ws.rs.ext.Provider;
 
 import tramways.inbound.UserService;
 import tramways.model.auth.Role;
-import tramways.model.auth.User;
+import tramways.model.persistable.users.User;
 import tramways.rs.annotations.Roles;
 import tramways.rs.annotations.Unsecure;
 import tramways.services.RequestSession;

@@ -1,12 +1,16 @@
 package tramways.inbound.impl;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.ws.rs.BadRequestException;
 
+import tramways.dto.UserDto;
 import tramways.exceptions.DuplicateUserException;
 import tramways.exceptions.LoginException;
 import tramways.inbound.UserService;
-import tramways.model.auth.User;
+import tramways.model.auth.Role;
+import tramways.model.persistable.users.User;
 import tramways.outbound.UserRepository;
 import tramways.services.RequestSession;
 
@@ -24,6 +28,7 @@ public class UserServiceImpl implements UserService {
 			User user = new User();
 			user.setUsername(username);
 			user.assignPassword(password);
+			user.grantRole(Role.CLIENT);
 			user = repository.create(user);
 			return user;
 		} else {
@@ -41,9 +46,20 @@ public class UserServiceImpl implements UserService {
 			throw new LoginException();
 		}
 	}
+	
+	@Override
+	public User updateUser(String uuid, UserDto dto) {
+		User user = repository.findByUuid(uuid);
+		if (user != null) {
+			user.assignRoles(dto.getRoles());
+			return user;
+		} else {
+			throw new IllegalArgumentException("User not found");
+		}
+	}
 
 	@Override
-	public boolean userExists(String username) {
+	public boolean exists(String username) {
 		return repository.findByUsername(username) != null;
 	}
 
@@ -74,6 +90,24 @@ public class UserServiceImpl implements UserService {
 		} else {
 			throw new BadRequestException("Login non effettuato");
 		}
+	}
+
+	@Override
+	public User findUser(String uuid) {
+		return repository.findByUuid(uuid);
+	}
+
+	@Override
+	public List<User> findAll() {
+		return repository.findAll();
+	}
+
+	@Override
+	public void deleteUser(String userUuid) {
+		if(session.getLoggedUserUuid().equals(userUuid)) {
+			throw new BadRequestException("Impossibile eliminare l'utente corrente");
+		}
+		repository.deleteByUuid(userUuid);
 	}
 
 }

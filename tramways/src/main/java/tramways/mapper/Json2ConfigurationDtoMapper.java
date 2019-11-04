@@ -5,16 +5,16 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 
 import tramways.dto.ConfigurationDto;
-import tramways.dto.distributions.ConstantDistributionDto;
-import tramways.dto.distributions.ExponentialDistributionDto;
-import tramways.dto.distributions.DistributionDto;
-import tramways.dto.distributions.UniformDistributionDto;
-import tramways.dto.properties.DecimalPropertyWrapper;
-import tramways.dto.properties.DistributionPropertyWrapper;
-import tramways.dto.properties.IntegerPropertyWrapper;
-import tramways.dto.properties.PropertyWrapper;
-import tramways.dto.properties.StringPropertyWrapper;
+import tramways.model.distributions.ConstantDistribution;
+import tramways.model.distributions.Distribution;
+import tramways.model.distributions.ExponentialDistribution;
+import tramways.model.distributions.UniformDistribution;
+import tramways.model.properties.DecimalProperty;
+import tramways.model.properties.DistributionProperty;
+import tramways.model.properties.IntegerProperty;
+import tramways.model.properties.Property;
 import tramways.model.properties.PropertyType;
+import tramways.model.properties.StringProperty;
 
 public class Json2ConfigurationDtoMapper {
 	
@@ -29,18 +29,18 @@ public class Json2ConfigurationDtoMapper {
 	}
 	
 	private Gson initMapper() {
-		RuntimeTypeAdapterFactory<DistributionDto> distributionsFactory = RuntimeTypeAdapterFactory
-				.of(DistributionDto.class)
-				.registerSubtype(ConstantDistributionDto.class, "constant")
-				.registerSubtype(UniformDistributionDto.class, "uniform")
-				.registerSubtype(ExponentialDistributionDto.class, "exponential");
+		RuntimeTypeAdapterFactory<Distribution> distributionsFactory = RuntimeTypeAdapterFactory
+				.of(Distribution.class)
+				.registerSubtype(ConstantDistribution.class, "constant")
+				.registerSubtype(UniformDistribution.class, "uniform")
+				.registerSubtype(ExponentialDistribution.class, "exponential");
 		
-		RuntimeTypeAdapterFactory<PropertyWrapper> propertyFactory = RuntimeTypeAdapterFactory
-				.of(PropertyWrapper.class, "type", true)
-				.registerSubtype(IntegerPropertyWrapper.class, PropertyType.INTEGER.name())
-				.registerSubtype(DecimalPropertyWrapper.class, PropertyType.DECIMAL.name())
-				.registerSubtype(StringPropertyWrapper.class, PropertyType.STRING.name())
-				.registerSubtype(DistributionPropertyWrapper.class, PropertyType.DISTRIBUTION.name());
+		RuntimeTypeAdapterFactory<Property> propertyFactory = RuntimeTypeAdapterFactory
+				.of(Property.class, "type", true)
+				.registerSubtype(IntegerProperty.class, PropertyType.INTEGER.name())
+				.registerSubtype(DecimalProperty.class, PropertyType.DECIMAL.name())
+				.registerSubtype(StringProperty.class, PropertyType.STRING.name())
+				.registerSubtype(DistributionProperty.class, PropertyType.DISTRIBUTION.name());
 		
 		return new GsonBuilder()
 				.registerTypeAdapterFactory(distributionsFactory)

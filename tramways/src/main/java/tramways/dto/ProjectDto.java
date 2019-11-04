@@ -1,14 +1,19 @@
 package tramways.dto;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class ProjectDto extends Dto {
 
 	private String name;
 
 	private UserDto owner;
 
-	private String map;
-	
-	private ProjectStatsDto stats;
+	private Set<RawMapDto> maps;
+
+	public ProjectDto() {
+		maps = new HashSet<>();
+	}
 
 	public void setName(String name) {
 		this.name = name;
@@ -18,12 +23,12 @@ public class ProjectDto extends Dto {
 		return name;
 	}
 
-	public String getMap() {
-		return map;
+	public Set<RawMapDto> getMaps() {
+		return maps;
 	}
 
-	public void setMap(String map) {
-		this.map = map;
+	public void setMaps(Set<RawMapDto> maps) {
+		this.maps = maps;
 	}
 
 	public UserDto getOwner() {
@@ -32,14 +37,6 @@ public class ProjectDto extends Dto {
 
 	public void setOwner(UserDto owner) {
 		this.owner = owner;
-	}
-	
-	public void setStats(ProjectStatsDto stats) {
-		this.stats = stats;
-	}
-	
-	public ProjectStatsDto getStats() {
-		return stats;
 	}
 
 }

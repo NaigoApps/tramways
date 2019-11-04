@@ -5,7 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import tramways.inbound.ConfigurationService;
-import tramways.model.Configuration;
+import tramways.model.persistable.configurations.Configuration;
 import tramways.outbound.ConfigurationRepository;
 
 public class ConfigurationServiceImpl implements ConfigurationService {
@@ -25,7 +25,6 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 	
 	@Override
 	public Configuration createConfiguration(Configuration conf) {
-		conf.assignUuid();
 		return repository.create(conf);
 	}
 

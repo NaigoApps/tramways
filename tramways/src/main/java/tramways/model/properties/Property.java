@@ -1,80 +1,36 @@
 package tramways.model.properties;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Lob;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({ @Type(value = IntegerProperty.class, name = "integer"),
+		@Type(value = DecimalProperty.class, name = "decimal"),
+		@Type(value = StringProperty.class, name = "string"),
+		@Type(value = DistributionProperty.class, name = "distribution") })
+public abstract class Property {
 
-import tramways.dto.properties.DecimalPropertyWrapper;
-import tramways.dto.properties.DistributionPropertyWrapper;
-import tramways.dto.properties.IntegerPropertyWrapper;
-import tramways.dto.properties.PropertyWrapper;
-import tramways.mapper.PropertyAdapterFactory;
-import tramways.model.distributions.Distribution;
+	private String type;
+	private String name;
 
-@Embeddable
-public class Property {
-
-	private static final Gson CONVERTER = new GsonBuilder()
-			.registerTypeAdapterFactory(PropertyAdapterFactory.getFactory())
-			.create();
-	
-	@Lob
-	private String content;
-
-	String getContent() {
-		return content;
-	}
-
-	void setContent(String content) {
-		this.content = content;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getName() {
-		return CONVERTER.fromJson(content, PropertyWrapper.class).getName();
+		return name;
+	}
+
+	protected void setType(PropertyType type) {
+		this.type = type.name();
 	}
 
 	public PropertyType getType() {
-		return CONVERTER.fromJson(content, PropertyWrapper.class).getType();
+		return PropertyType.valueOf(type);
 	}
 
-	public Object getValue() {
-		return CONVERTER.fromJson(content, PropertyWrapper.class).getValue();
-	}
+	public abstract Object getValue();
 
-	public void assignContent(PropertyWrapper wrapper) {
-		setContent(CONVERTER.toJson(wrapper, PropertyWrapper.class));
-	}
 	
-	public PropertyWrapper retrieveContent() {
-		return CONVERTER.fromJson(content, PropertyWrapper.class);
-	}
-	
-	public static Property create(String name, Long value) {
-		IntegerPropertyWrapper wrapper = new IntegerPropertyWrapper();
-		wrapper.setName(name);
-		wrapper.setValue(value);
-		Property prop = new Property();
-		prop.assignContent(wrapper);
-		return prop;
-	}
-	
-	public static Property create(String name, Double value) {
-		DecimalPropertyWrapper wrapper = new DecimalPropertyWrapper();
-		wrapper.setName(name);
-		wrapper.setValue(value);
-		Property prop = new Property();
-		prop.assignContent(wrapper);
-		return prop;
-	}
-	
-	public static Property create(String name, Distribution value) {
-		DistributionPropertyWrapper wrapper = new DistributionPropertyWrapper();
-		wrapper.setName(name);
-		wrapper.setValue(value);
-		Property prop = new Property();
-		prop.assignContent(wrapper);
-		return prop;
-	}
 }

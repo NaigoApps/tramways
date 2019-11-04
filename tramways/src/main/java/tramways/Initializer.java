@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import tramways.exceptions.DuplicateUserException;
 import tramways.inbound.UserService;
 import tramways.model.auth.Role;
-import tramways.model.auth.User;
+import tramways.model.persistable.users.User;
 
 @Startup
 @Singleton
@@ -21,7 +21,7 @@ public class Initializer {
 	
 	@PostConstruct
 	public void init() {
-		if (!service.userExists("admin")) {
+		if (!service.exists("admin")) {
 			try {
 				User admin = service.register("admin", "password");
 				admin.grantRole(Role.ADMIN);

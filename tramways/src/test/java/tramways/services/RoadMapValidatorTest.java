@@ -10,7 +10,7 @@ import org.junit.Test;
 import tramways.CDITest;
 import tramways.DefaultMessageCollector;
 import tramways.Utils;
-import tramways.dto.RoadMapDto;
+import tramways.dto.RoadMap;
 import tramways.mapper.Json2RoadMapDtoMapper;
 
 public class RoadMapValidatorTest extends CDITest {
@@ -23,42 +23,42 @@ public class RoadMapValidatorTest extends CDITest {
 
 	@Test
 	public void testValidateOk01() {
-		RoadMapDto map = mapper.map(Utils.readJson("json/roads_01.json"));
+		RoadMap map = mapper.map(Utils.readJson("json/roads_01.json"));
 		validator.setMap(map);
 		assertTrue(validator.validate(new DefaultMessageCollector()));
 	}
 
 	@Test
 	public void testValidateOk02() {
-		RoadMapDto map = mapper.map(Utils.readJson("json/roads_02.json"));
+		RoadMap map = mapper.map(Utils.readJson("json/roads_02.json"));
 		validator.setMap(map);
 		assertTrue(validator.validate(new DefaultMessageCollector()));
 	}
 
 	@Test
 	public void testValidateOk03() {
-		RoadMapDto map = mapper.map(Utils.readJson("json/roads_03.json"));
+		RoadMap map = mapper.map(Utils.readJson("json/roads_03.json"));
 		validator.setMap(map);
 		assertTrue(validator.validate(new DefaultMessageCollector()));
 	}
 
 	@Test
 	public void testValidateOk04() {
-		RoadMapDto map = mapper.map(Utils.readJson("json/roads_04.json"));
+		RoadMap map = mapper.map(Utils.readJson("json/roads_04.json"));
 		validator.setMap(map);
 		assertTrue(validator.validate(new DefaultMessageCollector()));
 	}
 
 	@Test
 	public void testValidateFail01() {
-		RoadMapDto map = mapper.map(Utils.readJson("json/bad_map_01.json"));
+		RoadMap map = mapper.map(Utils.readJson("json/bad_map_01.json"));
 		validator.setMap(map);
 		assertFalse(validator.validate(new DefaultMessageCollector()));
 	}
 
 	@Test
 	public void testValidateFail02() {
-		RoadMapDto map = mapper.map(Utils.readJson("json/bad_map_02.json"));
+		RoadMap map = mapper.map(Utils.readJson("json/bad_map_02.json"));
 		validator.setMap(map);
 		assertFalse(validator.validate(new DefaultMessageCollector()));
 	}

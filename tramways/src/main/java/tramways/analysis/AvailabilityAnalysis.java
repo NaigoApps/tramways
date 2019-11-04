@@ -2,7 +2,7 @@ package tramways.analysis;
 
 import org.oristool.petrinet.PetriNet;
 
-import tramways.dto.RoadMapDto;
+import tramways.dto.RoadMap;
 
 public class AvailabilityAnalysis {
 	private String crossingPointUuid;
@@ -24,7 +24,7 @@ public class AvailabilityAnalysis {
 		return trafficLightUuid;
 	}
 	
-	public void analyze(RoadMapDto map) {
+	public void analyze(RoadMap map) {
 		CrossingPointPetriNetMapper mapper = new CrossingPointPetriNetMapper();
 		mapper.setCrossingPoint(crossingPointUuid);
 		mapper.setTrafficLight(trafficLightUuid);

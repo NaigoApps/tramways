@@ -2,8 +2,8 @@ package tramways.outbound.impl;
 
 import java.util.List;
 
-import tramways.dao.AbstractJPARepository;
-import tramways.model.properties.PropertyMetadata;
+import tramways.model.persistable.properties.PropertyMetadata;
+import tramways.outbound.AbstractJPARepository;
 import tramways.outbound.PropertyMetadataRepository;
 
 public class JPAPropertyMetadataRepository extends AbstractJPARepository<PropertyMetadata>

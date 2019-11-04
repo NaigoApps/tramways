@@ -1,12 +1,12 @@
 package tramways.dto.points;
 
-import tramways.dto.distributions.DistributionDto;
+import tramways.model.distributions.Distribution;
 
 public class LaneSegmentLinkDto {
 
 	private String destination;
 	private int weight;
-	private DistributionDto crossingTime;
+	private Distribution crossingTime;
 
 	public String getDestination() {
 		return destination;
@@ -16,7 +16,7 @@ public class LaneSegmentLinkDto {
 		return weight;
 	}
 
-	public DistributionDto getCrossingTime() {
+	public Distribution getCrossingTime() {
 		return crossingTime;
 	}
 
