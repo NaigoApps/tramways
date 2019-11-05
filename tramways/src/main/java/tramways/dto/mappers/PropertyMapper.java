@@ -1,4 +1,4 @@
-package tramways.mapper;
+package tramways.dto.mappers;
 
 import org.mapstruct.Mapper;
 
@@ -8,12 +8,12 @@ import tramways.model.properties.Property;
 @Mapper(config = MapperConfiguration.class)
 public abstract class PropertyMapper {
 
-	public Property map(Property property) {
+	public Property map(PropertyWrapper property) {
 		return property.retrieveContent();
 	}
 
-	public Property map(Property dto) {
-		Property result = new Property();
+	public PropertyWrapper map(Property dto) {
+		PropertyWrapper result = new PropertyWrapper();
 		result.assignContent(dto);
 		return result;
 	}

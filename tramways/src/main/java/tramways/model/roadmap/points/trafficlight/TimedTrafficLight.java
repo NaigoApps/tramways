@@ -2,10 +2,19 @@ package tramways.model.roadmap.points.trafficlight;
 
 public class TimedTrafficLight implements TrafficLight{
 
-	private boolean startsOnGreen;
+	private Boolean on;
+	private Boolean startsOnGreen;
 
-	private int redDuration;
-	private int greenDuration;
+	private Integer redDuration;
+	private Integer greenDuration;
+
+	public boolean isOn() {
+		return on;
+	}
+
+	public void setOn(boolean on) {
+		this.on = on;
+	}
 
 	public boolean isStartsOnGreen() {
 		return startsOnGreen;

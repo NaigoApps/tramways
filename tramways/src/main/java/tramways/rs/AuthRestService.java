@@ -9,9 +9,9 @@ import javax.ws.rs.core.Response;
 
 import tramways.dto.LoginData;
 import tramways.dto.UserDto;
+import tramways.dto.mappers.UserMapper;
 import tramways.exceptions.LoginException;
 import tramways.inbound.UserService;
-import tramways.mapper.UserMapper;
 import tramways.model.persistable.users.User;
 import tramways.rs.annotations.Unsecure;
 import tramways.services.TokenManager;

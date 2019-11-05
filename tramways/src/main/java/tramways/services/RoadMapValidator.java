@@ -5,23 +5,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import tramways.dto.RoadMap;
-import tramways.dto.lanes.LaneSegmentDto;
-import tramways.dto.points.CrossingPointDto;
-import tramways.dto.points.DestinationPointDto;
-import tramways.dto.points.LaneSegmentLinkDto;
-import tramways.dto.points.RelevantPointDto;
-import tramways.dto.points.SourcePointDto;
-import tramways.dto.points.SourcePointType;
-import tramways.dto.points.trafficlight.TrafficLightCrossingPointDto;
+import tramways.model.roadmap.RoadMap;
+import tramways.model.roadmap.lanes.LaneSegment;
+import tramways.model.roadmap.points.CrossingPoint;
+import tramways.model.roadmap.points.DestinationPoint;
+import tramways.model.roadmap.points.LaneSegmentLink;
+import tramways.model.roadmap.points.RelevantPoint;
+import tramways.model.roadmap.points.SourcePoint;
+import tramways.model.roadmap.points.SourcePointType;
+import tramways.model.roadmap.points.trafficlight.TrafficLightCrossingPoint;
 
 public class RoadMapValidator {
 
 	private RoadMap map;
 	
-	private Map<String, LaneSegmentDto> lanes;
+	private Map<String, LaneSegment> lanes;
 
-	private Map<LaneSegmentDto, SourcePointType> lanesKindMap;
+	private Map<LaneSegment, SourcePointType> lanesKindMap;
 
 	private MessageCollector collector;
 
@@ -35,21 +35,21 @@ public class RoadMapValidator {
 			return false;
 		}
 
-		for (RelevantPointDto point : map.getPoints()) {
-			if (point instanceof SourcePointDto) {
-				LaneSegmentDto targetLane = findOrCreateLane(((SourcePointDto) point).getTargetLane());
+		for (RelevantPoint point : map.getPoints()) {
+			if (point instanceof SourcePoint) {
+				LaneSegment targetLane = findOrCreateLane(((SourcePoint) point).getTargetLane());
 				targetLane.setSource(point.getUuid());
-			} else if (point instanceof DestinationPointDto) {
-				((DestinationPointDto) point).getLanes().forEach(lane -> {
-					LaneSegmentDto targetLane = findOrCreateLane(lane);
+			} else if (point instanceof DestinationPoint) {
+				((DestinationPoint) point).getLanes().forEach(lane -> {
+					LaneSegment targetLane = findOrCreateLane(lane);
 					targetLane.setDestination(point.getUuid());
 				});
-			} else if (point instanceof TrafficLightCrossingPointDto) {
-				TrafficLightCrossingPointDto trafficLightPoint = (TrafficLightCrossingPointDto) point;
+			} else if (point instanceof TrafficLightCrossingPoint) {
+				TrafficLightCrossingPoint trafficLightPoint = (TrafficLightCrossingPoint) point;
 				trafficLightPoint.getConstraints().forEach((lane, links) -> {
-					LaneSegmentDto sourceLane = findOrCreateLane(lane);
+					LaneSegment sourceLane = findOrCreateLane(lane);
 					links.forEach(link -> {
-						LaneSegmentDto destinationLane = findOrCreateLane(link.getDestination());
+						LaneSegment destinationLane = findOrCreateLane(link.getDestination());
 						destinationLane.setSource(point.getUuid());
 					});
 					sourceLane.setDestination(point.getUuid());
@@ -57,8 +57,8 @@ public class RoadMapValidator {
 			}
 		}
 
-		List<SourcePointDto> sources = map.getPoints(SourcePointDto.class);
-		for (SourcePointDto source : sources) {
+		List<SourcePoint> sources = map.getPoints(SourcePoint.class);
+		for (SourcePoint source : sources) {
 			if (!validateSource(map, source)) {
 				return false;
 			}
@@ -66,21 +66,21 @@ public class RoadMapValidator {
 		return true;
 	}
 
-	private LaneSegmentDto findOrCreateLane(String laneUuid) {
+	private LaneSegment findOrCreateLane(String laneUuid) {
 		return lanes.computeIfAbsent(laneUuid, uuid -> {
-			LaneSegmentDto dto = new LaneSegmentDto();
+			LaneSegment dto = new LaneSegment();
 			dto.setUuid(uuid);
 			return dto;
 		});
 	}
 
-	private boolean validateSource(RoadMap map, SourcePointDto source) {
+	private boolean validateSource(RoadMap map, SourcePoint source) {
 		if(source.getKind() == null) {
 			collector.addMessage("Source " + source.getUuid() + " doesn't have a kind");
 			return false;			
 		}
 		
-		LaneSegmentDto target = lanes.get(source.getTargetLane());
+		LaneSegment target = lanes.get(source.getTargetLane());
 		
 		if(target == null) {
 			collector.addMessage("Lane " + source.getTargetLane() + " doesn't exists");
@@ -94,19 +94,19 @@ public class RoadMapValidator {
 		return validateLane(map, target);
 	}
 
-	private boolean validateLane(RoadMap map, LaneSegmentDto lane) {
+	private boolean validateLane(RoadMap map, LaneSegment lane) {
 		if (lane.getDestination() == null) {
 			collector.addMessage("Lane " + lane.getUuid() + " without a destination");
 			return false;
 		}
-		if (map.getPoint(lane.getDestination(), DestinationPointDto.class) != null) {
+		if (map.getPoint(lane.getDestination(), DestinationPoint.class) != null) {
 			return true;
 		}
-		CrossingPointDto crossing = map.getPoint(lane.getDestination(), CrossingPointDto.class);
+		CrossingPoint crossing = map.getPoint(lane.getDestination(), CrossingPoint.class);
 		if (crossing != null) {
-			Set<LaneSegmentLinkDto> links = crossing.getConstraints(lane.getUuid());
-			for (LaneSegmentLinkDto link : links) {
-				LaneSegmentDto next = lanes.get(link.getDestination());
+			Set<LaneSegmentLink> links = crossing.getConstraints(lane.getUuid());
+			for (LaneSegmentLink link : links) {
+				LaneSegment next = lanes.get(link.getDestination());
 				if (lanesKindMap.get(next) != null) {
 					if (lanesKindMap.get(next).equals(lanesKindMap.get(lane))) {
 						return true;

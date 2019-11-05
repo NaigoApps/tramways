@@ -1,4 +1,4 @@
-package tramways.mapper;
+package tramways.dto.mappers;
 
 import javax.inject.Inject;
 
@@ -9,11 +9,11 @@ import org.mapstruct.MappingTarget;
 
 import tramways.dto.MapStatsDto;
 import tramways.dto.RawMapDto;
-import tramways.dto.RoadMap;
-import tramways.dto.points.CrossingPointDto;
-import tramways.dto.points.SourcePointDto;
 import tramways.model.persistable.projects.Project;
 import tramways.model.persistable.projects.RoadMapWrapper;
+import tramways.model.roadmap.RoadMap;
+import tramways.model.roadmap.points.CrossingPoint;
+import tramways.model.roadmap.points.SourcePoint;
 import tramways.outbound.ProjectRepository;
 
 @Mapper(config = MapperConfiguration.class, uses = { UserMapper.class })
@@ -41,8 +41,8 @@ public abstract class RawMapMapper {
 		RoadMap map = mapper.map(dto.getMap());
 		MapStatsDto stats = new MapStatsDto();
 		stats.setSegments(map.getLanes().size());
-		long crossings = map.getPoints().stream().filter(CrossingPointDto.class::isInstance).count();
-		long sources = map.getPoints().stream().filter(SourcePointDto.class::isInstance).count();
+		long crossings = map.getPoints().stream().filter(CrossingPoint.class::isInstance).count();
+		long sources = map.getPoints().stream().filter(SourcePoint.class::isInstance).count();
 		stats.setSegments(map.getLanes().size());
 		stats.setCrossings(crossings);
 		stats.setSources(sources);

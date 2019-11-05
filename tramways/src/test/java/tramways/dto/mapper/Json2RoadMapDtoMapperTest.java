@@ -7,18 +7,16 @@ import static tramways.Utils.readJson;
 import org.junit.Before;
 import org.junit.Test;
 
-import tramways.dto.RoadMap;
-import tramways.dto.lanes.LaneSegmentDto;
-import tramways.dto.points.DestinationPointDto;
-import tramways.dto.points.LaneSegmentLinkDto;
-import tramways.dto.points.SourcePointDto;
-import tramways.dto.points.SourcePointType;
-import tramways.dto.points.trafficlight.SensorTrafficLightDto;
-import tramways.dto.points.trafficlight.TrafficLightCrossingPointDto;
-import tramways.mapper.Json2RoadMapDtoMapper;
-import tramways.model.distributions.ConstantDistribution;
+import tramways.dto.mappers.Json2RoadMapDtoMapper;
 import tramways.model.distributions.ExponentialDistribution;
-import tramways.model.distributions.UniformDistribution;
+import tramways.model.roadmap.RoadMap;
+import tramways.model.roadmap.lanes.LaneSegment;
+import tramways.model.roadmap.points.DestinationPoint;
+import tramways.model.roadmap.points.LaneSegmentLink;
+import tramways.model.roadmap.points.SourcePoint;
+import tramways.model.roadmap.points.SourcePointType;
+import tramways.model.roadmap.points.trafficlight.SensorTrafficLight;
+import tramways.model.roadmap.points.trafficlight.TrafficLightCrossingPoint;
 
 public class Json2RoadMapDtoMapperTest {
 
@@ -41,9 +39,9 @@ public class Json2RoadMapDtoMapperTest {
 		RoadMap dto = mapper.map(readJson("json/roads_02.json"));
 		assertEquals(1, dto.getLanes().size());
 		assertEquals(2, dto.getPoints().size());
-		SourcePointDto s = (SourcePointDto) dto.getPoints().get(0);
-		LaneSegmentDto l = (LaneSegmentDto) dto.getLanes().get(0);
-		DestinationPointDto d = (DestinationPointDto) dto.getPoints().get(1);
+		SourcePoint s = (SourcePoint) dto.getPoints().get(0);
+		LaneSegment l = (LaneSegment) dto.getLanes().get(0);
+		DestinationPoint d = (DestinationPoint) dto.getPoints().get(1);
 
 		assertEquals(SourcePointType.CAR, s.getKind());
 		assertTrue(l.getSource().equals(s.getUuid()));
@@ -66,9 +64,9 @@ public class Json2RoadMapDtoMapperTest {
 		RoadMap dto = mapper.map(readJson("json/roads_03.json"));
 		assertEquals(1, dto.getLanes().size());
 		assertEquals(2, dto.getPoints().size());
-		SourcePointDto s = (SourcePointDto) dto.getPoints().get(0);
-		LaneSegmentDto l = (LaneSegmentDto) dto.getLanes().get(0);
-		DestinationPointDto d = (DestinationPointDto) dto.getPoints().get(1);
+		SourcePoint s = (SourcePoint) dto.getPoints().get(0);
+		LaneSegment l = (LaneSegment) dto.getLanes().get(0);
+		DestinationPoint d = (DestinationPoint) dto.getPoints().get(1);
 
 		assertEquals(SourcePointType.TRAM, s.getKind());
 		assertTrue(l.getSource().equals(s.getUuid()));
@@ -87,23 +85,24 @@ public class Json2RoadMapDtoMapperTest {
 
 	@Test
 	public void testMap04() {
-		RoadMap dto = mapper.map(readJson("json/roads_04.json"));
-		assertEquals(4, dto.getLanes().size());
-		assertEquals(5, dto.getPoints().size());
+		RoadMap map = mapper.map(readJson("json/roads_04.json"));
+		map.initialize();
+		assertEquals(4, map.getLanes().size());
+		assertEquals(5, map.getPoints().size());
 
-		SourcePointDto cs = dto.getPoint("c_S", SourcePointDto.class);
-		DestinationPointDto cd = dto.getPoint("c_D", DestinationPointDto.class);
-		SourcePointDto ts = dto.getPoint("t_S", SourcePointDto.class);
-		DestinationPointDto td = dto.getPoint("t_D", DestinationPointDto.class);
-		TrafficLightCrossingPointDto cp = dto.getPoint("cp", TrafficLightCrossingPointDto.class);
+		SourcePoint cs = map.getPoint("c_S", SourcePoint.class);
+		DestinationPoint cd = map.getPoint("c_D", DestinationPoint.class);
+		SourcePoint ts = map.getPoint("t_S", SourcePoint.class);
+		DestinationPoint td = map.getPoint("t_D", DestinationPoint.class);
+		TrafficLightCrossingPoint cp = map.getPoint("cp", TrafficLightCrossingPoint.class);
 
 		assertEquals(SourcePointType.CAR, cs.getKind());
 		assertEquals(SourcePointType.TRAM, ts.getKind());
 
-		LaneSegmentDto cl1 = dto.getLane("cl_A");
-		LaneSegmentDto cl2 = dto.getLane("cl_B");
-		LaneSegmentDto tl1 = dto.getLane("tl_A");
-		LaneSegmentDto tl2 = dto.getLane("tl_B");
+		LaneSegment cl1 = map.getLane("cl_A");
+		LaneSegment cl2 = map.getLane("cl_B");
+		LaneSegment tl1 = map.getLane("tl_A");
+		LaneSegment tl2 = map.getLane("tl_B");
 
 		assertEquals(cl1.getUuid(), cs.getTargetLane());
 		assertEquals(tl1.getUuid(), ts.getTargetLane());
@@ -117,21 +116,16 @@ public class Json2RoadMapDtoMapperTest {
 		assertEquals(td.getUuid(), tl2.getDestination());
 
 		assertEquals(1, cp.getConstraints().get(tl1.getUuid()).size());
-		LaneSegmentLinkDto tramLink = cp.getConstraints().get(tl1.getUuid()).iterator().next();
+		LaneSegmentLink tramLink = cp.getConstraints().get(tl1.getUuid()).iterator().next();
 		assertEquals(tl2.getUuid(), tramLink.getDestination());
-		assertEquals(1.0d, tramLink.getWeight(), 0.0d);
-		assertEquals(5.0d, ((ConstantDistribution) tramLink.getCrossingTime()).getValue(), 0.0d);
 		assertEquals(tl2.getUuid(), tramLink.getDestination());
 
 		assertEquals(1, cp.getConstraints().get(cl1.getUuid()).size());
-		LaneSegmentLinkDto carLink = cp.getConstraints().get(cl1.getUuid()).iterator().next();
-		assertEquals(1.0d, carLink.getWeight(), 0.0d);
-		assertEquals(4.0d, ((UniformDistribution) carLink.getCrossingTime()).getMin(), 0.0d);
-		assertEquals(6.0d, ((UniformDistribution) carLink.getCrossingTime()).getMax(), 0.0d);
+		LaneSegmentLink carLink = cp.getConstraints().get(cl1.getUuid()).iterator().next();
 		assertEquals(cl2.getUuid(), carLink.getDestination());
 
 		assertEquals(1, cp.getTrafficLights().size());
-		SensorTrafficLightDto trafficLight = (SensorTrafficLightDto) cp.getTrafficLights().get(cl1.getUuid());
+		SensorTrafficLight trafficLight = (SensorTrafficLight) cp.getTrafficLights().get(cl1.getUuid());
 		assertEquals(5.0d, trafficLight.getAnticipation(), 0.0d);
 		assertEquals(1, trafficLight.getActivators().size());
 		assertEquals(tl1.getUuid(), trafficLight.getActivators().iterator().next());

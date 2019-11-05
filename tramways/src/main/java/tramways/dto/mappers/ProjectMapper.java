@@ -1,4 +1,4 @@
-package tramways.mapper;
+package tramways.dto.mappers;
 
 import org.mapstruct.Mapper;
 

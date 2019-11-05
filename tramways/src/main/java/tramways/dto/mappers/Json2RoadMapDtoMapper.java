@@ -1,18 +1,9 @@
-package tramways.mapper;
+package tramways.dto.mappers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 
-import tramways.dto.RoadMap;
-import tramways.dto.points.CrossingPointDto;
-import tramways.dto.points.DestinationPointDto;
-import tramways.dto.points.RelevantPointDto;
-import tramways.dto.points.SourcePointDto;
-import tramways.dto.points.trafficlight.SensorTrafficLightDto;
-import tramways.dto.points.trafficlight.TimedTrafficLightDto;
-import tramways.dto.points.trafficlight.TrafficLightCrossingPointDto;
-import tramways.dto.points.trafficlight.TrafficLightDto;
 import tramways.model.distributions.ConstantDistribution;
 import tramways.model.distributions.Distribution;
 import tramways.model.distributions.ExponentialDistribution;
@@ -23,6 +14,15 @@ import tramways.model.properties.IntegerProperty;
 import tramways.model.properties.Property;
 import tramways.model.properties.PropertyType;
 import tramways.model.properties.StringProperty;
+import tramways.model.roadmap.RoadMap;
+import tramways.model.roadmap.points.CrossingPoint;
+import tramways.model.roadmap.points.DestinationPoint;
+import tramways.model.roadmap.points.RelevantPoint;
+import tramways.model.roadmap.points.SourcePoint;
+import tramways.model.roadmap.points.trafficlight.SensorTrafficLight;
+import tramways.model.roadmap.points.trafficlight.TimedTrafficLight;
+import tramways.model.roadmap.points.trafficlight.TrafficLightCrossingPoint;
+import tramways.model.roadmap.points.trafficlight.TrafficLight;
 
 public class Json2RoadMapDtoMapper {
 	
@@ -33,16 +33,18 @@ public class Json2RoadMapDtoMapper {
 	}
 	
 	public RoadMap map(String json) {
-		return mapper.fromJson(json, RoadMap.class);
+		RoadMap result = mapper.fromJson(json, RoadMap.class);
+		result.initialize();
+		return result;
 	}
 	
 	private Gson initMapper() {
-		RuntimeTypeAdapterFactory<RelevantPointDto> pointsFactory = RuntimeTypeAdapterFactory
-				.of(RelevantPointDto.class)
-				.registerSubtype(SourcePointDto.class, "source")
-				.registerSubtype(CrossingPointDto.class, "crossing")
-				.registerSubtype(TrafficLightCrossingPointDto.class, "trafficLight")				
-				.registerSubtype(DestinationPointDto.class, "destination");
+		RuntimeTypeAdapterFactory<RelevantPoint> pointsFactory = RuntimeTypeAdapterFactory
+				.of(RelevantPoint.class)
+				.registerSubtype(SourcePoint.class, "source")
+				.registerSubtype(CrossingPoint.class, "crossing")
+				.registerSubtype(TrafficLightCrossingPoint.class, "trafficLight")				
+				.registerSubtype(DestinationPoint.class, "destination");
 
 		RuntimeTypeAdapterFactory<Distribution> distributionsFactory = RuntimeTypeAdapterFactory
 				.of(Distribution.class)
@@ -50,10 +52,10 @@ public class Json2RoadMapDtoMapper {
 				.registerSubtype(UniformDistribution.class, "uniform")
 				.registerSubtype(ExponentialDistribution.class, "exponential");
 		
-		RuntimeTypeAdapterFactory<TrafficLightDto> trafficLightsFactory = RuntimeTypeAdapterFactory
-				.of(TrafficLightDto.class)
-				.registerSubtype(TimedTrafficLightDto.class, "timed")
-				.registerSubtype(SensorTrafficLightDto.class, "sensor");
+		RuntimeTypeAdapterFactory<TrafficLight> trafficLightsFactory = RuntimeTypeAdapterFactory
+				.of(TrafficLight.class)
+				.registerSubtype(TimedTrafficLight.class, "timed")
+				.registerSubtype(SensorTrafficLight.class, "sensor");
 		
 		RuntimeTypeAdapterFactory<Property> propertyFactory = RuntimeTypeAdapterFactory
 				.of(Property.class)

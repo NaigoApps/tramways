@@ -2,10 +2,10 @@ package tramways.analysis;
 
 import org.oristool.petrinet.PetriNet;
 
-import tramways.dto.RoadMap;
-import tramways.dto.lanes.LaneSegmentDto;
-import tramways.dto.points.SourcePointDto;
-import tramways.dto.points.trafficlight.TrafficLightCrossingPointDto;
+import tramways.model.roadmap.RoadMap;
+import tramways.model.roadmap.lanes.LaneSegment;
+import tramways.model.roadmap.points.SourcePoint;
+import tramways.model.roadmap.points.trafficlight.TrafficLightCrossingPoint;
 
 public class CrossingPointPetriNetMapper {
 
@@ -22,10 +22,10 @@ public class CrossingPointPetriNetMapper {
 	}
 	
 	public PetriNet map(RoadMap map) {
-		TrafficLightCrossingPointDto tl = map.getPoint(crossingPoint, TrafficLightCrossingPointDto.class);
-		LaneSegmentDto target = map.getLane(carLine);
+		TrafficLightCrossingPoint tl = map.getPoint(crossingPoint, TrafficLightCrossingPoint.class);
+		LaneSegment target = map.getLane(carLine);
 		
-		SourcePointDto sourcePoint = map.getPoint(target.getSource(), SourcePointDto.class);
+		SourcePoint sourcePoint = map.getPoint(target.getSource(), SourcePoint.class);
 		target.getDestination().equals(crossingPoint);
 		return null;
 	}

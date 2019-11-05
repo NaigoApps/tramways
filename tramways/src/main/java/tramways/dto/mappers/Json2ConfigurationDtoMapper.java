@@ -1,4 +1,4 @@
-package tramways.mapper;
+package tramways.dto.mappers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

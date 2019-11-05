@@ -2,7 +2,7 @@ package tramways.analysis;
 
 import org.oristool.petrinet.PetriNet;
 
-import tramways.dto.RoadMap;
+import tramways.model.roadmap.RoadMap;
 
 public class AvailabilityAnalysis {
 	private String crossingPointUuid;

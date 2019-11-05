@@ -1,11 +1,7 @@
 package tramways.model.roadmap.points;
 
-import java.util.Set;
+import tramways.dto.ConfigurableDto;
 
-import tramways.model.Identifiable;
-import tramways.model.roadmap.lanes.LaneSegment;
+public class RelevantPoint extends ConfigurableDto {
 
-public interface RelevantPoint extends Identifiable {
-	public Set<LaneSegment> getSources();
-	public Set<LaneSegment> getDestinations();
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tramways.mapper;
+package tramways.dto.mappers;
 
 import java.util.List;
 import java.util.stream.Collectors;

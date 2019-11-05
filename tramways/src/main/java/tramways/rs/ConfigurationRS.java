@@ -12,8 +12,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
 import tramways.dto.ConfigurationDto;
+import tramways.dto.mappers.ConfigurationMapper;
 import tramways.inbound.ConfigurationService;
-import tramways.mapper.ConfigurationMapper;
 import tramways.model.auth.Role;
 import tramways.model.persistable.configurations.Configuration;
 import tramways.rs.annotations.Roles;

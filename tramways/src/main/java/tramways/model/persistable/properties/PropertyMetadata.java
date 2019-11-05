@@ -16,7 +16,15 @@ public class PropertyMetadata extends BaseEntity {
 	private PropertyType type;
 	
 	private String name;
+	
+	public PropertyMetadata() {
+	}
 
+	public PropertyMetadata(String name, PropertyType type) {
+		this.name = name;
+		this.type = type;
+	}
+	
 	public String getName() {
 		return name;
 	}

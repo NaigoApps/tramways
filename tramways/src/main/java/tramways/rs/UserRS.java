@@ -15,9 +15,9 @@ import javax.ws.rs.PathParam;
 
 import tramways.dto.LoginData;
 import tramways.dto.UserDto;
+import tramways.dto.mappers.UserMapper;
 import tramways.exceptions.DuplicateUserException;
 import tramways.inbound.UserService;
-import tramways.mapper.UserMapper;
 import tramways.model.auth.Role;
 import tramways.model.persistable.users.User;
 import tramways.rs.annotations.Roles;

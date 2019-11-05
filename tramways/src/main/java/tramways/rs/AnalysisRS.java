@@ -9,39 +9,47 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
+import tramways.dto.AnalysisTypeDto;
+import tramways.dto.mappers.AnalysisTypeMapper;
+import tramways.dto.mappers.PropertyMetadataMapper;
+import tramways.inbound.AnalysisService;
 import tramways.inbound.ProjectService;
-import tramways.mapper.ProjectMapper;
 import tramways.model.analysis.AnalysisType;
-import tramways.model.analysis.AnalysisTypeFactory;
 import tramways.model.properties.PropertyMetadataDto;
-import tramways.services.RequestSession;
+import tramways.model.roadmap.RoadMap;
 
 @Path("analysis")
 @Transactional
 public class AnalysisRS {
 
 	@Inject
-	private ProjectService service;
+	private PropertyMetadataMapper propertyMetadataMapper;
 
 	@Inject
-	private ProjectMapper mapper;
-
+	private AnalysisTypeMapper mapper;
+	
 	@Inject
-	private RequestSession session;
-
+	private AnalysisService service;
+	
 	@Inject
-	private AnalysisTypeFactory analysisTypeFactory;
-
+	private ProjectService projectService;
+	
 	@GET
 	@Path("types")
-	public List<String> availableAnalysis() {
-		return analysisTypeFactory.getTypes().stream().map(AnalysisType::getName).collect(Collectors.toList());
+	public List<AnalysisTypeDto> availableAnalysis() {
+		return service.getAvailableAnalysis().stream()
+				.map(mapper::map)
+				.collect(Collectors.toList());
 	}
 
 	@GET
-	@Path("{name}/params/{project}/{map}")
-	public List<PropertyMetadataDto> getParameters(@PathParam("name") String analysisType,
+	@Path("{typeId}/params/{project}/{map}")
+	public List<PropertyMetadataDto> getParameters(@PathParam("typeId") String analysisTypeId,
 			@PathParam("project") String project, @PathParam("map") String map) {
-		return analysisTypeFactory.getType(analysisType).getRequiredParameters();
+		AnalysisType<?> type = service.getAnalysisType(analysisTypeId);
+		RoadMap roadMap = projectService.retrieveProject(project).getMap(map).getContent();
+		return service.getRequiredParameters(type, roadMap).stream()
+				.map(propertyMetadataMapper::map)
+				.collect(Collectors.toList());
 	}
 }

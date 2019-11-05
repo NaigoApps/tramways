@@ -10,8 +10,8 @@ import org.junit.Test;
 import tramways.CDITest;
 import tramways.DefaultMessageCollector;
 import tramways.Utils;
-import tramways.dto.RoadMap;
-import tramways.mapper.Json2RoadMapDtoMapper;
+import tramways.dto.mappers.Json2RoadMapDtoMapper;
+import tramways.model.roadmap.RoadMap;
 
 public class RoadMapValidatorTest extends CDITest {
 

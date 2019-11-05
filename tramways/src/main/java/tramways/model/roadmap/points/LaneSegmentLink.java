@@ -1,54 +1,28 @@
 package tramways.model.roadmap.points;
 
-import org.apache.commons.math3.distribution.RealDistribution;
+import tramways.dto.ConfigurableDto;
 
-import tramways.model.AbstractConfigurable;
-import tramways.model.distributions.ConstantDistribution;
-import tramways.model.distributions.Distribution;
-import tramways.model.persistable.properties.PropertyWrapper;
-import tramways.model.roadmap.lanes.LaneSegment;
+/*
+ * Example properties: weight of the link, crossingTime, ...
+ */
+public class LaneSegmentLink extends ConfigurableDto {
 
-public class LaneSegmentLink extends AbstractConfigurable {
+	private String destination;
 
-	public static final String CROSSING_TIME = "crossingTime";
-
-	private LaneSegment destination;
-	private int weight;
-
-	public LaneSegmentLink(LaneSegment destination, int weight) {
+	public LaneSegmentLink() {
+		//Nothing to do
+	}
+	
+	public LaneSegmentLink(String destination) {
 		this.destination = destination;
-		this.weight = weight;
 	}
 
-	public LaneSegment getDestination() {
+	public String getDestination() {
 		return destination;
 	}
-
-	public int getWeight() {
-		return weight;
-	}
-
-	public void setCrossingTime(Distribution distribution) {
-		apply(PropertyWrapper.create(CROSSING_TIME, distribution));
-	}
-
-	public void setCrossingTime(Long crossingTime) {
-		apply(PropertyWrapper.create(CROSSING_TIME, crossingTime));
-	}
-
-	public RealDistribution getCrossingTime() {
-		Distribution distribution = getDistributionProperty(CROSSING_TIME);
-		if (distribution != null) {
-			return distribution.getRealDistribution();
-		} else {
-			Long value = getIntegerProperty(CROSSING_TIME);
-			if (value != null) {
-				ConstantDistribution result = new ConstantDistribution();
-				result.setValue(value.doubleValue());
-				return result.getRealDistribution();
-			}
-		}
-		return null;
+	
+	public void setDestination(String destination) {
+		this.destination = destination;
 	}
 
 }

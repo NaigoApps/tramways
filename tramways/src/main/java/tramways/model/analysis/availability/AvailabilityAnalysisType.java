@@ -1,18 +1,23 @@
 package tramways.model.analysis.availability;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import tramways.dto.RoadMap;
-import tramways.dto.points.CrossingPointDto;
 import tramways.model.analysis.Analysis;
 import tramways.model.analysis.AnalysisType;
-import tramways.model.properties.PropertyMetadataDto;
+import tramways.model.persistable.properties.PropertyMetadata;
 import tramways.model.properties.PropertyType;
+import tramways.model.roadmap.RoadMap;
+import tramways.model.roadmap.points.CrossingPoint;
 import tramways.services.MessageCollector;
 
 public class AvailabilityAnalysisType implements AnalysisType<AvailabilityAnalysisOptions>{
 
+	@Override
+	public String getId() {
+		return "availability";
+	}
+	
 	@Override
 	public String getName() {
 		return "Availability";
@@ -25,7 +30,7 @@ public class AvailabilityAnalysisType implements AnalysisType<AvailabilityAnalys
 
 	@Override
 	public boolean isApplicable(RoadMap map, AvailabilityAnalysisOptions options, MessageCollector collector) {
-		List<CrossingPointDto> crossingPoints = map.getPoints(CrossingPointDto.class);
+		List<CrossingPoint> crossingPoints = map.getPoints(CrossingPoint.class);
 		if(crossingPoints.isEmpty()) {
 			return collector.addMessage("No crossing points found");
 		}
@@ -36,10 +41,9 @@ public class AvailabilityAnalysisType implements AnalysisType<AvailabilityAnalys
 	}
 	
 	@Override
-	public List<PropertyMetadataDto> getRequiredParameters() {
-		List<PropertyMetadataDto> params = new ArrayList<>();
-		params.add(new PropertyMetadataDto("Car lane", PropertyType.STRING.name()));
-		return params;
+	public List<PropertyMetadata> getRequiredParameters(RoadMap map) {
+		PropertyMetadata metadata = new PropertyMetadata("Car lane", PropertyType.STRING);
+		return Arrays.asList(metadata);
 	}
 
 }

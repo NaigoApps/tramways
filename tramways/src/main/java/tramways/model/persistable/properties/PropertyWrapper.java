@@ -6,7 +6,7 @@ import javax.persistence.Lob;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import tramways.mapper.PropertyAdapterFactory;
+import tramways.dto.mappers.PropertyAdapterFactory;
 import tramways.model.distributions.Distribution;
 import tramways.model.properties.DecimalProperty;
 import tramways.model.properties.DistributionProperty;

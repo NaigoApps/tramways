@@ -63,26 +63,5 @@
 			}
 		}
 	],
-	"lanes": [
-		{
-			"uuid": "cl_A",
-			"source": "c_S",
-			"destination": "cp"
-		},
-		{
-			"uuid": "cl_B",
-			"source": "cp",
-			"destination": "c_D"
-		},
-		{
-			"uuid": "tl_A",
-			"source": "t_S",
-			"destination": "cp"
-		},
-		{
-			"uuid": "tl_B",
-			"source": "cp",
-			"destination": "t_D"
-		}
-	]
+	"lanes": []
 }

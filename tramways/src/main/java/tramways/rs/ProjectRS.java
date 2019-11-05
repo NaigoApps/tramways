@@ -14,8 +14,8 @@ import javax.ws.rs.PathParam;
 
 import tramways.dto.ProjectDto;
 import tramways.dto.Wrapper;
+import tramways.dto.mappers.ProjectMapper;
 import tramways.inbound.ProjectService;
-import tramways.mapper.ProjectMapper;
 import tramways.model.persistable.projects.Project;
 import tramways.services.RequestSession;
 

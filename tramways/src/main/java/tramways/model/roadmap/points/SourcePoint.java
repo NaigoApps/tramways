@@ -1,36 +1,24 @@
 package tramways.model.roadmap.points;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+public class SourcePoint extends RelevantPoint {
 
-import org.apache.commons.math3.distribution.RealDistribution;
+	private SourcePointType kind;
 
-import tramways.model.AbstractConfigurable;
-import tramways.model.roadmap.lanes.LaneSegment;
+	private String targetLane;
 
-public abstract class SourcePoint extends AbstractConfigurable implements RelevantPoint {
-	
-	private LaneSegment targetLane;
-
-	public void setTargetLane(LaneSegment targetLane) {
-		this.targetLane = targetLane;
-	}
-	
-	public LaneSegment getTargetLane() {
+	public String getTargetLane() {
 		return targetLane;
 	}
 
-	@Override
-	public Set<LaneSegment> getSources() {
-		return Collections.emptySet();
+	public void setTargetLane(String targetLane) {
+		this.targetLane = targetLane;
 	}
 
-	@Override
-	public Set<LaneSegment> getDestinations() {
-		return new HashSet<>(Arrays.asList(targetLane));
+	public SourcePointType getKind() {
+		return kind;
 	}
 
-	public abstract RealDistribution getRate();
+	public void setKind(SourcePointType kind) {
+		this.kind = kind;
+	}
 }

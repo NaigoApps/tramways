@@ -1,30 +1,27 @@
 package tramways.model.roadmap.points.trafficlight;
 
-import java.util.HashSet;
 import java.util.Set;
 
-import tramways.model.roadmap.lanes.LaneSegment;
+public class SensorTrafficLight implements TrafficLight {
 
-public class SensorTrafficLight implements TrafficLight{
+	private Set<String> activators;
 
-	private Set<LaneSegment> activators;
-	
-	private int anticipation;
-	
-	public SensorTrafficLight() {
-		activators = new HashSet<>();
+	private Integer anticipation;
+
+	public Set<String> getActivators() {
+		return activators;
 	}
 
-	public int getAnticipation() {
+	public void setActivators(Set<String> activators) {
+		this.activators = activators;
+	}
+
+	public Integer getAnticipation() {
 		return anticipation;
 	}
 
-	public void setAnticipation(int anticipation) {
+	public void setAnticipation(Integer anticipation) {
 		this.anticipation = anticipation;
-	}
-	
-	public void addActivator(LaneSegment segment) {
-		activators.add(segment);
 	}
 
 }
