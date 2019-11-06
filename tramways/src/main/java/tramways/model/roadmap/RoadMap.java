@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import tramways.model.Configurable;
+import tramways.model.properties.Property;
 import tramways.model.roadmap.lanes.LaneSegment;
 import tramways.model.roadmap.points.CrossingPoint;
 import tramways.model.roadmap.points.DestinationPoint;
@@ -15,7 +17,9 @@ import tramways.model.roadmap.points.SourcePoint;
 public class RoadMap {
 	private List<RelevantPoint> points;
 	private List<LaneSegment> lanes;
+	private Map<String, List<Property>> properties;
 	
+	private Map<String, Configurable> entitiesMap;
 	private Map<String, RelevantPoint> pointsMap;
 	private Map<String, LaneSegment> lanesMap;
 	
@@ -52,6 +56,7 @@ public class RoadMap {
 	}
 	
 	private void initializeMaps() {
+		entitiesMap = new HashMap<>();
 		pointsMap = new HashMap<>();
 		lanesMap = new HashMap<>();
 		if(this.lanes != null) {
@@ -83,6 +88,7 @@ public class RoadMap {
 			}
 			this.points.forEach(point -> {
 				pointsMap.put(point.getUuid(), point);
+				entitiesMap.put(point.getUuid(), point);
 			});
 				
 		}

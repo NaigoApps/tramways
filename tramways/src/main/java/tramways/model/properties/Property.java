@@ -8,11 +8,20 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonSubTypes({ @Type(value = IntegerProperty.class, name = "integer"),
 		@Type(value = DecimalProperty.class, name = "decimal"),
 		@Type(value = StringProperty.class, name = "string"),
+		@Type(value = ChoiceProperty.class, name = "choice"),
 		@Type(value = DistributionProperty.class, name = "distribution") })
 public abstract class Property {
 
 	private String type;
 	private String name;
+	
+	public Property() {
+	}
+	
+	public Property(String name, PropertyType type) {
+		this.name = name;
+		this.type = type.getName();
+	}
 
 	public void setName(String name) {
 		this.name = name;
@@ -23,10 +32,15 @@ public abstract class Property {
 	}
 
 	protected void setType(PropertyType type) {
-		this.type = type.name();
+		this.type = type.getName();
 	}
 
 	public PropertyType getType() {
+		for(PropertyType t : PropertyType.values()) {
+			if(t.getName().equals(type)) {
+				return t;
+			}
+		}
 		return PropertyType.valueOf(type);
 	}
 

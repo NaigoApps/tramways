@@ -1,11 +1,11 @@
 package tramways.model.roadmap.points;
 
-import tramways.dto.ConfigurableDto;
+import tramways.model.AbstractConfigurable;
 
 /*
  * Example properties: weight of the link, crossingTime, ...
  */
-public class LaneSegmentLink extends ConfigurableDto {
+public class LaneSegmentLink extends AbstractConfigurable {
 
 	private String destination;
 

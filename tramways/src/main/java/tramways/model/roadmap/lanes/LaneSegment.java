@@ -1,8 +1,8 @@
 package tramways.model.roadmap.lanes;
 
-import tramways.dto.ConfigurableDto;
+import tramways.model.AbstractConfigurable;
 
-public class LaneSegment extends ConfigurableDto {
+public class LaneSegment extends AbstractConfigurable {
 	
 	private String source;
 	private String destination;

@@ -3,11 +3,7 @@ package tramways.model.persistable.projects;
 import javax.persistence.Embeddable;
 import javax.persistence.Lob;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import tramways.dto.mappers.Json2RoadMapDtoMapper;
-import tramways.dto.mappers.PropertyAdapterFactory;
 import tramways.model.persistable.BaseEmbeddable;
 import tramways.model.roadmap.RoadMap;
 

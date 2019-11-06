@@ -9,18 +9,18 @@ import javax.inject.Inject;
 public class AnalysisTypeFactory {
 
 	@Inject
-	Instance<AnalysisType<?>> availableTypes;
+	Instance<AnalysisType> availableTypes;
 	
-	public AnalysisType<?> getType(String name){
-		for(AnalysisType<?> t : availableTypes) {
-			if(name.equals(t.getName())) {
+	public AnalysisType getType(String name){
+		for(AnalysisType t : availableTypes) {
+			if(name.equals(t.getId())) {
 				return t;
 			}
 		}
 		return null;
 	}
 	
-	public List<AnalysisType<?>> getTypes(){
+	public List<AnalysisType> getTypes(){
 		return availableTypes.stream()
 				.collect(Collectors.toList());
 	}

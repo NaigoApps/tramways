@@ -5,7 +5,11 @@ public class StringProperty extends Property {
 	private String value;
 
 	public StringProperty() {
-		setType(PropertyType.STRING);
+		super(null, PropertyType.STRING);
+	}
+	
+	public StringProperty(String name) {
+		super(name, PropertyType.STRING);
 	}
 	
 	public void setValue(String value) {

@@ -2,6 +2,7 @@ package tramways.dto.mappers;
 
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 
+import tramways.model.properties.ChoiceProperty;
 import tramways.model.properties.DecimalProperty;
 import tramways.model.properties.DistributionProperty;
 import tramways.model.properties.IntegerProperty;
@@ -20,6 +21,7 @@ public class PropertyAdapterFactory {
 				.registerSubtype(IntegerProperty.class, PropertyType.INTEGER.name())
 				.registerSubtype(DecimalProperty.class, PropertyType.DECIMAL.name())
 				.registerSubtype(StringProperty.class, PropertyType.STRING.name())
+				.registerSubtype(ChoiceProperty.class, PropertyType.CHOICE.name())
 				.registerSubtype(DistributionProperty.class, PropertyType.DISTRIBUTION.name());
 	}
 	

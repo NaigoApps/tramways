@@ -1,7 +1,7 @@
 package tramways.model.roadmap.points;
 
-import tramways.dto.ConfigurableDto;
+import tramways.model.AbstractConfigurable;
 
-public class RelevantPoint extends ConfigurableDto {
+public class RelevantPoint extends AbstractConfigurable {
 
 }

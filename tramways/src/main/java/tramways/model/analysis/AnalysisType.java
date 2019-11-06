@@ -2,14 +2,14 @@ package tramways.model.analysis;
 
 import java.util.List;
 
-import tramways.model.persistable.properties.PropertyMetadata;
+import tramways.model.properties.Property;
 import tramways.model.roadmap.RoadMap;
 import tramways.services.MessageCollector;
 
-public interface AnalysisType<O extends AnalysisOptions> {
+public interface AnalysisType {
 	public abstract String getId();
 	public abstract String getName();
-	public abstract Analysis createAnalysis();
-	public abstract boolean isApplicable(RoadMap map, O options, MessageCollector collector);
-	public abstract List<PropertyMetadata> getRequiredParameters(RoadMap map);
+	public abstract Analysis createAnalysis(List<Property> parameters);
+	public abstract boolean isApplicable(RoadMap map, List<Property> parameters, MessageCollector collector);
+	public abstract List<Property> getRequiredParameters(RoadMap map);
 }
