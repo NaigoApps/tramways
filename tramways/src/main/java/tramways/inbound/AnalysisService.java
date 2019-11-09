@@ -11,6 +11,6 @@ public interface AnalysisService {
 	public List<AnalysisType> getAvailableAnalysis();
 	public List<Property> getRequiredParameters(AnalysisType type, RoadMap map);
 	public AnalysisType getAnalysisType(String analysisType);
-	public String launchAnalysis(AnalysisType type, RoadMap roadMap, List<Property> parameters);
+	public void launchAnalysis(AnalysisType type, String name, String projectId, String mapId, List<Property> parameters);
 
 }

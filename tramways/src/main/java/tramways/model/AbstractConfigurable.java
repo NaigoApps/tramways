@@ -6,10 +6,11 @@ import java.util.List;
 import tramways.model.distributions.Distribution;
 import tramways.model.persistable.configurations.Configuration;
 import tramways.model.persistable.properties.PropertyWrapper;
+import tramways.model.properties.Property;
 
 public class AbstractConfigurable extends AbstractIdentifiable implements Configurable {
 
-	private List<PropertyWrapper> properties;
+	private List<Property> properties;
 
 	public AbstractConfigurable() {
 		properties = new ArrayList<>();
@@ -17,15 +18,22 @@ public class AbstractConfigurable extends AbstractIdentifiable implements Config
 
 	public void apply(Configuration conf) {
 		for (PropertyWrapper prop : conf.getProperties()) {
+			applyImpl(prop.retrieveContent());
+		}
+	}
+	
+	@Override
+	public void apply(List<Property> properties) {
+		for(Property prop : properties) {
 			applyImpl(prop);
 		}
 	}
 
 	public void apply(PropertyWrapper prop) {
-		applyImpl(prop);
+		applyImpl(prop.retrieveContent());
 	}
 
-	private void applyImpl(PropertyWrapper prop) {
+	private void applyImpl(Property prop) {
 		int index = -1;
 		for (int i = 0; i < properties.size(); i++) {
 			if (properties.get(i).getName().equals(prop.getName())) {
@@ -63,7 +71,9 @@ public class AbstractConfigurable extends AbstractIdentifiable implements Config
 	}
 
 	public Object getProperty(String name) {
-		return properties.stream().filter(prop -> prop.getName().equals(name)).map(PropertyWrapper::getValue).findFirst()
+		return properties.stream()
+				.filter(prop -> prop.getName().equals(name))
+				.map(Property::getValue).findFirst()
 				.orElse(null);
 	}
 

@@ -18,11 +18,11 @@ public class PropertyAdapterFactory {
 	public static RuntimeTypeAdapterFactory<Property> getFactory(){
 		return RuntimeTypeAdapterFactory
 				.of(Property.class, "type", true)
-				.registerSubtype(IntegerProperty.class, PropertyType.INTEGER.name())
-				.registerSubtype(DecimalProperty.class, PropertyType.DECIMAL.name())
-				.registerSubtype(StringProperty.class, PropertyType.STRING.name())
-				.registerSubtype(ChoiceProperty.class, PropertyType.CHOICE.name())
-				.registerSubtype(DistributionProperty.class, PropertyType.DISTRIBUTION.name());
+				.registerSubtype(IntegerProperty.class, PropertyType.INTEGER.getName())
+				.registerSubtype(DecimalProperty.class, PropertyType.DECIMAL.getName())
+				.registerSubtype(StringProperty.class, PropertyType.STRING.getName())
+				.registerSubtype(ChoiceProperty.class, PropertyType.CHOICE.getName())
+				.registerSubtype(DistributionProperty.class, PropertyType.DISTRIBUTION.getName());
 	}
 	
 }

@@ -8,12 +8,7 @@ import tramways.model.distributions.ConstantDistribution;
 import tramways.model.distributions.Distribution;
 import tramways.model.distributions.ExponentialDistribution;
 import tramways.model.distributions.UniformDistribution;
-import tramways.model.properties.DecimalProperty;
-import tramways.model.properties.DistributionProperty;
-import tramways.model.properties.IntegerProperty;
 import tramways.model.properties.Property;
-import tramways.model.properties.PropertyType;
-import tramways.model.properties.StringProperty;
 import tramways.model.roadmap.RoadMap;
 import tramways.model.roadmap.points.CrossingPoint;
 import tramways.model.roadmap.points.DestinationPoint;
@@ -21,8 +16,8 @@ import tramways.model.roadmap.points.RelevantPoint;
 import tramways.model.roadmap.points.SourcePoint;
 import tramways.model.roadmap.points.trafficlight.SensorTrafficLight;
 import tramways.model.roadmap.points.trafficlight.TimedTrafficLight;
-import tramways.model.roadmap.points.trafficlight.TrafficLightCrossingPoint;
 import tramways.model.roadmap.points.trafficlight.TrafficLight;
+import tramways.model.roadmap.points.trafficlight.TrafficLightCrossingPoint;
 
 public class Json2RoadMapDtoMapper {
 	
@@ -57,12 +52,7 @@ public class Json2RoadMapDtoMapper {
 				.registerSubtype(TimedTrafficLight.class, "timed")
 				.registerSubtype(SensorTrafficLight.class, "sensor");
 		
-		RuntimeTypeAdapterFactory<Property> propertyFactory = RuntimeTypeAdapterFactory
-				.of(Property.class)
-				.registerSubtype(IntegerProperty.class, PropertyType.INTEGER.name())
-				.registerSubtype(DecimalProperty.class, PropertyType.DECIMAL.name())
-				.registerSubtype(StringProperty.class, PropertyType.STRING.name())
-				.registerSubtype(DistributionProperty.class, PropertyType.DISTRIBUTION.name());
+		RuntimeTypeAdapterFactory<Property> propertyFactory = PropertyAdapterFactory.getFactory();
 		
 		return new GsonBuilder().setPrettyPrinting()
 			.registerTypeAdapterFactory(pointsFactory)

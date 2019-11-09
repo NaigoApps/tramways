@@ -35,13 +35,17 @@ public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilt
 
 	@Inject
 	private UserService userService;
-	
+
 	@Inject
 	private TokenManager tokenManager;
 
 	@Override
 	@Transactional
 	public void filter(ContainerRequestContext requestContext) throws IOException {
+		if (isUnsecure()) {
+			return;
+		}
+
 		String userUuid = null;
 		if ((userUuid = extractUser(requestContext)) != null) {
 			authService.setLoggedUserUuid(userUuid);
@@ -49,7 +53,7 @@ public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilt
 			if (!hasPermission(current.listRoles())) {
 				throw new BadRequestException("Unauthorized");
 			}
-		} else if (!isUnsecure()) {
+		} else {
 			throw new BadRequestException("Couldn't authenticate user");
 		}
 	}
@@ -65,7 +69,7 @@ public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilt
 		if (classAnnotation != null) {
 			return Arrays.stream(classAnnotation.value()).anyMatch(userRoles::contains);
 		}
-		
+
 		return true;
 	}
 
@@ -85,7 +89,7 @@ public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilt
 	@Override
 	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext)
 			throws IOException {
-		if(!responseContext.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
+		if (!responseContext.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
 			String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 			responseContext.getHeaders().add(HttpHeaders.AUTHORIZATION, authorizationHeader);
 		}

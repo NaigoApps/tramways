@@ -1,19 +1,28 @@
 package tramways.model.persistable.projects;
 
-import javax.persistence.Embeddable;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import tramways.dto.mappers.Json2RoadMapDtoMapper;
-import tramways.model.persistable.BaseEmbeddable;
+import tramways.model.persistable.BaseEntity;
 import tramways.model.roadmap.RoadMap;
 
-@Embeddable
-public class RoadMapWrapper extends BaseEmbeddable implements Comparable<RoadMapWrapper> {
+@Entity
+@Table(name = "road_maps")
+public class RoadMapWrapper extends BaseEntity implements Comparable<RoadMapWrapper> {
 
 	private String name;
 
 	@Lob
 	private String map;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<AnalysisWrapper> analysis;
 
 	public String getName() {
 		return name;
@@ -30,12 +39,28 @@ public class RoadMapWrapper extends BaseEmbeddable implements Comparable<RoadMap
 	public void setMap(String map) {
 		this.map = map;
 	}
-	
+
 	public RoadMap getContent() {
 		Json2RoadMapDtoMapper mapper = new Json2RoadMapDtoMapper();
 		return mapper.map(this.map);
 	}
 
+	public List<AnalysisWrapper> getAnalysis() {
+		return analysis;
+	}
+
+	public void setAnalysis(List<AnalysisWrapper> analysis) {
+		this.analysis = analysis;
+	}
+
+	public void addAnalysis(AnalysisWrapper analysis) {
+		this.analysis.add(analysis);
+	}
+
+	public void removeAnalysis(String id) {
+		this.analysis.removeIf(a -> a.getUuid().equals(id));
+	}
+	
 	@Override
 	public int compareTo(RoadMapWrapper other) {
 		if (other == null) {
@@ -44,4 +69,5 @@ public class RoadMapWrapper extends BaseEmbeddable implements Comparable<RoadMap
 
 		return name.compareTo(other.name);
 	}
+
 }

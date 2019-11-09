@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import tramways.dto.mappers.Json2RoadMapDtoMapper;
-import tramways.model.distributions.ExponentialDistribution;
 import tramways.model.roadmap.RoadMap;
 import tramways.model.roadmap.lanes.LaneSegment;
 import tramways.model.roadmap.points.DestinationPoint;
@@ -46,14 +45,8 @@ public class Json2RoadMapDtoMapperTest {
 		assertEquals(SourcePointType.CAR, s.getKind());
 		assertTrue(l.getSource().equals(s.getUuid()));
 		assertTrue(l.getDestination().equals(d.getUuid()));
-		assertEquals(1.0d, l.getDecimalProperty("length").doubleValue(), 0.0d);
-		assertEquals(2.0d, l.getDecimalProperty("vehicleMaxSpeed").doubleValue(), 0.0d);
-		assertEquals(3.0d, l.getDecimalProperty("vehicleMinGap").doubleValue(), 0.0d);
-		assertEquals(4.0d, l.getDecimalProperty("vehicleLength").doubleValue(), 0.0d);
 
 		assertEquals(l.getUuid(), s.getTargetLane());
-		ExponentialDistribution arrivalRate = (ExponentialDistribution) s.getDistributionProperty("arrivalRate");
-		assertEquals(1.0d, arrivalRate.getMean(), 0.0d);
 
 		assertEquals(1, d.getLanes().size());
 		assertEquals(l.getUuid(), d.getLanes().get(0));
@@ -71,12 +64,7 @@ public class Json2RoadMapDtoMapperTest {
 		assertEquals(SourcePointType.TRAM, s.getKind());
 		assertTrue(l.getSource().equals(s.getUuid()));
 		assertTrue(l.getDestination().equals(d.getUuid()));
-		assertEquals(1.0d, l.getDecimalProperty("length").doubleValue(), 0.0d);
-		assertEquals(2.0d, l.getDecimalProperty("vehicleMaxSpeed").doubleValue(), 0.0d);
-		assertEquals(3.0d, l.getDecimalProperty("vehicleMinGap").doubleValue(), 0.0d);
-		assertEquals(4.0d, l.getDecimalProperty("vehicleLength").doubleValue(), 0.0d);
 
-		assertEquals(5, s.getIntegerProperty("period").intValue());
 		assertEquals(l.getUuid(), s.getTargetLane());
 
 		assertEquals(1, d.getLanes().size());
@@ -126,7 +114,6 @@ public class Json2RoadMapDtoMapperTest {
 
 		assertEquals(1, cp.getTrafficLights().size());
 		SensorTrafficLight trafficLight = (SensorTrafficLight) cp.getTrafficLights().get(cl1.getUuid());
-		assertEquals(5.0d, trafficLight.getAnticipation(), 0.0d);
 		assertEquals(1, trafficLight.getActivators().size());
 		assertEquals(tl1.getUuid(), trafficLight.getActivators().iterator().next());
 

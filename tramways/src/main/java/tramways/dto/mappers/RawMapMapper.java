@@ -16,16 +16,16 @@ import tramways.model.roadmap.points.CrossingPoint;
 import tramways.model.roadmap.points.SourcePoint;
 import tramways.outbound.ProjectRepository;
 
-@Mapper(config = MapperConfiguration.class, uses = { UserMapper.class })
+@Mapper(config = MapperConfiguration.class, uses = { UserMapper.class, AnalysisMapper.class })
 public abstract class RawMapMapper {
 
 	@Inject
 	private ProjectRepository projectsRepo;
 
 	@Mapping(target = "stats", ignore = true)
-	@Mapping(target = "id", ignore = true)
 	public abstract RawMapDto map(RoadMapWrapper m);
 
+	@Mapping(target = "id", ignore = true)
 	public abstract RoadMapWrapper map(RawMapDto m);
 
 	protected Project find(String projectId) {

@@ -1,6 +1,8 @@
 package tramways.model.analysis.availability;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import org.oristool.analyzer.log.AnalysisMonitor;
@@ -11,14 +13,13 @@ import org.oristool.models.stpn.trees.DeterministicEnablingState;
 import org.oristool.petrinet.Marking;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import tramways.analysis.CrossingPointPetriNetMapper;
+import tramways.model.AbstractIdentifiable;
 import tramways.model.analysis.Analysis;
-import tramways.model.roadmap.RoadMap;
+import tramways.model.analysis.result.XYAnalysisResult;
+import tramways.model.analysis.result.XYPoint;
 
-public class AvailabilityAnalysis implements Analysis {
+public class AvailabilityAnalysis extends AbstractIdentifiable implements Analysis {
 
 	private static final int FPS = 1;
 	
@@ -43,7 +44,7 @@ public class AvailabilityAnalysis implements Analysis {
 	}
 	
 	@Override
-	public String run() {
+	public XYAnalysisResult run() {
 		CrossingPointPetriNetMapper mapper = new CrossingPointPetriNetMapper();
 //		TrafficLightCrossingPoint point = map.getPoints(TrafficLightCrossingPoint.class).iterator().next();
 //		mapper.setCrossingPoint(point);
@@ -74,11 +75,16 @@ public class AvailabilityAnalysis implements Analysis {
 			av[tick] *= reward.getSolution()[tick % (220 * FPS)][0][0];
 		}
 
-		AvailabilityAnalysisResult result = new AvailabilityAnalysisResult();
-		result.setX(time);
-		result.setY(av);
+		XYAnalysisResult result = new XYAnalysisResult();
+		result.setXLabel("Time");
+		result.setYLabel("Availability");
+
+		List<XYPoint> points = new ArrayList<>();
+		for(int i = 0;i < time.length;i++) {
+			points.add(new XYPoint(time[i], av[i]));
+		}
+		result.setPoints(points);
 		
-		Gson gson = new GsonBuilder().create();
-		return gson.toJson(result);
+		return result;
 	}
 }

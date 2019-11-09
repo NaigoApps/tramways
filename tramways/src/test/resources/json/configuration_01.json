@@ -3,17 +3,17 @@
 	"properties": [
 		{
 			"name": "A",
-			"type": "INTEGER",
+			"type": "integer",
 			"value": 0
 		},
 		{
 			"name": "B",
-			"type": "STRING",
+			"type": "string",
 			"value": "s"
 		},
 		{
 			"name": "C",
-			"type": "DECIMAL",
+			"type": "decimal",
 			"value": 0.6
 		}
 	]

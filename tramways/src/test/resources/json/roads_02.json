@@ -4,52 +4,13 @@
 			"uuid": "S",
 			"type": "source",
 			"kind": "CAR",
-			"targetLane": "A",
-			"properties": [
-				{
-					"type": "DISTRIBUTION",
-					"name": "arrivalRate",
-					"value": {
-						"type": "exponential",
-						"mean": 1.0
-					}
-				}
-			]
+			"targetLane": "A"
 		},
 		{
 			"uuid": "D",
 			"type": "destination",
 			"lanes": [
 				"A"
-			]
-		}
-	],
-	"lanes": [
-		{
-			"uuid": "A",
-			"source": "S",
-			"destination": "D",
-			"properties": [
-				{
-					"type": "DECIMAL",
-					"name": "length",
-					"value": 1.0
-				},
-				{
-					"type": "DECIMAL",
-					"name": "vehicleMaxSpeed",
-					"value": 2.0
-				},
-				{
-					"type": "DECIMAL",
-					"name": "vehicleMinGap",
-					"value": 3.0
-				},
-				{
-					"type": "DECIMAL",
-					"name": "vehicleLength",
-					"value": 4.0
-				}
 			]
 		}
 	]

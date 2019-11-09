@@ -1,5 +1,8 @@
 package tramways.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RawMapDto extends Dto {
 
 	private String name;
@@ -7,6 +10,12 @@ public class RawMapDto extends Dto {
 	private String map;
 
 	private MapStatsDto stats;
+
+	private List<AnalysisDto> analysis;
+
+	public RawMapDto() {
+		analysis = new ArrayList<>();
+	}
 
 	public String getName() {
 		return name;
@@ -30,5 +39,13 @@ public class RawMapDto extends Dto {
 
 	public void setStats(MapStatsDto stats) {
 		this.stats = stats;
+	}
+
+	public List<AnalysisDto> getAnalysis() {
+		return analysis;
+	}
+
+	public void setAnalysis(List<AnalysisDto> analysis) {
+		this.analysis = analysis;
 	}
 }

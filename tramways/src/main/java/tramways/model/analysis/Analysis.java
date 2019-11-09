@@ -1,7 +1,10 @@
 package tramways.model.analysis;
 
-public interface Analysis {
+import tramways.model.Identifiable;
+import tramways.model.analysis.result.AnalysisResult;
 
-	public String run();
+public interface Analysis extends Identifiable{
+
+	public AnalysisResult run();
 	
 }

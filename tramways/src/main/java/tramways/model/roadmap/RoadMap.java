@@ -16,16 +16,15 @@ import tramways.model.roadmap.points.SourcePoint;
 
 public class RoadMap {
 	private List<RelevantPoint> points;
-	private List<LaneSegment> lanes;
 	private Map<String, List<Property>> properties;
 	
+	private List<LaneSegment> lanes;
 	private Map<String, Configurable> entitiesMap;
-	private Map<String, RelevantPoint> pointsMap;
-	private Map<String, LaneSegment> lanesMap;
 	
 	public RoadMap() {
 		this.points = new ArrayList<>();
 		this.lanes = new ArrayList<>();
+		this.properties = new HashMap<>();
 	}
 	
 	public void setPoints(List<RelevantPoint> points) {
@@ -57,13 +56,7 @@ public class RoadMap {
 	
 	private void initializeMaps() {
 		entitiesMap = new HashMap<>();
-		pointsMap = new HashMap<>();
-		lanesMap = new HashMap<>();
-		if(this.lanes != null) {
-			this.lanes.forEach(lane -> {
-				lanesMap.put(lane.getUuid(), lane);
-			});
-		}
+		lanes = new ArrayList<>();
 		if(this.points != null) {
 			for (RelevantPoint point : points) {
 				if (point instanceof SourcePoint) {
@@ -81,50 +74,52 @@ public class RoadMap {
 						links.forEach(link -> {
 							LaneSegment destinationLane = findOrCreateLane(link.getDestination());
 							destinationLane.setSource(point.getUuid());
+							entitiesMap.put(link.getUuid(), link);
 						});
 						sourceLane.setDestination(point.getUuid());
 					});
 				}
 			}
-			this.points.forEach(point -> {
-				pointsMap.put(point.getUuid(), point);
-				entitiesMap.put(point.getUuid(), point);
-			});
-				
+			this.points.forEach(point -> entitiesMap.put(point.getUuid(), point));
+			this.properties.forEach((uuid, props) -> entitiesMap.get(uuid).apply(props));
 		}
 	}
 
 	private LaneSegment findOrCreateLane(String laneUuid) {
-		return lanesMap.computeIfAbsent(laneUuid, uuid -> {
-			LaneSegment dto = new LaneSegment();
-			dto.setUuid(uuid);
-			lanes.add(dto);
-			return dto;
-		});
+		return LaneSegment.class.cast(entitiesMap.computeIfAbsent(laneUuid, uuid -> {
+			LaneSegment segment = new LaneSegment();
+			segment.setUuid(uuid);
+			lanes.add(segment);
+			return segment;
+		}));
 	}
 	
 	public RelevantPoint getPoint(String uuid) {
-		if(pointsMap == null) {
+		if(entitiesMap == null) {
 			initializeMaps();
 		}
-		return pointsMap.get(uuid);
+		return RelevantPoint.class.cast(entitiesMap.get(uuid));
 	}
 	
 	public <P extends RelevantPoint> P getPoint(String uuid, Class<P> pointClass) {
-		if(pointsMap == null) {
+		if(entitiesMap == null) {
 			initializeMaps();
 		}
-		if(pointClass.isInstance(pointsMap.get(uuid))) {			
-			return pointClass.cast(pointsMap.get(uuid));
+		if(pointClass.isInstance(entitiesMap.get(uuid))) {			
+			return pointClass.cast(entitiesMap.get(uuid));
 		}
 		return null;
 	}
 	
 	public LaneSegment getLane(String uuid) {
-		if(lanesMap == null) {
+		if(entitiesMap == null) {
 			initializeMaps();
 		}
-		return lanesMap.get(uuid);
+		return LaneSegment.class.cast(entitiesMap.get(uuid));
+	}
+	
+	public List<Property> getProperties(String uuid){
+		return properties.get(uuid);
 	}
 	
 }

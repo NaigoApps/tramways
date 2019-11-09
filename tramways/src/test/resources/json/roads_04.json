@@ -32,29 +32,19 @@
 			"constraints": {
 				"cl_A": [
 					{
-						"destination": "cl_B",
-						"weight": 1.0,
-						"crossingTime": {
-							"type": "uniform",
-							"min": 4.0,
-							"max": 6.0
-						}
+						"uuid": "carLink",
+						"destination": "cl_B"
 					}
 				],
 				"tl_A": [
 					{
-						"destination": "tl_B",
-						"weight": 1.0,
-						"crossingTime": {
-							"type": "constant",
-							"value": 5.0
-						}
+						"uuid": "tramLink",
+						"destination": "tl_B"
 					}
 				]
 			},
 			"trafficLights": {
 				"cl_A": {
-					"anticipation": 5,
 					"type": "sensor",
 					"activators": [
 						"tl_A"
@@ -63,5 +53,13 @@
 			}
 		}
 	],
-	"lanes": []
+	"properties": {
+		"carLink": [
+			{
+				"name": "weight",
+				"type": "integer",
+				"value": 5
+			}
+		]
+	}
 }
