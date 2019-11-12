@@ -12,11 +12,11 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
+import tramways.core.model.persistable.projects.Project;
 import tramways.dto.ProjectDto;
 import tramways.dto.Wrapper;
 import tramways.dto.mappers.ProjectMapper;
 import tramways.inbound.ProjectService;
-import tramways.model.persistable.projects.Project;
 import tramways.services.RequestSession;
 
 @Path("projects")
@@ -81,5 +81,12 @@ public class ProjectRS {
 	public void deleteProject(@PathParam("projectUuid") String uuid) {
 		service.deleteProject(uuid);
 	}
-	
+
+	@DELETE
+	@Path("{project}/maps/{map}/analysis/{analysis}")
+	public void deleteAnalysis(@PathParam("project") String project, @PathParam("map") String map,
+			@PathParam("analysis") String analysis) {
+		Project p = service.retrieveProject(project);
+		p.getMap(map).removeAnalysis(analysis);
+	}
 }

@@ -2,7 +2,7 @@ package tramways.inbound;
 
 import java.util.List;
 
-import tramways.model.persistable.projects.Project;
+import tramways.core.model.persistable.projects.Project;
 
 public interface ProjectService {
 

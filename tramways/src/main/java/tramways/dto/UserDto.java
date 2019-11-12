@@ -2,7 +2,7 @@ package tramways.dto;
 
 import java.util.Set;
 
-import tramways.model.auth.Role;
+import tramways.core.model.persistable.users.Role;
 
 public class UserDto extends Dto {
 	private String username;

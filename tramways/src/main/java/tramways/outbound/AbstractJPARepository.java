@@ -12,7 +12,7 @@ import javax.persistence.criteria.Root;
 
 import org.slf4j.LoggerFactory;
 
-import tramways.model.persistable.BaseEntity;
+import tramways.core.model.persistable.BaseEntity;
 import tramways.model.persistable.BaseEntity_;
 
 public abstract class AbstractJPARepository<E extends BaseEntity> {

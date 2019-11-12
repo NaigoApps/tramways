@@ -5,11 +5,11 @@ import java.util.List;
 import javax.inject.Inject;
 
 import tramways.DefaultMessageCollector;
+import tramways.core.model.persistable.projects.Project;
+import tramways.core.model.persistable.projects.RoadMapWrapper;
+import tramways.core.model.roadmap.RoadMap;
 import tramways.dto.mappers.Json2RoadMapDtoMapper;
 import tramways.inbound.ProjectService;
-import tramways.model.persistable.projects.Project;
-import tramways.model.persistable.projects.RoadMapWrapper;
-import tramways.model.roadmap.RoadMap;
 import tramways.outbound.ProjectRepository;
 import tramways.services.MessageCollector;
 import tramways.services.RoadMapValidator;

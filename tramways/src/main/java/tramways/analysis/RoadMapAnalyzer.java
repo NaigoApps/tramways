@@ -6,7 +6,7 @@ import java.util.List;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
-import tramways.model.roadmap.RoadMap;
+import tramways.core.model.roadmap.RoadMap;
 
 /**
  *

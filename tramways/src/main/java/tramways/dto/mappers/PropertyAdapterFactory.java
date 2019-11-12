@@ -2,13 +2,13 @@ package tramways.dto.mappers;
 
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 
-import tramways.model.properties.ChoiceProperty;
-import tramways.model.properties.DecimalProperty;
-import tramways.model.properties.DistributionProperty;
-import tramways.model.properties.IntegerProperty;
-import tramways.model.properties.Property;
-import tramways.model.properties.PropertyType;
-import tramways.model.properties.StringProperty;
+import tramways.core.model.propertiess.ChoiceProperty;
+import tramways.core.model.propertiess.DecimalProperty;
+import tramways.core.model.propertiess.DistributionProperty;
+import tramways.core.model.propertiess.IntegerProperty;
+import tramways.core.model.propertiess.Property;
+import tramways.core.model.propertiess.PropertyType;
+import tramways.core.model.propertiess.StringProperty;
 
 public class PropertyAdapterFactory {
 	

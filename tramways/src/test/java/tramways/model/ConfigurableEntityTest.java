@@ -8,10 +8,11 @@ import org.junit.Test;
 
 import tramways.CDITest;
 import tramways.Utils;
+import tramways.core.model.AbstractConfigurable;
+import tramways.core.model.persistable.configurations.Configuration;
 import tramways.dto.ConfigurationDto;
 import tramways.dto.mappers.ConfigurationMapper;
 import tramways.dto.mappers.Json2ConfigurationDtoMapper;
-import tramways.model.persistable.configurations.Configuration;
 
 public class ConfigurableEntityTest extends CDITest{
 

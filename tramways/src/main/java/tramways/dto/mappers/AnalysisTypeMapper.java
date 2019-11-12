@@ -2,8 +2,8 @@ package tramways.dto.mappers;
 
 import org.mapstruct.Mapper;
 
+import tramways.core.model.analysis.AnalysisType;
 import tramways.dto.AnalysisTypeDto;
-import tramways.model.analysis.AnalysisType;
 
 @Mapper(config = MapperConfiguration.class)
 public interface AnalysisTypeMapper {

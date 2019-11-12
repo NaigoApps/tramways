@@ -2,8 +2,8 @@ package tramways.dto.mappers;
 
 import org.mapstruct.Mapper;
 
-import tramways.model.persistable.properties.PropertyWrapper;
-import tramways.model.properties.Property;
+import tramways.core.model.persistable.properties.PropertyWrapper;
+import tramways.core.model.propertiess.Property;
 
 @Mapper(config = MapperConfiguration.class)
 public abstract class PropertyMapper {

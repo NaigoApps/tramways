@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaQuery;
 
-import tramways.model.persistable.projects.Project;
+import tramways.core.model.persistable.projects.Project;
 import tramways.model.persistable.projects.Project_;
 import tramways.model.persistable.users.User_;
 import tramways.outbound.AbstractJPARepository;

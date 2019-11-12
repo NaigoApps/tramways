@@ -7,10 +7,10 @@ import javax.inject.Inject;
 
 import org.slf4j.LoggerFactory;
 
+import tramways.core.model.persistable.users.Role;
+import tramways.core.model.persistable.users.User;
 import tramways.exceptions.DuplicateUserException;
 import tramways.inbound.UserService;
-import tramways.model.auth.Role;
-import tramways.model.persistable.users.User;
 
 @Startup
 @Singleton

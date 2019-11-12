@@ -5,12 +5,12 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.BadRequestException;
 
+import tramways.core.model.persistable.users.Role;
+import tramways.core.model.persistable.users.User;
 import tramways.dto.UserDto;
 import tramways.exceptions.DuplicateUserException;
 import tramways.exceptions.LoginException;
 import tramways.inbound.UserService;
-import tramways.model.auth.Role;
-import tramways.model.persistable.users.User;
 import tramways.outbound.UserRepository;
 import tramways.services.RequestSession;
 

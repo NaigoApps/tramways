@@ -9,8 +9,8 @@ import org.oristool.petrinet.PetriNet;
 import org.oristool.petrinet.Place;
 import org.oristool.petrinet.Transition;
 
-import tramways.model.roadmap.RoadMap;
-import tramways.model.roadmap.points.trafficlight.TrafficLightCrossingPoint;
+import tramways.core.model.roadmap.RoadMap;
+import tramways.core.model.roadmap.points.trafficlight.TrafficLightCrossingPoint;
 
 public class CrossingPointPetriNetMapper {
 

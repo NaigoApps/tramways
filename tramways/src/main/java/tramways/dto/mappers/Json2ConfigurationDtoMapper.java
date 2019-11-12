@@ -4,9 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 
+import tramways.core.model.distributionss.Distribution;
+import tramways.core.model.propertiess.Property;
 import tramways.dto.ConfigurationDto;
-import tramways.model.distributions.Distribution;
-import tramways.model.properties.Property;
 
 public class Json2ConfigurationDtoMapper {
 	

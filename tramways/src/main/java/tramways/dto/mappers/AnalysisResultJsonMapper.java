@@ -4,9 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 
-import tramways.model.analysis.AnalysisResultType;
-import tramways.model.analysis.result.AnalysisResult;
-import tramways.model.analysis.result.XYAnalysisResult;
+import tramways.core.model.analysis.AnalysisResultType;
+import tramways.core.model.analysis.result.AnalysisResult;
+import tramways.core.model.analysis.result.XYAnalysisResult;
 
 public class AnalysisResultJsonMapper {
 	

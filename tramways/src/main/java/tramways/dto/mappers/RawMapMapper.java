@@ -7,13 +7,13 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
+import tramways.core.model.persistable.projects.Project;
+import tramways.core.model.persistable.projects.RoadMapWrapper;
+import tramways.core.model.roadmap.RoadMap;
+import tramways.core.model.roadmap.points.CrossingPoint;
+import tramways.core.model.roadmap.points.SourcePoint;
 import tramways.dto.MapStatsDto;
 import tramways.dto.RawMapDto;
-import tramways.model.persistable.projects.Project;
-import tramways.model.persistable.projects.RoadMapWrapper;
-import tramways.model.roadmap.RoadMap;
-import tramways.model.roadmap.points.CrossingPoint;
-import tramways.model.roadmap.points.SourcePoint;
 import tramways.outbound.ProjectRepository;
 
 @Mapper(config = MapperConfiguration.class, uses = { UserMapper.class, AnalysisMapper.class })

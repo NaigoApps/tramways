@@ -2,8 +2,8 @@ package tramways.dto.mappers;
 
 import org.mapstruct.Mapper;
 
+import tramways.core.model.persistable.projects.AnalysisWrapper;
 import tramways.dto.AnalysisDto;
-import tramways.model.persistable.projects.AnalysisWrapper;
 
 @Mapper(config = MapperConfiguration.class, uses = {})
 public abstract class AnalysisMapper {

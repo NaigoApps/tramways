@@ -9,8 +9,8 @@ import javax.persistence.criteria.Root;
 
 import org.slf4j.LoggerFactory;
 
+import tramways.core.model.persistable.users.User;
 import tramways.model.persistable.BaseEntity_;
-import tramways.model.persistable.users.User;
 import tramways.model.persistable.users.User_;
 import tramways.outbound.AbstractJPARepository;
 import tramways.outbound.UserRepository;

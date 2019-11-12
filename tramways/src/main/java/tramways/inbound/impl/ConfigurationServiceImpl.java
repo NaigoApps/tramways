@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import tramways.core.model.persistable.configurations.Configuration;
 import tramways.inbound.ConfigurationService;
-import tramways.model.persistable.configurations.Configuration;
 import tramways.outbound.ConfigurationRepository;
 
 public class ConfigurationServiceImpl implements ConfigurationService {

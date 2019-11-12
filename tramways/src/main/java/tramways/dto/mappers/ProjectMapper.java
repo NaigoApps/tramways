@@ -2,8 +2,8 @@ package tramways.dto.mappers;
 
 import org.mapstruct.Mapper;
 
+import tramways.core.model.persistable.projects.Project;
 import tramways.dto.ProjectDto;
-import tramways.model.persistable.projects.Project;
 
 @Mapper(config = MapperConfiguration.class, uses = { UserMapper.class, RawMapMapper.class })
 public interface ProjectMapper {

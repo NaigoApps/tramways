@@ -13,13 +13,13 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
+import tramways.core.model.persistable.users.Role;
+import tramways.core.model.persistable.users.User;
 import tramways.dto.LoginData;
 import tramways.dto.UserDto;
 import tramways.dto.mappers.UserMapper;
 import tramways.exceptions.DuplicateUserException;
 import tramways.inbound.UserService;
-import tramways.model.auth.Role;
-import tramways.model.persistable.users.User;
 import tramways.rs.annotations.Roles;
 
 @Path("users")

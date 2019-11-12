@@ -2,10 +2,10 @@ package tramways.inbound;
 
 import java.util.List;
 
+import tramways.core.model.persistable.users.User;
 import tramways.dto.UserDto;
 import tramways.exceptions.DuplicateUserException;
 import tramways.exceptions.LoginException;
-import tramways.model.persistable.users.User;
 
 public interface UserService {
 

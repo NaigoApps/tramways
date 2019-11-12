@@ -2,7 +2,7 @@ package tramways.analysis;
 
 import java.util.Collection;
 
-import tramways.model.roadmap.RoadMap;
+import tramways.core.model.roadmap.RoadMap;
 
 public interface AnalysisProvider {
 

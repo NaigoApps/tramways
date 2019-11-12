@@ -2,7 +2,7 @@ package tramways.outbound;
 
 import java.util.List;
 
-import tramways.model.persistable.users.User;
+import tramways.core.model.persistable.users.User;
 
 public interface UserRepository {
 	

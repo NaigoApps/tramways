@@ -12,14 +12,14 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 
+import tramways.core.model.analysis.AnalysisType;
+import tramways.core.model.persistable.projects.Project;
+import tramways.core.model.propertiess.Property;
+import tramways.core.model.roadmap.RoadMap;
 import tramways.dto.AnalysisTypeDto;
 import tramways.dto.mappers.AnalysisTypeMapper;
 import tramways.inbound.AnalysisService;
 import tramways.inbound.ProjectService;
-import tramways.model.analysis.AnalysisType;
-import tramways.model.persistable.projects.Project;
-import tramways.model.properties.Property;
-import tramways.model.roadmap.RoadMap;
 
 @Path("analysis")
 @Transactional
@@ -55,13 +55,5 @@ public class AnalysisRS {
 			@PathParam("map") String map, @QueryParam("name") String name, List<Property> parameters) {
 		AnalysisType type = service.getAnalysisType(analysisTypeId);
 		service.launchAnalysis(type, name, project, map, parameters);
-	}
-
-	@DELETE
-	@Path("projects/{project}/maps/{map}/analysis/{analysis}")
-	public void deleteAnalysis(@PathParam("project") String project, @PathParam("map") String map,
-			@PathParam("analysis") String analysis) {
-		Project p = projectService.retrieveProject(project);
-		p.getMap(map).removeAnalysis(analysis);
 	}
 }

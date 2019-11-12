@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 
 import javax.enterprise.util.Nonbinding;
 
-import tramways.model.auth.Role;
+import tramways.core.model.persistable.users.Role;
 
 @Target({ TYPE, METHOD, PARAMETER, FIELD })
 @Retention(RUNTIME)

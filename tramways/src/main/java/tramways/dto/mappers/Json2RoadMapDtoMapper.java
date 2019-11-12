@@ -4,20 +4,20 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 
-import tramways.model.distributions.ConstantDistribution;
-import tramways.model.distributions.Distribution;
-import tramways.model.distributions.ExponentialDistribution;
-import tramways.model.distributions.UniformDistribution;
-import tramways.model.properties.Property;
-import tramways.model.roadmap.RoadMap;
-import tramways.model.roadmap.points.CrossingPoint;
-import tramways.model.roadmap.points.DestinationPoint;
-import tramways.model.roadmap.points.RelevantPoint;
-import tramways.model.roadmap.points.SourcePoint;
-import tramways.model.roadmap.points.trafficlight.SensorTrafficLight;
-import tramways.model.roadmap.points.trafficlight.TimedTrafficLight;
-import tramways.model.roadmap.points.trafficlight.TrafficLight;
-import tramways.model.roadmap.points.trafficlight.TrafficLightCrossingPoint;
+import tramways.core.model.distributionss.ConstantDistribution;
+import tramways.core.model.distributionss.Distribution;
+import tramways.core.model.distributionss.ExponentialDistribution;
+import tramways.core.model.distributionss.UniformDistribution;
+import tramways.core.model.propertiess.Property;
+import tramways.core.model.roadmap.RoadMap;
+import tramways.core.model.roadmap.points.CrossingPoint;
+import tramways.core.model.roadmap.points.DestinationPoint;
+import tramways.core.model.roadmap.points.RelevantPoint;
+import tramways.core.model.roadmap.points.SourcePoint;
+import tramways.core.model.roadmap.points.trafficlight.SensorTrafficLight;
+import tramways.core.model.roadmap.points.trafficlight.TimedTrafficLight;
+import tramways.core.model.roadmap.points.trafficlight.TrafficLight;
+import tramways.core.model.roadmap.points.trafficlight.TrafficLightCrossingPoint;
 
 public class Json2RoadMapDtoMapper {
 	

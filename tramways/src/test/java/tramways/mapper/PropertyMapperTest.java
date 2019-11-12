@@ -7,10 +7,10 @@ import javax.inject.Inject;
 import org.junit.Test;
 
 import tramways.CDITest;
+import tramways.core.model.persistable.properties.PropertyWrapper;
+import tramways.core.model.propertiess.IntegerProperty;
+import tramways.core.model.propertiess.Property;
 import tramways.dto.mappers.PropertyMapper;
-import tramways.model.persistable.properties.PropertyWrapper;
-import tramways.model.properties.IntegerProperty;
-import tramways.model.properties.Property;
 
 public class PropertyMapperTest extends CDITest {
 

@@ -2,7 +2,7 @@ package tramways.dto;
 
 import java.util.List;
 
-import tramways.model.properties.Property;
+import tramways.core.model.propertiess.Property;
 
 public class ConfigurationDto extends Dto{
 

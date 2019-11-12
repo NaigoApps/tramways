@@ -2,7 +2,7 @@ package tramways.inbound;
 
 import java.util.List;
 
-import tramways.model.persistable.configurations.Configuration;
+import tramways.core.model.persistable.configurations.Configuration;
 
 public interface ConfigurationService {
 

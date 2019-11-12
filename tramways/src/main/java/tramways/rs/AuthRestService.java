@@ -7,12 +7,12 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
+import tramways.core.model.persistable.users.User;
 import tramways.dto.LoginData;
 import tramways.dto.UserDto;
 import tramways.dto.mappers.UserMapper;
 import tramways.exceptions.LoginException;
 import tramways.inbound.UserService;
-import tramways.model.persistable.users.User;
 import tramways.rs.annotations.Unsecure;
 import tramways.services.TokenManager;
 

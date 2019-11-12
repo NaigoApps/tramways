@@ -7,8 +7,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
+import tramways.core.model.persistable.users.User;
 import tramways.dto.UserDto;
-import tramways.model.persistable.users.User;
 
 @Mapper(config = MapperConfiguration.class)
 public interface UserMapper {

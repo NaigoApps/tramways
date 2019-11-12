@@ -5,15 +5,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import tramways.model.roadmap.RoadMap;
-import tramways.model.roadmap.lanes.LaneSegment;
-import tramways.model.roadmap.points.CrossingPoint;
-import tramways.model.roadmap.points.DestinationPoint;
-import tramways.model.roadmap.points.LaneSegmentLink;
-import tramways.model.roadmap.points.RelevantPoint;
-import tramways.model.roadmap.points.SourcePoint;
-import tramways.model.roadmap.points.SourcePointType;
-import tramways.model.roadmap.points.trafficlight.TrafficLightCrossingPoint;
+import tramways.core.model.roadmap.RoadMap;
+import tramways.core.model.roadmap.lanes.LaneSegment;
+import tramways.core.model.roadmap.points.CrossingPoint;
+import tramways.core.model.roadmap.points.DestinationPoint;
+import tramways.core.model.roadmap.points.LaneSegmentLink;
+import tramways.core.model.roadmap.points.RelevantPoint;
+import tramways.core.model.roadmap.points.SourcePoint;
+import tramways.core.model.roadmap.points.SourcePointType;
+import tramways.core.model.roadmap.points.trafficlight.TrafficLightCrossingPoint;
 
 public class RoadMapValidator {
 

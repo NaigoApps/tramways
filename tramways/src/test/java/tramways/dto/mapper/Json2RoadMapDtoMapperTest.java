@@ -7,15 +7,15 @@ import static tramways.Utils.readJson;
 import org.junit.Before;
 import org.junit.Test;
 
+import tramways.core.model.roadmap.RoadMap;
+import tramways.core.model.roadmap.lanes.LaneSegment;
+import tramways.core.model.roadmap.points.DestinationPoint;
+import tramways.core.model.roadmap.points.LaneSegmentLink;
+import tramways.core.model.roadmap.points.SourcePoint;
+import tramways.core.model.roadmap.points.SourcePointType;
+import tramways.core.model.roadmap.points.trafficlight.SensorTrafficLight;
+import tramways.core.model.roadmap.points.trafficlight.TrafficLightCrossingPoint;
 import tramways.dto.mappers.Json2RoadMapDtoMapper;
-import tramways.model.roadmap.RoadMap;
-import tramways.model.roadmap.lanes.LaneSegment;
-import tramways.model.roadmap.points.DestinationPoint;
-import tramways.model.roadmap.points.LaneSegmentLink;
-import tramways.model.roadmap.points.SourcePoint;
-import tramways.model.roadmap.points.SourcePointType;
-import tramways.model.roadmap.points.trafficlight.SensorTrafficLight;
-import tramways.model.roadmap.points.trafficlight.TrafficLightCrossingPoint;
 
 public class Json2RoadMapDtoMapperTest {
 
