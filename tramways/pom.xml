@@ -116,7 +116,6 @@
 			<version>2.9.9</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>org.jboss.weld</groupId>
 			<artifactId>weld-junit4</artifactId>
@@ -175,6 +174,17 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.jsonschema2pojo</groupId>
+				<artifactId>jsonschema2pojo-maven-plugin</artifactId>
+				<version>1.0.2</version>
+				<configuration>
+					<sourceDirectory>${basedir}/src/main/resources/schema</sourceDirectory>
+					<targetPackage>com.naigoapps.tramways.rs.model</targetPackage>
+				</configuration>
+			</plugin>
+
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
