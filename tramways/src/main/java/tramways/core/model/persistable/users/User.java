@@ -28,7 +28,7 @@ public class User extends BaseEntity {
 
 	private String username;
 
-	private boolean toBeDeleted;
+	private boolean enabled;
 
 	@Lob
 	private byte[] password;
@@ -94,12 +94,12 @@ public class User extends BaseEntity {
 		return Collections.unmodifiableSet(roles);
 	}
 
-	public boolean isToBeDeleted() {
-		return toBeDeleted;
+	public boolean isEnabled() {
+		return enabled;
 	}
 
-	public void setToBeDeleted(boolean toBeDeleted) {
-		this.toBeDeleted = toBeDeleted;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	private static MessageDigest getAlgorithm() {

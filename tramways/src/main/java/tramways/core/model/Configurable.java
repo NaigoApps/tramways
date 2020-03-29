@@ -3,7 +3,7 @@ package tramways.core.model;
 import java.util.List;
 
 import tramways.core.model.persistable.configurations.Configuration;
-import tramways.core.model.propertiess.Property;
+import tramways.core.model.properties.Property;
 
 public interface Configurable {
 

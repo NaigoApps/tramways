@@ -1,18 +1,19 @@
 package tramways.inbound.impl;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
 import tramways.DefaultMessageCollector;
 import tramways.core.model.persistable.projects.Project;
 import tramways.core.model.persistable.projects.RoadMapWrapper;
 import tramways.core.model.roadmap.RoadMap;
 import tramways.dto.mappers.Json2RoadMapDtoMapper;
 import tramways.inbound.ProjectService;
+import tramways.inbound.api.UsersApiService;
+import tramways.inbound.model.CreateProjectRequest;
 import tramways.outbound.ProjectRepository;
 import tramways.services.MessageCollector;
 import tramways.services.RoadMapValidator;
+
+import javax.inject.Inject;
+import java.util.List;
 
 public class ProjectServiceImpl implements ProjectService {
 
@@ -20,10 +21,10 @@ public class ProjectServiceImpl implements ProjectService {
 	private ProjectRepository repository;
 
 	@Inject
-	private UserServiceImpl uService;
+	private UsersApiService uService;
 
 	@Override
-	public List<Project> retrieveProjects(String userUuid) {
+	public List<Project> retrieveUserProjects(String userUuid) {
 		return repository.findByUser(userUuid);
 	}
 
@@ -33,14 +34,16 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public void createProject(Project project) {
-		project.setOwner(uService.getSessionData());
-
-		for(RoadMapWrapper map : project.listMaps()) {			
-			this.validateMap(map);
-		}
-
-		repository.create(project);
+	public Project createProject(CreateProjectRequest request) {
+		//TODO
+		return null;
+//		project.setOwner(uService.getSessionData());
+//
+//		for(RoadMapWrapper map : project.listMaps()) {
+//			this.validateMap(map);
+//		}
+//
+//		repository.create(project);
 	}
 
 	@Override
@@ -63,7 +66,7 @@ public class ProjectServiceImpl implements ProjectService {
 	public void updateProject(String uuid, String name) {
 		repository.update(uuid, name);
 	}
-	
+
 	@Override
 	public void editMap(String projectUuid, String mapUuid, String map) {
 		Project target = repository.findByUuid(projectUuid);
@@ -76,7 +79,7 @@ public class ProjectServiceImpl implements ProjectService {
 		target.addMap(newMap);
 		validateMap(target.getMap(mapUuid));
 	}
-	
+
 	@Override
 	public void duplicateMap(String projectUuid, String mapUuid, String mapName) {
 		Project target = repository.findByUuid(projectUuid);

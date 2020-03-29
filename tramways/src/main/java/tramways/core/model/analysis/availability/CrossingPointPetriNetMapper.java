@@ -14,8 +14,8 @@ public class CrossingPointPetriNetMapper {
 	public PetriNet map(RoadMap map) {
 		TrafficLightCrossingPoint tl = map.getPoints(TrafficLightCrossingPoint.class).iterator().next();
 		LaneSegment target = map.getLane(carLane);
-		
-		SourcePoint sourcePoint = map.getPoint(target.getSource(), SourcePoint.class);
+
+		SourcePoint sourcePoint = map.getPoint(target.getSource().getUuid(), SourcePoint.class);
 		target.getDestination().equals(tl.getUuid());
 		return null;
 	}

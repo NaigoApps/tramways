@@ -1,6 +1,6 @@
 package tramways.core.model.properties;
 
-import tramways.core.model.distributionss.Distribution;
+import tramways.core.model.distributions.Distribution;
 
 public class DistributionProperty extends Property {
 
@@ -9,7 +9,7 @@ public class DistributionProperty extends Property {
 	public DistributionProperty() {
 		setType(PropertyType.DISTRIBUTION);
 	}
-	
+
 	public void setValue(Distribution value) {
 		this.value = value;
 	}

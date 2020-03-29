@@ -1,13 +1,14 @@
 package tramways.outbound;
 
-import java.util.List;
-
 import tramways.core.model.persistable.projects.Project;
 
+import java.util.List;
+
 public interface ProjectRepository {
-	public Project create(Project p);
-	public Project findByUuid(String id);
-	public List<Project> findByUser(String userUuid);
-	public Project update(String id, String name);
-	public void delete(String id);
+	Project create(Project p);
+	Project findByUuid(String id);
+	List<Project> findByUser(String userUuid);
+	Project update(String id, String name);
+	void delete(String id);
+    void deleteByUser(String id);
 }

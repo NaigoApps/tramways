@@ -11,7 +11,7 @@ import tramways.core.model.analysis.result.AnalysisResult;
 import tramways.core.model.persistable.projects.AnalysisWrapper;
 import tramways.core.model.persistable.projects.Project;
 import tramways.core.model.persistable.projects.RoadMapWrapper;
-import tramways.core.model.propertiess.Property;
+import tramways.core.model.properties.Property;
 import tramways.core.model.roadmap.RoadMap;
 import tramways.inbound.AnalysisService;
 import tramways.outbound.ProjectRepository;

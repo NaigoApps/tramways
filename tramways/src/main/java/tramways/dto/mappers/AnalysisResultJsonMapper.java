@@ -1,37 +1,36 @@
 package tramways.dto.mappers;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
-
-import tramways.core.model.analysis.AnalysisResultType;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.LoggerFactory;
 import tramways.core.model.analysis.result.AnalysisResult;
-import tramways.core.model.analysis.result.XYAnalysisResult;
+
+import java.io.IOException;
 
 public class AnalysisResultJsonMapper {
-	
-	private Gson mapper;
-	
+
+	private ObjectMapper mapper;
+
 	public AnalysisResultJsonMapper() {
-		mapper = initMapper();
+		mapper = new ObjectMapper();
 	}
 
 	public AnalysisResult map(String json) {
-		return mapper.fromJson(json, AnalysisResult.class);
+		try {
+			return mapper.readValue(json, AnalysisResult.class);
+		} catch (IOException e) {
+			LoggerFactory.getLogger(getClass()).error("Error", e);
+			return null;
+		}
 	}
 
 	public String map(AnalysisResult result) {
-		return mapper.toJson(result, AnalysisResult.class);
+		try {
+			return mapper.writeValueAsString(result);
+		} catch (JsonProcessingException e) {
+			LoggerFactory.getLogger(getClass()).error("Error", e);
+			return null;
+		}
 	}
-	
-	private Gson initMapper() {
-		RuntimeTypeAdapterFactory<AnalysisResult> resultsFactory = RuntimeTypeAdapterFactory
-				.of(AnalysisResult.class)
-				.registerSubtype(XYAnalysisResult.class, AnalysisResultType.XY.getName());
-		
-		return new GsonBuilder().setPrettyPrinting()
-			.registerTypeAdapterFactory(resultsFactory)
-			.create();
-	}
-	
+
 }

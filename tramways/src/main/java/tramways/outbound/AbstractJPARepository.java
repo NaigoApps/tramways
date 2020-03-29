@@ -13,7 +13,7 @@ import javax.persistence.criteria.Root;
 import org.slf4j.LoggerFactory;
 
 import tramways.core.model.persistable.BaseEntity;
-import tramways.model.persistable.BaseEntity_;
+import tramways.core.model.persistable.BaseEntity_;
 
 public abstract class AbstractJPARepository<E extends BaseEntity> {
 
@@ -79,13 +79,17 @@ public abstract class AbstractJPARepository<E extends BaseEntity> {
 	protected void deleteByUuid(String uuid) {
 		em.remove(findByUuid(uuid));
 	}
-	
+
 	protected CriteriaBuilder cb() {
 		return em.getCriteriaBuilder();
 	}
-	
+
 	protected CriteriaQuery<E> query(){
 		return em.getCriteriaBuilder().createQuery(getEntityClass());
+	}
+
+	protected <T> CriteriaQuery<T> query(Class<T> queryClass){
+		return em.getCriteriaBuilder().createQuery(queryClass);
 	}
 
     protected abstract Class<E> getEntityClass();

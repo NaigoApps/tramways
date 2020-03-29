@@ -1,33 +1,26 @@
 package tramways.dto.mappers;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
-
-import tramways.core.model.distributionss.Distribution;
-import tramways.core.model.propertiess.Property;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.LoggerFactory;
 import tramways.dto.ConfigurationDto;
 
+import java.io.IOException;
+
 public class Json2ConfigurationDtoMapper {
-	
-	private Gson mapper;
-	
+
+	private ObjectMapper mapper;
+
 	public Json2ConfigurationDtoMapper() {
-		mapper = initMapper();
+		mapper = new ObjectMapper();
 	}
-	
+
 	public ConfigurationDto map(String json) {
-		return mapper.fromJson(json, ConfigurationDto.class);
+		try {
+			return mapper.readValue(json, ConfigurationDto.class);
+		} catch (IOException e) {
+			LoggerFactory.getLogger(getClass()).error("Error", e);
+			return null;
+		}
 	}
-	
-	private Gson initMapper() {
-		RuntimeTypeAdapterFactory<Distribution> distributionsFactory = DistributionAdapterFactory.getFactory();
-		RuntimeTypeAdapterFactory<Property> propertyFactory = PropertyAdapterFactory.getFactory();
-		
-		return new GsonBuilder()
-				.registerTypeAdapterFactory(distributionsFactory)
-				.registerTypeAdapterFactory(propertyFactory)
-				.create();
-	}
-	
+
 }

@@ -26,30 +26,30 @@ public class CrossroadTest {
 
 		LaneSegment tA = new LaneSegment();
 		LaneSegment tB = new LaneSegment();
-		
+
 		SourcePoint csp = new SourcePoint();
 		csp.setKind(SourcePointType.CAR);
 		csp.setTargetLane(cA.getUuid());
-		
+
 		SourcePoint tsp = new SourcePoint();
 		tsp.setKind(SourcePointType.TRAM);
 		tsp.setTargetLane(tA.getUuid());
-		
+
 		DestinationPoint cdp = new DestinationPoint();
 		cdp.getLanes().add(cB.getUuid());
-		
+
 		DestinationPoint tdp = new DestinationPoint();
 		tdp.getLanes().add(tB.getUuid());
-		
+
 		CrossingPoint crossing = new CrossingPoint();
-		
-		Map<String, Set<LaneSegmentLink>> constraints = new HashMap<>();
-		constraints.put(tA.getUuid(), new HashSet<>());
-		constraints.get(tA.getUuid()).add(new LaneSegmentLink(tB.getUuid()));
-		constraints.put(cA.getUuid(), new HashSet<>());
-		constraints.get(cA.getUuid()).add(new LaneSegmentLink(cB.getUuid()));
+
+		Map<LaneSegment, Set<LaneSegmentLink>> constraints = new HashMap<>();
+		constraints.put(tA, new HashSet<>());
+		constraints.get(tA).add(new LaneSegmentLink(tB.getUuid()));
+		constraints.put(cA, new HashSet<>());
+		constraints.get(cA).add(new LaneSegmentLink(cB.getUuid()));
 		crossing.setConstraints(constraints);
-		
+
 		RoadMap map = new RoadMap();
 		map.getPoints().add(csp);
 		map.getPoints().add(tsp);
@@ -57,16 +57,16 @@ public class CrossroadTest {
 		map.getPoints().add(tdp);
 		map.getPoints().add(crossing);
 		map.initialize();
-		
+
 		assertEquals(2, crossing.getConstraints().size());
-		assertEquals(tB.getUuid(), crossing.getConstraints(tA.getUuid()).iterator().next().getDestination());
-		assertEquals(cB.getUuid(), crossing.getConstraints(cA.getUuid()).iterator().next().getDestination());
+		assertEquals(tB.getUuid(), crossing.getConstraints(tA).iterator().next().getDestination());
+		assertEquals(cB.getUuid(), crossing.getConstraints(cA).iterator().next().getDestination());
 
 		assertEquals(crossing.getUuid(), map.getLane(tA.getUuid()).getDestination());
 		assertEquals(crossing.getUuid(), map.getLane(cA.getUuid()).getDestination());
 		assertEquals(crossing.getUuid(), map.getLane(tB.getUuid()).getSource());
 		assertEquals(crossing.getUuid(), map.getLane(cB.getUuid()).getSource());
-		
+
 	}
 
 }

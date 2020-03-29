@@ -5,8 +5,8 @@ import java.util.List;
 
 import tramways.core.model.analysis.Analysis;
 import tramways.core.model.analysis.AnalysisType;
-import tramways.core.model.propertiess.Property;
-import tramways.core.model.propertiess.StringProperty;
+import tramways.core.model.properties.Property;
+import tramways.core.model.properties.StringProperty;
 import tramways.core.model.roadmap.RoadMap;
 import tramways.core.model.roadmap.points.CrossingPoint;
 import tramways.services.MessageCollector;
@@ -17,7 +17,7 @@ public class AvailabilityAnalysisType implements AnalysisType{
 	public String getId() {
 		return "availability";
 	}
-	
+
 	@Override
 	public String getName() {
 		return "Availability";
@@ -39,7 +39,7 @@ public class AvailabilityAnalysisType implements AnalysisType{
 		}
 		return true;
 	}
-	
+
 	@Override
 	public List<Property> getRequiredParameters(RoadMap map) {
 		StringProperty prop = new StringProperty("Car lane");

@@ -14,17 +14,18 @@ import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.ext.Provider;
 
 import tramways.core.model.persistable.users.Role;
 import tramways.core.model.persistable.users.User;
-import tramways.inbound.UserService;
+import tramways.inbound.api.UsersApiService;
+import tramways.outbound.UserRepository;
 import tramways.rs.annotations.Roles;
 import tramways.rs.annotations.Unsecure;
 import tramways.services.RequestSession;
 import tramways.services.TokenManager;
 
-@Provider
+//FIXME
+//@Provider
 public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilter {
 
 	@Context
@@ -34,10 +35,13 @@ public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilt
 	private RequestSession authService;
 
 	@Inject
-	private UserService userService;
+	private UsersApiService userService;
 
 	@Inject
 	private TokenManager tokenManager;
+
+	@Inject
+	private UserRepository userRepository;
 
 	@Override
 	@Transactional
@@ -46,11 +50,10 @@ public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilt
 			return;
 		}
 
-		String userUuid = null;
-		if ((userUuid = extractUser(requestContext)) != null) {
-			authService.setLoggedUserUuid(userUuid);
-			User current = userService.getSessionData();
-			if (!hasPermission(current.listRoles())) {
+		User user = null;
+		if ((user = extractUser(requestContext)) != null) {
+			requestContext.setSecurityContext(new TramwaysSecurityContext(user));
+			if (!hasPermission(user.listRoles())) {
 				throw new BadRequestException("Unauthorized");
 			}
 		} else {
@@ -77,11 +80,11 @@ public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilt
 		return resourceInfo.getResourceMethod().isAnnotationPresent(Unsecure.class);
 	}
 
-	private String extractUser(ContainerRequestContext context) {
+	private User extractUser(ContainerRequestContext context) {
 		String authorizationHeader = context.getHeaderString(HttpHeaders.AUTHORIZATION);
 		if (authorizationHeader != null) {
 			String token = authorizationHeader.substring("Bearer".length()).trim();
-			return tokenManager.token2User(token);
+			return userRepository.findByUuid(tokenManager.token2User(token));
 		}
 		return null;
 	}

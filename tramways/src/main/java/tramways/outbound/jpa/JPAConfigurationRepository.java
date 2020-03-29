@@ -1,4 +1,4 @@
-package tramways.outbound.impl;
+package tramways.outbound.jpa;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class JPAConfigurationRepository extends AbstractJPARepository<Configurat
 	public List<Configuration> findAll() {
 		return super.findAll();
 	}
-	
+
 	@Override
 	public Configuration findByUuid(String uuid) {
 		return super.findByUuid(uuid);
@@ -28,7 +28,7 @@ public class JPAConfigurationRepository extends AbstractJPARepository<Configurat
 	public void delete(String uuid) {
 		super.delete(findByUuid(uuid));
 	}
-	
+
 	@Override
 	protected Class<Configuration> getEntityClass() {
 		return Configuration.class;

@@ -3,10 +3,10 @@ package tramways.core.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import tramways.core.model.distributionss.Distribution;
+import tramways.core.model.distributions.Distribution;
 import tramways.core.model.persistable.configurations.Configuration;
 import tramways.core.model.persistable.properties.PropertyWrapper;
-import tramways.core.model.propertiess.Property;
+import tramways.core.model.properties.Property;
 
 public class AbstractConfigurable extends AbstractIdentifiable implements Configurable {
 
@@ -21,7 +21,7 @@ public class AbstractConfigurable extends AbstractIdentifiable implements Config
 			applyImpl(prop.retrieveContent());
 		}
 	}
-	
+
 	@Override
 	public void apply(List<Property> properties) {
 		for(Property prop : properties) {
