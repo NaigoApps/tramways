@@ -3,7 +3,6 @@ package tramways.outbound.jpa;
 import tramways.core.model.persistable.BaseEntity_;
 import tramways.core.model.persistable.projects.Project;
 import tramways.core.model.persistable.projects.Project_;
-import tramways.outbound.AbstractJPARepository;
 import tramways.outbound.ProjectRepository;
 
 import javax.persistence.criteria.CriteriaDelete;
