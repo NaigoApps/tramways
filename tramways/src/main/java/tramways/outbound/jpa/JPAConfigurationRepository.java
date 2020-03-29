@@ -3,6 +3,7 @@ package tramways.outbound.jpa;
 import java.util.List;
 
 import tramways.core.model.persistable.configurations.Configuration;
+import tramways.outbound.AbstractJPARepository;
 import tramways.outbound.ConfigurationRepository;
 
 public class JPAConfigurationRepository extends AbstractJPARepository<Configuration> implements ConfigurationRepository {

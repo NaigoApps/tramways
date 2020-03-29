@@ -5,6 +5,7 @@ import tramways.core.model.persistable.BaseEntity_;
 import tramways.core.model.persistable.users.Role;
 import tramways.core.model.persistable.users.User;
 import tramways.core.model.persistable.users.User_;
+import tramways.outbound.AbstractJPARepository;
 import tramways.outbound.UserRepository;
 
 import javax.persistence.NoResultException;
