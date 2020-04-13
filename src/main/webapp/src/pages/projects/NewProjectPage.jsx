@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import useNetwork from "../../hooks/useNetwork";
 import InputTextFile from "../../inputs/InputTextFile";
 import Page from "../Page";
-import useStyles from "../../utils/styles";
+import useStyles from "../../utils/useStyles";
 import CheckIcon from "@material-ui/icons/Check";
 
 export default function NewProjectPage({ navigate }) {

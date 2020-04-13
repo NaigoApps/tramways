@@ -1,6 +1,6 @@
 import { Chip, Grid, Slider } from "@material-ui/core";
 import React, { Fragment } from "react";
-import { pointIcon } from "../../../utils/IconUtils";
+import { pointIcon } from "../../../utils/iconUtils";
 
 export default function CrossingPointConstraint({
   map,

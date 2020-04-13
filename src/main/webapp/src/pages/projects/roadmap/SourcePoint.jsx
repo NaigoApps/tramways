@@ -1,7 +1,7 @@
 import { Avatar, Card, CardContent, CardHeader, Chip } from "@material-ui/core";
 import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
 import React from "react";
-import { pointIcon } from "../../../utils/IconUtils";
+import { pointIcon } from "../../../utils/iconUtils";
 
 export default function SourcePoint({ point }) {
   return (

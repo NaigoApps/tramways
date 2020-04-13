@@ -12,7 +12,7 @@ import {
   CardActions
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import useStyles from "../../utils/styles";
+import useStyles from "../../utils/useStyles";
 
 export default function ConfigurationsPage({ navigate }) {
   const { remove } = useNetwork();

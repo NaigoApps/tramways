@@ -1,6 +1,6 @@
 import { TextField } from "@material-ui/core";
 import React from "react";
-import useStyles from "../../utils/styles";
+import useStyles from "../../utils/useStyles";
 
 export default function StringPropertyInput({ label, value, onChange }) {
   const classes = useStyles();

@@ -2,7 +2,7 @@ import { Avatar, Card, CardContent, CardHeader, Chip } from "@material-ui/core";
 import ErrorIcon from "@material-ui/icons/Error";
 import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
 import React from "react";
-import { pointIcon } from "../../../utils/IconUtils";
+import { pointIcon } from "../../../utils/iconUtils";
 export default function DestinationPoint({ map, point }) {
   // function findSource(lane) {
   //   let currentPoint = getPoint(map, lane.source);

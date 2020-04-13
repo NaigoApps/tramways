@@ -1,6 +1,6 @@
 import { Button, FormControl, Typography } from "@material-ui/core";
 import React, { useState } from "react";
-import useStyles from "../utils/styles";
+import useStyles from "../utils/useStyles";
 
 export default function InputTextFile({ label, formats, onChange, variant }) {
   const classes = useStyles();

@@ -37,4 +37,7 @@
       <module name="tramways" target="11" />
     </bytecodeTargetLevel>
   </component>
+  <component name="TypeScriptCompiler">
+    <option name="versionType" value="EMBEDDED" />
+  </component>
 </project>

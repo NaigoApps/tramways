@@ -164,12 +164,12 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                 </plugin>
 
-
                 <plugin>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>3.2.2</version>
                     <configuration>
-                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                        <failOnMissingWebXml>true</failOnMissingWebXml>
+                        <warSourceDirectory>${basedir}/src/main/webapp/dist</warSourceDirectory>
                     </configuration>
                 </plugin>
 
@@ -241,7 +241,7 @@
                                     <goal>generate</goal>
                                 </goals>
                                 <configuration>
-                                    <inputSpec>${project.basedir}/src/main/resources/api/swagger/api.yaml</inputSpec>
+                                    <inputSpec>${project.basedir}/src/main/resources/api/api.yaml</inputSpec>
                                     <generatorName>jaxrs-resteasy</generatorName>
                                     <configOptions>
                                         <apiPackage>tramways.inbound.api</apiPackage>

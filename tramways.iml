@@ -4,8 +4,8 @@
     <facet type="web" name="Web">
       <configuration>
         <descriptors>
-          <deploymentDescriptor name="jboss-web.xml" url="file://$MODULE_DIR$/src/main/webapp/WEB-INF/jboss-web.xml" />
-          <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/src/main/webapp/WEB-INF/web.xml" />
+          <deploymentDescriptor name="jboss-web.xml" url="file://$MODULE_DIR$/src/main/webapp/dist/WEB-INF/jboss-web.xml" />
+          <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/src/main/webapp/dist/WEB-INF/web.xml" />
         </descriptors>
         <webroots>
           <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
@@ -14,6 +14,7 @@
           <root url="file://$MODULE_DIR$/src/main/java" />
           <root url="file://$MODULE_DIR$/src/main/resources" />
           <root url="file://$MODULE_DIR$/target/generated-sources/annotations" />
+          <root url="file://$MODULE_DIR$/target/generated-sources/openapi/src/main/java/api/generated" />
         </sourceRoots>
       </configuration>
     </facet>
@@ -21,7 +22,7 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <datasource-mapping>
-          <factory-entry name="tramways" />
+          <factory-entry name="tramways" value="0fcca273-d2e1-4b62-8283-097b96efbf53" />
         </datasource-mapping>
         <naming-strategy-map />
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
@@ -47,20 +48,21 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.9" level="project" />
     <orderEntry type="library" name="Maven: org.mongodb:mongo-java-driver:3.12.1" level="project" />
     <orderEntry type="library" name="Maven: org.oris-tool:sirio:2.0.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: com.google.auto.value:auto-value-annotations:1.6.5" level="project" />
+    <orderEntry type="library" name="Maven: com.google.auto.value:auto-value-annotations:1.7" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:25.0-jre" level="project" />
     <orderEntry type="library" name="Maven: org.jfree:jfreechart:1.0.19" level="project" />
     <orderEntry type="library" name="Maven: org.jfree:jcommon:1.0.23" level="project" />
     <orderEntry type="library" name="Maven: org.tinyjee.jgraphx:jgraphx:2.3.0.5" level="project" />
-    <orderEntry type="library" name="Maven: org.ejml:ejml-all:0.38" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:ejml-all:0.39" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:3.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.ejml:ejml-core:0.38" level="project" />
-    <orderEntry type="library" name="Maven: org.ejml:ejml-fdense:0.38" level="project" />
-    <orderEntry type="library" name="Maven: org.ejml:ejml-ddense:0.38" level="project" />
-    <orderEntry type="library" name="Maven: org.ejml:ejml-cdense:0.38" level="project" />
-    <orderEntry type="library" name="Maven: org.ejml:ejml-zdense:0.38" level="project" />
-    <orderEntry type="library" name="Maven: org.ejml:ejml-dsparse:0.38" level="project" />
-    <orderEntry type="library" name="Maven: org.ejml:ejml-simple:0.38" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:ejml-core:0.39" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:ejml-fdense:0.39" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:ejml-ddense:0.39" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:ejml-cdense:0.39" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:ejml-zdense:0.39" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:ejml-dsparse:0.39" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:ejml-simple:0.39" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:ejml-fsparse:0.39" level="project" />
     <orderEntry type="library" name="Maven: org.la4j:la4j:0.5.5" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.22.jbossorg-1" level="project" />
     <orderEntry type="library" name="Maven: io.swagger:swagger-annotations:1.6.0" level="project" />

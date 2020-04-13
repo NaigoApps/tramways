@@ -15,21 +15,22 @@
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: org.mongodb:mongo-java-driver:3.12.1" />
-          <element id="file-copy" path="$MAVEN_REPOSITORY$/org/oris-tool/sirio/2.0.0-SNAPSHOT/sirio-2.0.0-20190723.035355-36.jar" output-file-name="sirio-2.0.0-SNAPSHOT.jar" />
-          <element id="library" level="project" name="Maven: com.google.auto.value:auto-value-annotations:1.6.5" />
+          <element id="file-copy" path="$MAVEN_REPOSITORY$/org/oris-tool/sirio/2.0.0-SNAPSHOT/sirio-2.0.0-20200413.012547-37.jar" output-file-name="sirio-2.0.0-SNAPSHOT.jar" />
+          <element id="library" level="project" name="Maven: com.google.auto.value:auto-value-annotations:1.7" />
           <element id="library" level="project" name="Maven: com.google.guava:guava:25.0-jre" />
           <element id="library" level="project" name="Maven: org.jfree:jfreechart:1.0.19" />
           <element id="library" level="project" name="Maven: org.jfree:jcommon:1.0.23" />
           <element id="library" level="project" name="Maven: org.tinyjee.jgraphx:jgraphx:2.3.0.5" />
-          <element id="library" level="project" name="Maven: org.ejml:ejml-all:0.38" />
+          <element id="library" level="project" name="Maven: org.ejml:ejml-all:0.39" />
           <element id="library" level="project" name="Maven: com.google.code.findbugs:jsr305:3.0.2" />
-          <element id="library" level="project" name="Maven: org.ejml:ejml-core:0.38" />
-          <element id="library" level="project" name="Maven: org.ejml:ejml-fdense:0.38" />
-          <element id="library" level="project" name="Maven: org.ejml:ejml-ddense:0.38" />
-          <element id="library" level="project" name="Maven: org.ejml:ejml-cdense:0.38" />
-          <element id="library" level="project" name="Maven: org.ejml:ejml-zdense:0.38" />
-          <element id="library" level="project" name="Maven: org.ejml:ejml-dsparse:0.38" />
-          <element id="library" level="project" name="Maven: org.ejml:ejml-simple:0.38" />
+          <element id="library" level="project" name="Maven: org.ejml:ejml-core:0.39" />
+          <element id="library" level="project" name="Maven: org.ejml:ejml-fdense:0.39" />
+          <element id="library" level="project" name="Maven: org.ejml:ejml-ddense:0.39" />
+          <element id="library" level="project" name="Maven: org.ejml:ejml-cdense:0.39" />
+          <element id="library" level="project" name="Maven: org.ejml:ejml-zdense:0.39" />
+          <element id="library" level="project" name="Maven: org.ejml:ejml-dsparse:0.39" />
+          <element id="library" level="project" name="Maven: org.ejml:ejml-simple:0.39" />
+          <element id="library" level="project" name="Maven: org.ejml:ejml-fsparse:0.39" />
           <element id="library" level="project" name="Maven: org.la4j:la4j:0.5.5" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.22.jbossorg-1" />
           <element id="library" level="project" name="Maven: io.swagger:swagger-annotations:1.6.0" />

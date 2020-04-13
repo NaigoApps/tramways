@@ -1,6 +1,6 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
-import useStyles from "../../utils/styles";
+import useStyles from "../../utils/useStyles";
 
 export default function DecimalPropertyInput({ label, value, onChange }) {
   const classes = useStyles();

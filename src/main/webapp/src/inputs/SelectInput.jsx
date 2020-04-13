@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { distribute } from "../utils/Utils";
+import { distribute } from "../utils/utils";
 import { Button, ButtonGroup } from "@material-ui/core";
 
 export default function SelectInput({

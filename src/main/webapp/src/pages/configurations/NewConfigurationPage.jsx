@@ -17,7 +17,7 @@ import CheckIcon from "@material-ui/icons/Check";
 import React, { useState } from "react";
 import useNetwork from "../../hooks/useNetwork";
 import SelectEditor from "../../inputs/SelectEditor";
-import useStyles from "../../utils/styles";
+import useStyles from "../../utils/useStyles";
 import Page from "../Page";
 import PropertyInput from "../properties/PropertyInput";
 

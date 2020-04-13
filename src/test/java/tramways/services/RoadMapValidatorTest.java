@@ -10,8 +10,8 @@ import org.junit.Test;
 import tramways.CDITest;
 import tramways.DefaultMessageCollector;
 import tramways.Utils;
-import tramways.core.model.roadmap.RoadMap;
-import tramways.dto.mappers.Json2RoadMapDtoMapper;
+import tramways.dto.mappers.Json2RoadMapMapper;
+import tramways.inbound.model.RoadMap;
 
 public class RoadMapValidatorTest extends CDITest {
 
@@ -19,7 +19,7 @@ public class RoadMapValidatorTest extends CDITest {
 	private RoadMapValidator validator;
 
 	@Inject
-	private Json2RoadMapDtoMapper mapper;
+	private Json2RoadMapMapper mapper;
 
 	@Test
 	public void testValidateOk01() {

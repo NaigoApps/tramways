@@ -48,10 +48,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserRequest'
+              $ref: '#/components/schemas/LoginRequest'
       responses:
         '200':
           $ref: '#/components/responses/Ok'
+  /users/logged:
+    get:
+      summary: 'Gets logged user'
+      operationId: 'logged'
+      responses:
+        '200':
+          description: 'Ok'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
   /users/{id}:
     get:
       operationId: 'getUser'
@@ -194,6 +205,18 @@ components:
           type: string
         password:
           type: string
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserRole'
+      required: [roles]
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
     User:
       allOf:
         - $ref: '#/components/schemas/Resource'
@@ -205,6 +228,7 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/UserRole'
+          required: [username, roles]
     UserRole:
       type: string
       enum: [CLIENT, EXPERT, ADMIN]
@@ -220,21 +244,8 @@ components:
     Resource:
       type: object
       properties:
-        actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Action'
-    Action:
-      type: object
-      properties:
-        name:
+        uuid:
           type: string
-        description:
-          type: string
-        uri:
-          type: string
-        method:
-          $ref: '#/components/schemas/ActionMethod'
     BooleanWrapper:
       type: object
       properties:
@@ -245,9 +256,6 @@ components:
       properties:
         value:
           type: string
-    ActionMethod:
-      type: string
-      enum: [GET, PUT, POST, DELETE]
     Error:
       type: object
       properties:

@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="Maven: org.oris-tool:sirio:2.0.0-SNAPSHOT">
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/oris-tool/sirio/2.0.0-SNAPSHOT/sirio-2.0.0-20190723.035355-36.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/oris-tool/sirio/2.0.0-SNAPSHOT/sirio-2.0.0-20200413.012547-37.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/org/oris-tool/sirio/2.0.0-SNAPSHOT/sirio-2.0.0-20190723.035355-36-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/oris-tool/sirio/2.0.0-SNAPSHOT/sirio-2.0.0-20200413.012547-37-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/oris-tool/sirio/2.0.0-SNAPSHOT/sirio-2.0.0-20190723.035355-36-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/oris-tool/sirio/2.0.0-SNAPSHOT/sirio-2.0.0-20200413.012547-37-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
