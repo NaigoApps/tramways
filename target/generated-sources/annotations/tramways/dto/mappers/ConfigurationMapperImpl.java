@@ -6,13 +6,12 @@ import javax.annotation.processing.Generated;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import tramways.core.model.persistable.configurations.Configuration;
-import tramways.core.model.persistable.properties.PropertyWrapper;
 import tramways.core.model.properties.Property;
 import tramways.dto.ConfigurationDto;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-04-13T14:51:39+0200",
+    date = "2020-04-13T17:27:10+0200",
     comments = "version: 1.3.0.Final, compiler: javac, environment: Java 11 (Oracle Corporation)"
 )
 @ApplicationScoped

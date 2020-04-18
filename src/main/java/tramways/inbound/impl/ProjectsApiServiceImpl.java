@@ -1,7 +1,9 @@
 package tramways.inbound.impl;
 
 import tramways.core.model.persistable.projects.Project;
+import tramways.core.model.persistable.projects.RoadMap;
 import tramways.core.model.persistable.users.User;
+import tramways.core.model.properties.Properties;
 import tramways.dto.mappers.Json2RoadMapMapper;
 import tramways.dto.mappers.ProjectMapper;
 import tramways.dto.mappers.RoadMapMapper;
@@ -10,6 +12,11 @@ import tramways.inbound.api.NotFoundException;
 import tramways.inbound.api.ProjectsApiService;
 import tramways.inbound.model.CreateMapRequest;
 import tramways.inbound.model.CreateProjectRequest;
+import tramways.inbound.model.CrossingLink;
+import tramways.inbound.model.IntegerProperty;
+import tramways.inbound.model.Lane;
+import tramways.inbound.model.RelevantPoint;
+import tramways.inbound.model.RoadMapContent;
 import tramways.inbound.model.UpdateMapRequest;
 import tramways.inbound.model.UpdateProjectRequest;
 import tramways.outbound.ProjectRepository;
@@ -19,6 +26,8 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import java.util.Arrays;
+import java.util.Collections;
 
 @Transactional
 public class ProjectsApiServiceImpl implements ProjectsApiService {
@@ -42,10 +51,28 @@ public class ProjectsApiServiceImpl implements ProjectsApiService {
     public Response createMap(String projectId, CreateMapRequest request, SecurityContext securityContext) throws NotFoundException {
         Project project = repository.findByUuid(projectId);
         tramways.core.model.persistable.projects.RoadMap newMap = new tramways.core.model.persistable.projects.RoadMap();
-        newMap.setName(request.getName());
-        newMap.setMap(jsonRoadMapMapper.map(request.getMap()));
+        newMap.setName(request.getMap().getName());
+        createDemoMap(request);
+        newMap.setMap(jsonRoadMapMapper.map(request.getMap().getContent()));
         project.addMap(newMap);
         return RestUtils.created("projects/" + projectId + "/maps/" + newMap.getUuid(), roadMapMapper.map(newMap));
+    }
+
+    private void createDemoMap(CreateMapRequest request) {
+        RelevantPoint p0 = new RelevantPoint();
+        p0.setId("P0");
+        p0.getProps().add(Properties.intProperty("x", 0L));
+        p0.getProps().add(Properties.intProperty("y", 0L));
+        RelevantPoint p1 = new RelevantPoint();
+        p1.setId("P1");
+        Lane l1 = new Lane();
+        l1.setSourceId(p0.getId());
+        l1.setDestinationId(p1.getId());
+
+        RoadMapContent content = new RoadMapContent();
+        content.setPoints(Arrays.asList(p0, p1));
+        content.setLanes(Collections.singletonList(l1));
+        request.getMap().setContent(content);
     }
 
     @Override
@@ -59,7 +86,10 @@ public class ProjectsApiServiceImpl implements ProjectsApiService {
 
     @Override
     public Response deleteMap(String projectId, String mapId, SecurityContext securityContext) throws NotFoundException {
-        return null;
+        Project project = repository.findByUuid(projectId);
+        project.removeMap(mapId);
+        repository.deleteMap(mapId);
+        return RestUtils.ok("Map deleted");
     }
 
     @Override
@@ -82,7 +112,7 @@ public class ProjectsApiServiceImpl implements ProjectsApiService {
 
     @Override
     public Response getMap(String projectId, String mapId, SecurityContext securityContext) throws NotFoundException {
-        return null;
+        return RestUtils.ok(roadMapMapper.map(repository.findByUuid(projectId).getMap(mapId)));
     }
 
     @Override
@@ -92,8 +122,11 @@ public class ProjectsApiServiceImpl implements ProjectsApiService {
     }
 
     @Override
-    public Response updateMap(String projectId, String mapId, UpdateMapRequest updateMapRequest, SecurityContext securityContext) throws NotFoundException {
-        return null;
+    public Response updateMap(String projectId, String mapId, UpdateMapRequest request, SecurityContext securityContext) throws NotFoundException {
+        RoadMap map = repository.findByUuid(projectId).getMap(mapId);
+        map.setName(request.getMap().getName());
+        map.setMap(jsonRoadMapMapper.map(request.getMap().getContent()));
+        return RestUtils.ok(roadMapMapper.map(map));
     }
 
 

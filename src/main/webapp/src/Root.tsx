@@ -28,6 +28,7 @@ import {AccountCircle} from "@material-ui/icons";
 import ProfilePage from "./pages/ProfilePage";
 import ProjectsPage from "./pages/projects/ProjectsPage";
 import ProjectPage from "./pages/projects/ProjectPage";
+import RoadMapPage from "./pages/projects/RoadMapPage";
 
 const Root = () => {
     const {
@@ -100,7 +101,7 @@ const Root = () => {
 
                     <ProjectsPage path="projects" default />
                     <ProjectPage path="projects/:projectId" />
-                    {/*<RoadMapPage path="projects/:projectId/:mapId" />*/}
+                    <RoadMapPage path="projects/:projectId/:mapId" />
                     {/*<AnalysisPage path="projects/:projectId/:mapId/analysis" />*/}
 
                     {/*<ConfigurationsPage path="configurations" />*/}

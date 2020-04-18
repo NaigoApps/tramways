@@ -7,9 +7,6 @@ import tramways.inbound.model.RoadMapDescription;
 @Mapper(config = MapperConfiguration.class, uses = {UserMapper.class, AnalysisMapper.class})
 public interface RoadMapMapper {
 
-    default tramways.inbound.model.RoadMap map(RoadMap m) {
-        return m.getContent();
-    }
-
+    tramways.inbound.model.RoadMap map(RoadMap m);
     RoadMapDescription description(RoadMap map);
 }

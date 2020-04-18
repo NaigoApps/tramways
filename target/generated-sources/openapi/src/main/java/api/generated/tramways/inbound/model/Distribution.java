@@ -12,7 +12,7 @@ import tramways.inbound.model.DistributionType;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-13T14:51:32.877637400+02:00[Europe/Berlin]")@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "distributionType", visible = true)
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-13T17:27:03.760042100+02:00[Europe/Berlin]")@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "distributionType", visible = true)
 @JsonSubTypes({
   @JsonSubTypes.Type(value = UniformDistribution.class, name = "UniformDistribution"),
   @JsonSubTypes.Type(value = ExponentialDistribution.class, name = "ExponentialDistribution"),

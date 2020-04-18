@@ -7,9 +7,9 @@ servers:
   - url: http://localhost:8080/tramways/rest
 
 paths:
-# # # # # # #
-# USERS
-# # # # # # #
+  # # # # # # #
+  # USERS
+  # # # # # # #
   /users:
     get:
       operationId: 'getUsers'
@@ -181,9 +181,9 @@ paths:
       responses:
         '200':
           description: OK
-# # # # # # #
-# PROJECTS
-# # # # # # #
+  # # # # # # #
+  # PROJECTS
+  # # # # # # #
   /projects:
     post:
       operationId: 'createProject'
@@ -367,8 +367,6 @@ components:
     CreateMapRequest:
       type: object
       properties:
-        name:
-          type: string
         map:
           $ref: '#/components/schemas/RoadMap'
     UpdateMapRequest:
@@ -451,18 +449,23 @@ components:
           properties:
             name:
               type: string
-            points:
-              type: array
-              items:
-                $ref: '#/components/schemas/RelevantPoint'
-            lanes:
-              type: array
-              items:
-                $ref: '#/components/schemas/Lane'
-            links:
-              type: array
-              items:
-                $ref: '#/components/schemas/CrossingLink'
+            content:
+              $ref: '#/components/schemas/RoadMapContent'
+    RoadMapContent:
+      type: object
+      properties:
+        points:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelevantPoint'
+        lanes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Lane'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/CrossingLink'
     RelevantPoint:
       allOf:
         - $ref: '#/components/schemas/Configurable'

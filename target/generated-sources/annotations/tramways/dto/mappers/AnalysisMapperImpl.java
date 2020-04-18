@@ -7,7 +7,7 @@ import tramways.dto.AnalysisDto;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-04-13T14:51:40+0200",
+    date = "2020-04-13T17:27:10+0200",
     comments = "version: 1.3.0.Final, compiler: javac, environment: Java 11 (Oracle Corporation)"
 )
 @ApplicationScoped

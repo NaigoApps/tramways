@@ -10,23 +10,10 @@ import tramways.inbound.model.RoadMap;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-13T14:51:32.877637400+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-13T17:27:03.760042100+02:00[Europe/Berlin]")
 public class CreateMapRequest   {
   
-  private String name;
   private RoadMap map = null;
-
-  /**
-   **/
-  
-  @ApiModelProperty(value = "")
-  @JsonProperty("name")
-  public String getName() {
-    return name;
-  }
-  public void setName(String name) {
-    this.name = name;
-  }
 
   /**
    **/
@@ -50,13 +37,12 @@ public class CreateMapRequest   {
       return false;
     }
     CreateMapRequest createMapRequest = (CreateMapRequest) o;
-    return Objects.equals(name, createMapRequest.name) &&
-        Objects.equals(map, createMapRequest.map);
+    return Objects.equals(map, createMapRequest.map);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, map);
+    return Objects.hash(map);
   }
 
   @Override
@@ -64,7 +50,6 @@ public class CreateMapRequest   {
     StringBuilder sb = new StringBuilder();
     sb.append("class CreateMapRequest {\n");
     
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    map: ").append(toIndentedString(map)).append("\n");
     sb.append("}");
     return sb.toString();

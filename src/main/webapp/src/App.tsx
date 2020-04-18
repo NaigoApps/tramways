@@ -31,10 +31,13 @@ export default function App() {
     const [projectsApi, setProjectsApi] = useState(new ProjectsApi(new Configuration(config)));
     const [defaultApi, setDefaultApi] = useState(new DefaultApi(new Configuration(config)));
 
+    const [loaded, setLoaded] = useState(false);
+
     const refreshLoggedUser = useCallback(() => {
         defaultApi.logged()
             .then(response => setLoggedUser(response.data))
-            .catch(() => setLoggedUser(null));
+            .catch(() => setLoggedUser(null))
+            .then(() => setLoaded(true));
     }, [defaultApi]);
 
     const updateToken = useCallback((newToken) => {
@@ -53,7 +56,7 @@ export default function App() {
         refreshLoggedUser();
     }, [refreshLoggedUser]);
 
-    return (
+    return loaded && (
         <AppContext.Provider value={{
             error,
             notifyError,

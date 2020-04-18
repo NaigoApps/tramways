@@ -10,5 +10,6 @@ public interface ProjectRepository {
 	List<Project> findByUser(String userUuid);
 	Project update(String id, String name);
 	void delete(String id);
+	void deleteMap(String mapId);
     void deleteByUser(String id);
 }

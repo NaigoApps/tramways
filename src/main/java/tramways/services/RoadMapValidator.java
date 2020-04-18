@@ -9,6 +9,7 @@ import tramways.core.model.roadmap.points.SourcePointType;
 import tramways.core.model.roadmap.points.trafficlight.TrafficLightCrossingPoint;
 import tramways.inbound.model.RelevantPoint;
 import tramways.inbound.model.RoadMap;
+import tramways.inbound.model.RoadMapContent;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.Set;
 
 public class RoadMapValidator {
 
-	private RoadMap map;
+	private RoadMapContent map;
 
 	private Map<String, LaneSegment> lanes;
 
@@ -125,7 +126,7 @@ public class RoadMapValidator {
 //		return false;
 	}
 
-	public void setMap(tramways.inbound.model.RoadMap map) {
+	public void setMap(RoadMapContent map) {
 		this.map = map;
 	}
 }

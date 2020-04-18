@@ -9,7 +9,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.Table;
 
 import tramways.core.model.persistable.BaseEntity;
-import tramways.core.model.persistable.properties.PropertyWrapper;
 
 @Entity
 @Table(name = "configurations")

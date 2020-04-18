@@ -50,6 +50,11 @@ public class ProjectsMongoRepository implements ProjectRepository {
     }
 
     @Override
+    public void deleteMap(String mapId) {
+
+    }
+
+    @Override
     public void deleteByUser(String id) {
 
     }

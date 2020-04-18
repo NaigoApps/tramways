@@ -16,6 +16,7 @@ import tramways.core.model.roadmap.points.trafficlight.SensorTrafficLight;
 import tramways.core.model.roadmap.points.trafficlight.TrafficLightCrossingPoint;
 import tramways.dto.mappers.Json2RoadMapMapper;
 import tramways.inbound.model.RoadMap;
+import tramways.inbound.model.RoadMapContent;
 
 public class Json2RoadMapMapperTest {
 
@@ -28,14 +29,14 @@ public class Json2RoadMapMapperTest {
 
 	@Test
 	public void testMap01() {
-		RoadMap dto = mapper.map(readJson("json/roads_01.json"));
+		RoadMapContent dto = mapper.map(readJson("json/roads_01.json"));
 		assertTrue(dto.getLanes().isEmpty());
 		assertTrue(dto.getPoints().isEmpty());
 	}
 
 	@Test
 	public void testMap02() {
-		RoadMap dto = mapper.map(readJson("json/roads_02.json"));
+		RoadMapContent dto = mapper.map(readJson("json/roads_02.json"));
 		assertEquals(1, dto.getLanes().size());
 		assertEquals(2, dto.getPoints().size());
 //		SourcePoint s = (SourcePoint) dto.getPoints().get(0);
@@ -54,7 +55,7 @@ public class Json2RoadMapMapperTest {
 
 	@Test
 	public void testMap03() {
-		RoadMap dto = mapper.map(readJson("json/roads_03.json"));
+		RoadMapContent dto = mapper.map(readJson("json/roads_03.json"));
 		assertEquals(1, dto.getLanes().size());
 		assertEquals(2, dto.getPoints().size());
 //		SourcePoint s = (SourcePoint) dto.getPoints().get(0);
@@ -73,7 +74,7 @@ public class Json2RoadMapMapperTest {
 
 	@Test
 	public void testMap04() {
-		RoadMap map = mapper.map(readJson("json/roads_04.json"));
+		RoadMapContent map = mapper.map(readJson("json/roads_04.json"));
 		assertEquals(4, map.getLanes().size());
 		assertEquals(5, map.getPoints().size());
 

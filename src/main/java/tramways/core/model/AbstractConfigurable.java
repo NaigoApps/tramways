@@ -5,7 +5,6 @@ import java.util.List;
 
 import tramways.core.model.distributions.Distribution;
 import tramways.core.model.persistable.configurations.Configuration;
-import tramways.core.model.persistable.properties.PropertyWrapper;
 import tramways.core.model.properties.Property;
 
 public class AbstractConfigurable extends AbstractIdentifiable implements Configurable {

@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import org.junit.Test;
 
 import tramways.CDITest;
-import tramways.core.model.persistable.properties.PropertyWrapper;
 import tramways.core.model.properties.IntegerProperty;
 import tramways.core.model.properties.Property;
 import tramways.dto.mappers.PropertyMapper;

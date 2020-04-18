@@ -44,6 +44,18 @@ public abstract class AbstractJPARepository<E extends BaseEntity> {
 		return null;
 	}
 
+	protected <T extends BaseEntity> T findByUuid(String uuid, Class<T> entityClass) {
+		try {
+			CriteriaQuery<T> query = query(entityClass);
+			Root<T> root = query.from(entityClass);
+			query.where(cb().equal(root.get(BaseEntity_.uuid), uuid));
+			return getEntityManager().createQuery(query).getSingleResult();
+		} catch (Exception ex) {
+			LoggerFactory.getLogger(getClass()).error("Error", ex);
+		}
+		return null;
+	}
+
 	protected E findById(Long id) {
 		try {
 			CriteriaQuery<E> query = query();

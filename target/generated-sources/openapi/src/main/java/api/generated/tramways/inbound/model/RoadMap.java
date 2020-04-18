@@ -6,28 +6,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.ArrayList;
-import java.util.List;
-import tramways.inbound.model.CrossingLink;
-import tramways.inbound.model.Lane;
-import tramways.inbound.model.RelevantPoint;
 import tramways.inbound.model.Resource;
 import tramways.inbound.model.RoadMapAllOf;
+import tramways.inbound.model.RoadMapContent;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-13T14:51:32.877637400+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-13T17:27:03.760042100+02:00[Europe/Berlin]")
 public class RoadMap   {
-  
+
   private String uuid;
   private String name;
-  private List<RelevantPoint> points = new ArrayList<RelevantPoint>();
-  private List<Lane> lanes = new ArrayList<Lane>();
-  private List<CrossingLink> links = new ArrayList<CrossingLink>();
+  private RoadMapContent content;
 
   /**
    **/
-  
+
   @ApiModelProperty(value = "")
   @JsonProperty("uuid")
   public String getUuid() {
@@ -39,7 +33,7 @@ public class RoadMap   {
 
   /**
    **/
-  
+
   @ApiModelProperty(value = "")
   @JsonProperty("name")
   public String getName() {
@@ -51,38 +45,14 @@ public class RoadMap   {
 
   /**
    **/
-  
-  @ApiModelProperty(value = "")
-  @JsonProperty("points")
-  public List<RelevantPoint> getPoints() {
-    return points;
-  }
-  public void setPoints(List<RelevantPoint> points) {
-    this.points = points;
-  }
 
-  /**
-   **/
-  
   @ApiModelProperty(value = "")
-  @JsonProperty("lanes")
-  public List<Lane> getLanes() {
-    return lanes;
+  @JsonProperty("content")
+  public RoadMapContent getContent() {
+    return content;
   }
-  public void setLanes(List<Lane> lanes) {
-    this.lanes = lanes;
-  }
-
-  /**
-   **/
-  
-  @ApiModelProperty(value = "")
-  @JsonProperty("links")
-  public List<CrossingLink> getLinks() {
-    return links;
-  }
-  public void setLinks(List<CrossingLink> links) {
-    this.links = links;
+  public void setContent(RoadMapContent content) {
+    this.content = content;
   }
 
 
@@ -97,26 +67,22 @@ public class RoadMap   {
     RoadMap roadMap = (RoadMap) o;
     return Objects.equals(uuid, roadMap.uuid) &&
         Objects.equals(name, roadMap.name) &&
-        Objects.equals(points, roadMap.points) &&
-        Objects.equals(lanes, roadMap.lanes) &&
-        Objects.equals(links, roadMap.links);
+        Objects.equals(content, roadMap.content);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, points, lanes, links);
+    return Objects.hash(uuid, name, content);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class RoadMap {\n");
-    
+    sb.append("class SmartMap {\n");
+
     sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    points: ").append(toIndentedString(points)).append("\n");
-    sb.append("    lanes: ").append(toIndentedString(lanes)).append("\n");
-    sb.append("    links: ").append(toIndentedString(links)).append("\n");
+    sb.append("    content: ").append(toIndentedString(content)).append("\n");
     sb.append("}");
     return sb.toString();
   }

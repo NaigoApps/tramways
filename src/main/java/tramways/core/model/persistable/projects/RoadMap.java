@@ -1,15 +1,15 @@
 package tramways.core.model.persistable.projects;
 
-import java.util.List;
+import tramways.core.model.persistable.BaseEntity;
+import tramways.dto.mappers.Json2RoadMapMapper;
+import tramways.inbound.model.RoadMapContent;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import tramways.core.model.persistable.BaseEntity;
-import tramways.dto.mappers.Json2RoadMapMapper;
+import java.util.List;
 
 @Entity
 @Table(name = "road_maps")
@@ -39,7 +39,7 @@ public class RoadMap extends BaseEntity implements Comparable<RoadMap> {
 		this.map = map;
 	}
 
-	public tramways.inbound.model.RoadMap getContent() {
+	public RoadMapContent getContent() {
 		Json2RoadMapMapper mapper = new Json2RoadMapMapper();
 		return mapper.map(this.map);
 	}
