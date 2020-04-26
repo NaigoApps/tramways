@@ -10,6 +10,7 @@ import java.util.List;
 @Mapper(config = MapperConfiguration.class, uses = {UserMapper.class, RoadMapMapper.class})
 public interface ProjectMapper {
 
+    @Mapping(target = "resourceType", constant = "Project")
     @Mapping(target = "roadMaps", source = "maps")
     tramways.inbound.model.Project map(Project p);
 

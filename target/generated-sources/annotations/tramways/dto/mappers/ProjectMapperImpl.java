@@ -12,7 +12,7 @@ import tramways.inbound.model.RoadMap;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-04-13T17:27:10+0200",
+    date = "2020-04-26T14:37:29+0200",
     comments = "version: 1.3.0.Final, compiler: javac, environment: Java 11 (Oracle Corporation)"
 )
 @ApplicationScoped
@@ -32,6 +32,8 @@ public class ProjectMapperImpl implements ProjectMapper {
         project.setRoadMaps( roadMapSetToRoadMapList( p.getMaps() ) );
         project.setUuid( p.getUuid() );
         project.setName( p.getName() );
+
+        project.setResourceType( "Project" );
 
         return project;
     }

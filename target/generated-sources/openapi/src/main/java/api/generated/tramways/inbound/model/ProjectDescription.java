@@ -14,24 +14,11 @@ import tramways.inbound.model.RoadMapDescription;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-13T17:27:03.760042100+02:00[Europe/Berlin]")
-public class ProjectDescription   {
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-26T14:37:23.351990800+02:00[Europe/Berlin]")
+public class ProjectDescription extends Resource  {
   
-  private String uuid;
   private String name;
   private List<RoadMapDescription> roadMaps = new ArrayList<RoadMapDescription>();
-
-  /**
-   **/
-  
-  @ApiModelProperty(value = "")
-  @JsonProperty("uuid")
-  public String getUuid() {
-    return uuid;
-  }
-  public void setUuid(String uuid) {
-    this.uuid = uuid;
-  }
 
   /**
    **/
@@ -67,22 +54,20 @@ public class ProjectDescription   {
       return false;
     }
     ProjectDescription projectDescription = (ProjectDescription) o;
-    return Objects.equals(uuid, projectDescription.uuid) &&
-        Objects.equals(name, projectDescription.name) &&
+    return Objects.equals(name, projectDescription.name) &&
         Objects.equals(roadMaps, projectDescription.roadMaps);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, roadMaps);
+    return Objects.hash(name, roadMaps);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ProjectDescription {\n");
-    
-    sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    roadMaps: ").append(toIndentedString(roadMaps)).append("\n");
     sb.append("}");

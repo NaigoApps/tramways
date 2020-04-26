@@ -4,15 +4,26 @@ import java.util.Objects;
 import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-13T17:27:03.760042100+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-26T14:37:23.351990800+02:00[Europe/Berlin]")@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "resourceType", visible = true)
+@JsonSubTypes({
+  @JsonSubTypes.Type(value = User.class, name = "User"),
+  @JsonSubTypes.Type(value = ProjectDescription.class, name = "ProjectDescription"),
+  @JsonSubTypes.Type(value = Project.class, name = "Project"),
+  @JsonSubTypes.Type(value = RoadMap.class, name = "RoadMap"),
+  @JsonSubTypes.Type(value = ModelConfiguration.class, name = "Configuration"),
+})
+
 public class Resource   {
   
   private String uuid;
+  private String resourceType;
 
   /**
    **/
@@ -26,6 +37,18 @@ public class Resource   {
     this.uuid = uuid;
   }
 
+  /**
+   **/
+  
+  @ApiModelProperty(value = "")
+  @JsonProperty("resourceType")
+  public String getResourceType() {
+    return resourceType;
+  }
+  public void setResourceType(String resourceType) {
+    this.resourceType = resourceType;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -36,12 +59,13 @@ public class Resource   {
       return false;
     }
     Resource resource = (Resource) o;
-    return Objects.equals(uuid, resource.uuid);
+    return Objects.equals(uuid, resource.uuid) &&
+        Objects.equals(resourceType, resource.resourceType);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid);
+    return Objects.hash(uuid, resourceType);
   }
 
   @Override
@@ -50,6 +74,7 @@ public class Resource   {
     sb.append("class Resource {\n");
     
     sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
+    sb.append("    resourceType: ").append(toIndentedString(resourceType)).append("\n");
     sb.append("}");
     return sb.toString();
   }

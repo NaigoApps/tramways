@@ -27,10 +27,10 @@ export default function RoadMapEditor({projectId, map, onAbort, onConfirm}: Road
         } else {
             projectsApi.createMap(projectId, {
                 map: {
+                    resourceType: "RoadMap",
                     name: newName,
                     content: {
                         points: [],
-                        links: [],
                         lanes: []
                     }
                 }

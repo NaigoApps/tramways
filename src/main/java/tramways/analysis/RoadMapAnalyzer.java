@@ -6,7 +6,7 @@ import java.util.List;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
-import tramways.core.model.roadmap.RoadMap;
+import tramways.core.model.roadmap.NetworkMap;
 
 /**
  *
@@ -14,18 +14,18 @@ import tramways.core.model.roadmap.RoadMap;
  */
 public class RoadMapAnalyzer {
 
-	private RoadMap roadMap;
-	
+	private NetworkMap networkMap;
+
 	@Inject
 	private Instance<AnalysisProvider> analyzers;
-	
+
 	public List<Analysis> listAvailableAnalysis(){
 		List<Analysis> result = new ArrayList<>();
-		analyzers.forEach(analyzer -> result.addAll(analyzer.availableAnalysis(roadMap)));
+		analyzers.forEach(analyzer -> result.addAll(analyzer.availableAnalysis(networkMap)));
 		return result;
 	}
 //	private static final int FPS = 1;
-//	
+//
 //	private TramwaySystem system;
 //
 //	private int analysisTime;
@@ -51,24 +51,24 @@ public class RoadMapAnalyzer {
 //				.asDoubleStream()
 //				.map(v -> 1.0)
 //				.toArray();
-//		
+//
 //		if (solution.isEmpty()) {
 //			Set<TramwaySystem> subsystems = system.getSubsystems();
 //			int i = 1;
-//			for(TramwaySystem subsystem : system.getSubsystems()) {				
+//			for(TramwaySystem subsystem : system.getSubsystems()) {
 //				LoggerFactory.getLogger(getClass()).info("Analyzing {} of {}...", i++, subsystems.size());
 //				TramwaySubsystemMapper mapper = new TramwaySubsystemMapper();
 //				mapper.setSystem(subsystem);
 //				mapper.map();
 //				RegTransient analysis = createAnalysis(subsystem.getPeriod());
 //				TransientSolution<DeterministicEnablingState, Marking> ssSolution = analysis.compute(mapper.getNet(), mapper.getMarking());
-//				
+//
 //				LoggerFactory.getLogger(getClass()).info("Computing reward...");
 //				TransientSolution<DeterministicEnablingState, RewardRate> reward = TransientSolution.computeRewards(false,
 //						ssSolution, mapper.getGreen(point));
 //				LoggerFactory.getLogger(getClass()).info("...Computed reward");
 //
-//				
+//
 //				for (int tick = 0; tick < steps; tick++) {
 //					av[tick] *= reward.getSolution()[tick % (subsystem.getPeriod() * FPS)][0][0];
 //				}
@@ -99,10 +99,10 @@ public class RoadMapAnalyzer {
 //				.timeStep(BigDecimal.valueOf(1.0 / FPS))
 //				.build();
 //	}
-//	
+//
 //	public InterpolatedArray analyzeOverflowProbability(CarControlPoint point) {
 //		InterpolatedArray availability = analyzeAvailability(point);
-//		
+//
 //		Queue q = new Queue(ExponentialDistribution.of(point.getArrivalRate()),
 //				ExponentialDistribution.of(1.0 / point.getTraversingTime()), point.getQueueCapacity());
 //		CarQueueAnalyzer analyzer = new CarQueueAnalyzer(q);
@@ -120,10 +120,10 @@ public class RoadMapAnalyzer {
 //
 //		return new InterpolatedArray(xes, probability);
 //	}
-//	
+//
 //	public InterpolatedArray[] analyzeBySize(CarControlPoint point) {
 //		InterpolatedArray availability = analyzeAvailability(point);
-//		
+//
 //		Queue q = new Queue(ExponentialDistribution.of(point.getArrivalRate()),
 //				ExponentialDistribution.of(1.0 / point.getTraversingTime()), point.getQueueCapacity());
 //		CarQueueAnalyzer analyzer = new CarQueueAnalyzer(q);
@@ -132,10 +132,10 @@ public class RoadMapAnalyzer {
 //
 //		return analyzer.computeByQueueSize(analysisTime);
 //	}
-//	
+//
 //	public double[][] analyzeByTime(CarControlPoint point) {
 //		InterpolatedArray availability = analyzeAvailability(point);
-//		
+//
 //		Queue q = new Queue(ExponentialDistribution.of(point.getArrivalRate()),
 //				ExponentialDistribution.of(1.0 / point.getTraversingTime()), point.getQueueCapacity());
 //		CarQueueAnalyzer analyzer = new CarQueueAnalyzer(q);
@@ -144,10 +144,10 @@ public class RoadMapAnalyzer {
 //
 //		return analyzer.computeByTime(analysisTime);
 //	}
-//	
+//
 //	public InterpolatedArray analyzeMeanQueueSize(CarControlPoint point) {
 //		InterpolatedArray availability = analyzeAvailability(point);
-//		
+//
 //		Queue q = new Queue(ExponentialDistribution.of(point.getArrivalRate()),
 //				ExponentialDistribution.of(1.0 / point.getTraversingTime()), point.getQueueCapacity());
 //		CarQueueAnalyzer analyzer = new CarQueueAnalyzer(q);
@@ -158,7 +158,7 @@ public class RoadMapAnalyzer {
 //
 //		double[] tes = IntStream.range(0, analysisTime + 1).asDoubleStream().toArray();
 //		double[] avg = new double[analysisTime + 1];
-//		
+//
 //		for (int i = 0; i < avg.length; i++) {
 //			for (int c = 0;c < results[i].length;c++) {
 //				avg[i] += c * results[i][c];

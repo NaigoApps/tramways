@@ -1,14 +1,14 @@
 package tramways.core.model;
 
-import java.util.List;
-
 import tramways.core.model.persistable.configurations.Configuration;
-import tramways.core.model.properties.Property;
+import tramways.inbound.model.Property;
+
+import java.util.List;
 
 public interface Configurable {
 
-	public void apply(Configuration conf);
-	public void apply(List<Property> properties);
-	public Object getProperty(String name);
+	void apply(Configuration conf);
+	void apply(List<Property> properties);
+	List<Property> listProperties();
 
 }

@@ -1,6 +1,6 @@
 package tramways.core.model.roadmap.graph;
 
-public interface Arc {
-	public Node getSource();
-	public Node getDestination();
+public interface Arc<T extends Node> {
+	T getSource();
+	T getDestination();
 }

@@ -1,20 +1,13 @@
 package tramways.services;
 
 import tramways.core.model.roadmap.lanes.LaneSegment;
-import tramways.core.model.roadmap.points.CrossingPoint;
-import tramways.core.model.roadmap.points.DestinationPoint;
-import tramways.core.model.roadmap.points.LaneSegmentLink;
-import tramways.core.model.roadmap.points.SourcePoint;
 import tramways.core.model.roadmap.points.SourcePointType;
-import tramways.core.model.roadmap.points.trafficlight.TrafficLightCrossingPoint;
 import tramways.inbound.model.RelevantPoint;
 import tramways.inbound.model.RoadMap;
 import tramways.inbound.model.RoadMapContent;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class RoadMapValidator {
 
@@ -73,26 +66,6 @@ public class RoadMapValidator {
 			dto.setUuid(uuid);
 			return dto;
 		});
-	}
-
-	private boolean validateSource(RoadMap map, SourcePoint source) {
-		if(source.getKind() == null) {
-			collector.addMessage("Source " + source.getUuid() + " doesn't have a kind");
-			return false;
-		}
-
-		LaneSegment target = lanes.get(source.getTargetLane());
-
-		if(target == null) {
-			collector.addMessage("Lane " + source.getTargetLane() + " doesn't exists");
-			return false;
-		}
-
-		if (lanesKindMap.get(target) != null) {
-			return lanesKindMap.get(target).equals(source.getKind());
-		}
-		lanesKindMap.put(target, source.getKind());
-		return validateLane(map, target);
 	}
 
 	private boolean validateLane(RoadMap map, LaneSegment lane) {

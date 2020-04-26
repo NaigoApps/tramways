@@ -8,18 +8,16 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
-import tramways.inbound.model.CrossingLink;
 import tramways.inbound.model.Lane;
 import tramways.inbound.model.RelevantPoint;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-13T17:27:03.760042100+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-26T14:37:23.351990800+02:00[Europe/Berlin]")
 public class RoadMapContent   {
   
   private List<RelevantPoint> points = new ArrayList<RelevantPoint>();
   private List<Lane> lanes = new ArrayList<Lane>();
-  private List<CrossingLink> links = new ArrayList<CrossingLink>();
 
   /**
    **/
@@ -45,18 +43,6 @@ public class RoadMapContent   {
     this.lanes = lanes;
   }
 
-  /**
-   **/
-  
-  @ApiModelProperty(value = "")
-  @JsonProperty("links")
-  public List<CrossingLink> getLinks() {
-    return links;
-  }
-  public void setLinks(List<CrossingLink> links) {
-    this.links = links;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -68,13 +54,12 @@ public class RoadMapContent   {
     }
     RoadMapContent roadMapContent = (RoadMapContent) o;
     return Objects.equals(points, roadMapContent.points) &&
-        Objects.equals(lanes, roadMapContent.lanes) &&
-        Objects.equals(links, roadMapContent.links);
+        Objects.equals(lanes, roadMapContent.lanes);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(points, lanes, links);
+    return Objects.hash(points, lanes);
   }
 
   @Override
@@ -84,7 +69,6 @@ public class RoadMapContent   {
     
     sb.append("    points: ").append(toIndentedString(points)).append("\n");
     sb.append("    lanes: ").append(toIndentedString(lanes)).append("\n");
-    sb.append("    links: ").append(toIndentedString(links)).append("\n");
     sb.append("}");
     return sb.toString();
   }

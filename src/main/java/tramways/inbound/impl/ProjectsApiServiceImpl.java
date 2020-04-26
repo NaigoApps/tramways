@@ -26,6 +26,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -61,11 +62,16 @@ public class ProjectsApiServiceImpl implements ProjectsApiService {
     private void createDemoMap(CreateMapRequest request) {
         RelevantPoint p0 = new RelevantPoint();
         p0.setId("P0");
-        p0.getProps().add(Properties.intProperty("x", 0L));
-        p0.getProps().add(Properties.intProperty("y", 0L));
+        p0.setConfigurableType(RelevantPoint.class.getSimpleName());
+        p0.getProps().add(Properties.decimalProperty("x", BigDecimal.valueOf(0)));
+        p0.getProps().add(Properties.decimalProperty("y", BigDecimal.valueOf(0)));
         RelevantPoint p1 = new RelevantPoint();
         p1.setId("P1");
+        p1.setConfigurableType(RelevantPoint.class.getSimpleName());
+        p1.getProps().add(Properties.decimalProperty("x", BigDecimal.valueOf(1)));
+        p1.getProps().add(Properties.decimalProperty("y", BigDecimal.valueOf(1)));
         Lane l1 = new Lane();
+        l1.setConfigurableType(Lane.class.getSimpleName());
         l1.setSourceId(p0.getId());
         l1.setDestinationId(p1.getId());
 

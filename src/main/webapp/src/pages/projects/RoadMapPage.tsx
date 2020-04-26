@@ -18,18 +18,18 @@ export default function RoadMapPage({navigate, projectId, mapId}: RoadMapPagePro
 
     const loadMap = useCallback(() => {
         projectsApi.getMap(projectId, mapId).then(response => setMap(response.data));
-    }, []);
+    }, [projectsApi, mapId, projectId]);
 
     useEffect(() => {
         loadMap();
-    }, []);
+    }, [loadMap]);
 
     return (
         <Page title={map && map.name}>
             <RoadMapComponent
                 refresh={loadMap}
                 projectId={projectId}
-                roadMap={map}
+                networkMap={map}
                 navigate={navigate}
             />
         </Page>

@@ -28,7 +28,7 @@ export default function ProjectsPage({navigate}: RouteComponentProps) {
     const [selectedProject, setSelectedProject] = useState<ProjectDescription>(null);
 
     function openProject(project: Project) {
-        navigate("/projects/" + project.uuid);
+        navigate(project.uuid);
     }
 
     function editProject(project: Project) {

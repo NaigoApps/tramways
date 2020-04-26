@@ -40,7 +40,7 @@ const Root = () => {
         appBarTitle
     } = useContext(AppContext);
 
-    const {defaultApi, updateToken} = useContext(ApiContext);
+    const {updateToken} = useContext(ApiContext);
     const {user} = useContext(SessionContext);
 
     const classes = useStyles();
@@ -72,7 +72,7 @@ const Root = () => {
                     {user && (
                         <>
                             <IconButton
-                                onClick={() => navigate("/profile")}
+                                onClick={() => navigate("/tramways/profile")}
                                 color="inherit">
                                 <AccountCircle/>
                             </IconButton>
@@ -91,24 +91,24 @@ const Root = () => {
                 </div>
             </Drawer>
             {!user && !loading && (
-                <Router>
+                <Router basepath={"/tramways"}>
                     <LoginPage default/>
                 </Router>
             )}
             {user && (
-                <Router>
-                    <ProfilePage path="profile"/>
+                <Router basepath={"/tramways"}>
+                    <ProfilePage path="/profile" default/>
 
-                    <ProjectsPage path="projects" default />
-                    <ProjectPage path="projects/:projectId" />
-                    <RoadMapPage path="projects/:projectId/:mapId" />
+                    <ProjectsPage path="/projects"/>
+                    <ProjectPage path="/projects/:projectId"/>
+                    <RoadMapPage path="/projects/:projectId/:mapId"/>
                     {/*<AnalysisPage path="projects/:projectId/:mapId/analysis" />*/}
 
                     {/*<ConfigurationsPage path="configurations" />*/}
                     {/*<NewConfigurationPage path="configurations/new" />*/}
                     {/*<ConfigurationPage path="configurations/:confId" />*/}
 
-                    <UsersPage path="users"/>
+                    <UsersPage path="/users"/>
                 </Router>
             )}
 
@@ -129,7 +129,7 @@ const Root = () => {
 function navContent(loggedUser: User | null) {
     return <List>
         {loggedUser && loggedUser.roles.find(r => r === UserRole.CLIENT) && (
-            <ListItem button onClick={() => navigate("/projects")}>
+            <ListItem button onClick={() => navigate("/tramways/projects")}>
                 <ListItemIcon>
                     <TramIcon/>
                 </ListItemIcon>
@@ -137,7 +137,7 @@ function navContent(loggedUser: User | null) {
             </ListItem>
         )}
         {loggedUser && loggedUser.roles.find(r => r === UserRole.EXPERT) && (
-            <ListItem button onClick={() => navigate("/configurations")}>
+            <ListItem button onClick={() => navigate("/tramways/configurations")}>
                 <ListItemIcon>
                     <SettingsIcon/>
                 </ListItemIcon>
@@ -145,7 +145,7 @@ function navContent(loggedUser: User | null) {
             </ListItem>
         )}
         {loggedUser && loggedUser.roles.find(r => r === UserRole.ADMIN) && (
-            <ListItem button onClick={() => navigate("/users")}>
+            <ListItem button onClick={() => navigate("/tramways/users")}>
                 <ListItemIcon>
                     <GroupIcon/>
                 </ListItemIcon>

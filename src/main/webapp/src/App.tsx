@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import Root from "./Root";
 import AppContext from "./AppContext";
 import ApiContext from "./ApiContext";
-import {Configuration, DefaultApi, ProjectsApi, User, UsersApi} from "./api/generated";
+import {AnalysisApi, Configuration, DefaultApi, ProjectsApi, User, UsersApi} from "./api/generated";
 import Cookies from "js-cookie";
 import SessionContext from "./SessionContext";
 
@@ -29,6 +29,7 @@ export default function App() {
     };
     const [usersApi, setUsersApi] = useState(new UsersApi(new Configuration(config)));
     const [projectsApi, setProjectsApi] = useState(new ProjectsApi(new Configuration(config)));
+    const [analysisApi, setAnalysisApi] = useState(new AnalysisApi(new Configuration(config)));
     const [defaultApi, setDefaultApi] = useState(new DefaultApi(new Configuration(config)));
 
     const [loaded, setLoaded] = useState(false);
@@ -49,6 +50,7 @@ export default function App() {
         };
         setUsersApi(new UsersApi(new Configuration(newConfig)));
         setProjectsApi(new ProjectsApi(new Configuration(newConfig)));
+        setAnalysisApi(new AnalysisApi(new Configuration(newConfig)));
         setDefaultApi(new DefaultApi(new Configuration(newConfig)));
     }, []);
 
@@ -74,6 +76,7 @@ export default function App() {
                 defaultApi,
                 usersApi,
                 projectsApi,
+                analysisApi,
                 updateToken,
             }}>
                 <SessionContext.Provider value={{

@@ -26,7 +26,7 @@ export default function RoadMapItem({project, map, refresh, navigate}: RoadMapIt
     const cloneMapNameInput = useRef(null);
 
     function openMap() {
-        navigate(`./${map.uuid}`);
+        navigate(map.uuid);
     }
 
     const [isShowCloneDialog, setShowCloneDialog] = useState(false);

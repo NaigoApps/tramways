@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import tramways.inbound.model.PropertyType;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-13T17:27:03.760042100+02:00[Europe/Berlin]")@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "propertyType", visible = true)
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-26T14:37:23.351990800+02:00[Europe/Berlin]")@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "propertyType", visible = true)
 @JsonSubTypes({
   @JsonSubTypes.Type(value = IntegerProperty.class, name = "IntegerProperty"),
   @JsonSubTypes.Type(value = StringProperty.class, name = "StringProperty"),
+  @JsonSubTypes.Type(value = ChoiceProperty.class, name = "ChoiceProperty"),
   @JsonSubTypes.Type(value = DecimalProperty.class, name = "DecimalProperty"),
   @JsonSubTypes.Type(value = DistributionProperty.class, name = "DistributionProperty"),
 })
@@ -23,7 +23,7 @@ import io.swagger.annotations.*;
 public class Property   {
   
   private String name;
-  private PropertyType propertyType;
+  private String propertyType;
 
   /**
    **/
@@ -43,10 +43,10 @@ public class Property   {
   @ApiModelProperty(required = true, value = "")
   @JsonProperty("propertyType")
   @NotNull
-  public PropertyType getPropertyType() {
+  public String getPropertyType() {
     return propertyType;
   }
-  public void setPropertyType(PropertyType propertyType) {
+  public void setPropertyType(String propertyType) {
     this.propertyType = propertyType;
   }
 

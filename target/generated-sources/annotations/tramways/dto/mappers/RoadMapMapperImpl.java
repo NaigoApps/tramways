@@ -7,7 +7,7 @@ import tramways.inbound.model.RoadMapDescription;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-04-13T17:27:10+0200",
+    date = "2020-04-26T14:37:29+0200",
     comments = "version: 1.3.0.Final, compiler: javac, environment: Java 11 (Oracle Corporation)"
 )
 @ApplicationScoped
@@ -24,6 +24,8 @@ public class RoadMapMapperImpl implements RoadMapMapper {
         roadMap.setUuid( m.getUuid() );
         roadMap.setName( m.getName() );
         roadMap.setContent( m.getContent() );
+
+        roadMap.setResourceType( "RoadMap" );
 
         return roadMap;
     }

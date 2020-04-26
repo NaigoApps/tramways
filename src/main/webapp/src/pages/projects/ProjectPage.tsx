@@ -24,11 +24,11 @@ export default function ProjectPage({navigate, projectId}: ProjectPageProps) {
 
     const loadProject = useCallback(() => {
         projectsApi.getProject(projectId).then(response => setProject(response.data));
-    }, []);
+    }, [projectId, projectsApi]);
 
     useEffect(() => {
         loadProject();
-    }, []);
+    }, [loadProject]);
 
     return (
         <Page title={`Project ${project?.name}`}>
@@ -39,7 +39,6 @@ export default function ProjectPage({navigate, projectId}: ProjectPageProps) {
                     name: "",
                     content: {
                         lanes: [],
-                        links: [],
                         points: []
                     }
                 })}>

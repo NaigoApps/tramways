@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 @Mapper(config = MapperConfiguration.class)
 public abstract class UserMapper {
 
+    @Mapping(target = "resourceType", constant = "User")
     @Mapping(target = "roles", expression = "java(toApi(u.listRoles()))")
     public abstract tramways.inbound.model.User map(User u);
 

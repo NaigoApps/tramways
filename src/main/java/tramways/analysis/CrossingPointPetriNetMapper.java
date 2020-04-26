@@ -9,23 +9,21 @@ import org.oristool.petrinet.PetriNet;
 import org.oristool.petrinet.Place;
 import org.oristool.petrinet.Transition;
 
-import tramways.core.model.roadmap.RoadMap;
-import tramways.core.model.roadmap.points.trafficlight.TrafficLightCrossingPoint;
+import tramways.core.model.roadmap.NetworkMap;
+import tramways.core.model.roadmap.points.NetworkPoint;
 
 public class CrossingPointPetriNetMapper {
 
-	private TrafficLightCrossingPoint crossingPoint;
-//	private String trafficLight;
-//	private String carLine;
+	private NetworkPoint crossingPoint;
 
 	private PetriNet net;
 	private Marking marking;
 
-	public void setCrossingPoint(TrafficLightCrossingPoint point) {
+	public void setCrossingPoint(NetworkPoint point) {
 		this.crossingPoint = point;
 	}
 
-	public PetriNet map(RoadMap map) {
+	public PetriNet map(NetworkMap map) {
 
 //		SourcePoint sourcePoint = map.getPoint(target.getSource(), SourcePoint.class);
 //		target.getDestination().equals(crossingPoint);

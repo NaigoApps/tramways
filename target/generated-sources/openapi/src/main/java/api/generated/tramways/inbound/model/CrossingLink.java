@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.ArrayList;
 import java.util.List;
 import tramways.inbound.model.Configurable;
 import tramways.inbound.model.LaneAllOf;
@@ -14,37 +13,11 @@ import tramways.inbound.model.Property;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-13T17:27:03.760042100+02:00[Europe/Berlin]")
-public class CrossingLink   {
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-26T14:37:23.351990800+02:00[Europe/Berlin]")
+public class CrossingLink extends Configurable  {
   
-  private String id;
-  private List<Property> props = new ArrayList<Property>();
   private String sourceId;
   private String destinationId;
-
-  /**
-   **/
-  
-  @ApiModelProperty(value = "")
-  @JsonProperty("id")
-  public String getId() {
-    return id;
-  }
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  /**
-   **/
-  
-  @ApiModelProperty(value = "")
-  @JsonProperty("props")
-  public List<Property> getProps() {
-    return props;
-  }
-  public void setProps(List<Property> props) {
-    this.props = props;
-  }
 
   /**
    **/
@@ -80,24 +53,20 @@ public class CrossingLink   {
       return false;
     }
     CrossingLink crossingLink = (CrossingLink) o;
-    return Objects.equals(id, crossingLink.id) &&
-        Objects.equals(props, crossingLink.props) &&
-        Objects.equals(sourceId, crossingLink.sourceId) &&
+    return Objects.equals(sourceId, crossingLink.sourceId) &&
         Objects.equals(destinationId, crossingLink.destinationId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, props, sourceId, destinationId);
+    return Objects.hash(sourceId, destinationId);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CrossingLink {\n");
-    
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    props: ").append(toIndentedString(props)).append("\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    sourceId: ").append(toIndentedString(sourceId)).append("\n");
     sb.append("    destinationId: ").append(toIndentedString(destinationId)).append("\n");
     sb.append("}");

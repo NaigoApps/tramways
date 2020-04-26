@@ -347,6 +347,63 @@ paths:
       responses:
         '200':
           description: Ok
+  /analysis/available:
+    get:
+      summary: 'Gets available analysis for map'
+      operationId: 'getAvailableAnalysis'
+      tags: ['analysis']
+      parameters:
+        - in: query
+          name: projectId
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: mapId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AnalysisType'
+  /analysis/parameters:
+    get:
+      summary: 'Gets analysis parameters for chosen type'
+      operationId: 'getAnalysisParams'
+      tags: ['analysis']
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnalysisParamsRequest'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Property'
+  /analysis/launch:
+    get:
+      summary: 'Launch selected analysis'
+      operationId: 'launchAnalysis'
+      tags: ['analysis']
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnalysisLaunchRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/Ok'
 components:
   securitySchemes:
     bearerAuth:
@@ -462,13 +519,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Lane'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/CrossingLink'
     RelevantPoint:
       allOf:
         - $ref: '#/components/schemas/Configurable'
+        - type: object
+          properties:
+            links:
+              type: array
+              items:
+                $ref: '#/components/schemas/CrossingLink'
     Lane:
       allOf:
         - $ref: '#/components/schemas/Configurable'
@@ -489,13 +548,40 @@ components:
               type: string
     Configurable:
       type: object
+      discriminator:
+        propertyName: 'configurableType'
       properties:
         id:
+          type: string
+        configurableId:
+          type: string
+        configurableType:
           type: string
         props:
           type: array
           items:
             $ref: '#/components/schemas/Property'
+    Configuration:
+      allOf:
+        - $ref: '#/components/schemas/Resource'
+        - type: object
+          properties:
+            configurableId:
+              type: string
+            props:
+              type: array
+              items:
+                $ref: '#/components/schemas/Property'
+    Property:
+      type: object
+      discriminator:
+        propertyName: propertyType
+      properties:
+        name:
+          type: string
+        propertyType:
+          type: string
+      required: [propertyType]
     IntegerProperty:
       allOf:
         - $ref: '#/components/schemas/Property'
@@ -508,6 +594,17 @@ components:
         - $ref: '#/components/schemas/Property'
         - type: object
           properties:
+            value:
+              type: string
+    ChoiceProperty:
+      allOf:
+        - $ref: '#/components/schemas/Property'
+        - type: object
+          properties:
+            choices:
+              type: array
+              items:
+                type: string
             value:
               type: string
     DecimalProperty:
@@ -551,23 +648,25 @@ components:
           properties:
             lambda:
               type: number
-    Property:
+    AnalysisType:
       type: object
-      discriminator:
-        propertyName: propertyType
       properties:
+        id:
+          type: string
         name:
           type: string
-        propertyType:
-          $ref: '#/components/schemas/PropertyType'
-      required: [propertyType]
-    PropertyType:
-      type: string
-      enum: [INTEGER, STRING, DECIMAL, DISTRIBUTION]
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
     Resource:
       type: object
+      discriminator:
+        propertyName: resourceType
       properties:
         uuid:
+          type: string
+        resourceType:
           type: string
     BooleanWrapper:
       type: object
@@ -584,6 +683,28 @@ components:
       properties:
         message:
           type: string
+    AnalysisParamsRequest:
+      type: object
+      properties:
+        projectId:
+          type: string
+        mapId:
+          type: string
+        analysisTypeId:
+          type: string
+    AnalysisLaunchRequest:
+      type: object
+      properties:
+        projectId:
+          type: string
+        mapId:
+          type: string
+        analysisTypeId:
+          type: string
+        parametes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
   responses:
     Created:
       description: 'Resource created'

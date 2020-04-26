@@ -12,28 +12,15 @@ import tramways.inbound.model.RoadMapContent;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-13T17:27:03.760042100+02:00[Europe/Berlin]")
-public class RoadMap   {
-
-  private String uuid;
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-26T14:37:23.351990800+02:00[Europe/Berlin]")
+public class RoadMap extends Resource  {
+  
   private String name;
   private RoadMapContent content;
 
   /**
    **/
-
-  @ApiModelProperty(value = "")
-  @JsonProperty("uuid")
-  public String getUuid() {
-    return uuid;
-  }
-  public void setUuid(String uuid) {
-    this.uuid = uuid;
-  }
-
-  /**
-   **/
-
+  
   @ApiModelProperty(value = "")
   @JsonProperty("name")
   public String getName() {
@@ -45,7 +32,7 @@ public class RoadMap   {
 
   /**
    **/
-
+  
   @ApiModelProperty(value = "")
   @JsonProperty("content")
   public RoadMapContent getContent() {
@@ -65,22 +52,20 @@ public class RoadMap   {
       return false;
     }
     RoadMap roadMap = (RoadMap) o;
-    return Objects.equals(uuid, roadMap.uuid) &&
-        Objects.equals(name, roadMap.name) &&
+    return Objects.equals(name, roadMap.name) &&
         Objects.equals(content, roadMap.content);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, content);
+    return Objects.hash(name, content);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SmartMap {\n");
-
-    sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
+    sb.append("class RoadMap {\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
     sb.append("}");

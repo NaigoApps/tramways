@@ -1,11 +1,13 @@
 import {Button} from "@material-ui/core";
 import React, {useCallback, useContext, useEffect, useState} from "react";
-import {RoadMap, RoadMapContent} from "../../api/generated";
+import {AnalysisType, RoadMap, RoadMapContent} from "../../api/generated";
 import ApiContext from "../../ApiContext";
 import {RouteComponentProps} from "@reach/router";
 import {JSONComponent} from "../../widgets/JSONComponent";
 import cytoscape from "cytoscape";
-import {intProperty} from "./roadmap/properties";
+import {decimalProperty} from "./roadmap/properties";
+import AvailableAnalysisDialog from "./roadmap/analysis/AvailableAnalysisDialog";
+import AnalysisDialog from "./roadmap/analysis/AnalysisDialog";
 
 interface RoadMapComponentProps extends RouteComponentProps {
     projectId: string;
@@ -29,16 +31,15 @@ export default function RoadMapComponent({
                 content: mapContent
             }
         }).then(() => {
-            setShowEditor(false);
             refresh();
         });
     }, [roadMap, projectId, projectsApi, refresh]);
 
     const [showEditor, setShowEditor] = useState(false);
-    const [container, setContainer] = useState(null);
+    const [container, setContainer] = useState<HTMLElement>(null);
     const [showAnalysisDialog, setShowAnalysisDialog] = useState(false);
 
-    const [chosenAnalysis, setChosenAnalysis] = useState(null);
+    const [chosenAnalysis, setChosenAnalysis] = useState<AnalysisType>(null);
 
     const [configurable, setConfigurable] = useState(null);
 
@@ -47,44 +48,68 @@ export default function RoadMapComponent({
 
     const refreshNetwork = useCallback(() => {
         if (roadMap && container) {
-            const net = cytoscape({
-                container: container,
-                elements: {
-                    nodes: roadMap.content.points.map(rp => ({
-                        data: {
-                            id: rp.id
-                        },
-                        position: {
-                            x: intProperty(rp.props, 'x')?.value,
-                            y: intProperty(rp.props, 'y')?.value
+            try {
+                const net = cytoscape({
+                    container: container,
+                    elements: {
+                        nodes: roadMap?.content?.points.map(rp => ({
+                            data: {
+                                id: rp.id
+                            },
+                            position: {
+                                x: decimalProperty(rp.props, 'x')?.value * container.clientWidth,
+                                y: decimalProperty(rp.props, 'y')?.value * container.clientHeight
+                            },
+                            // locked: true
+                        })),
+                        edges: roadMap?.content?.lanes.map(lane => ({
+                            data: {
+                                source: lane.sourceId,
+                                target: lane.destinationId
+                            }
+                        }))
+                    },
+                    style: [
+                        {
+                            selector: 'node',
+                            style: {
+                                label: 'data(id)'
+                            }
+                        }, {
+                            selector: 'edge',
+                            style: {
+                                // "mid-arrow-color": "#CCC",
+                                "mid-target-arrow-shape": "triangle"
+                            }
                         }
-                    })),
-                    edges: roadMap.content.lanes.map(lane => ({
-                        data: {
-                            source: lane.sourceId,
-                            target: lane.destinationId
-                        }
-                    }))
-                },
-                style: [
-                    {
-                        selector: 'node',
-                        style: {
-                            label: 'data(id)'
-                        }
-                    }, {
-                        selector: 'edges',
-                        style: {
-                            // "mid-arrow-color": "#CCC",
-                            "mid-target-arrow-shape": "triangle"
-                        }
+                    ],
+                    layout: {
+                        name: 'preset',
+                        fit: true
                     }
-                ]
-            });
-            net.fit(undefined, 50);
-            setNetwork(net);
+                });
+                net.on('tapend', 'node', evt => {
+                    const id = evt.target.id();
+                    const newPos = evt.target.position();
+                    const newX = newPos.x / container.clientWidth;
+                    const newY = newPos.y / container.clientHeight;
+                    const points = roadMap.content.points;
+                    const pointProps = points.find(p => p.id === id).props;
+                    const oldX = decimalProperty(pointProps, 'x');
+                    const oldY = decimalProperty(pointProps, 'y');
+                    if (oldX.value !== newX && oldY.value !== newY) {
+                        oldX.value = newX;
+                        oldY.value = newY;
+                        editMap(roadMap.content);
+                    }
+                });
+                setNetwork(net);
+            } catch (err) {
+                console.log("Could not draw network");
+                console.error(err);
+            }
         }
-    }, [container, roadMap]);
+    }, [editMap, container, roadMap]);
 
     useEffect(() => {
         refreshNetwork();
@@ -101,7 +126,7 @@ export default function RoadMapComponent({
                 <Button
                     variant="outlined"
                     color="primary"
-                    onClick={() => navigate("./analysis")}>
+                    onClick={() => navigate("analysis")}>
                     Analysis
                 </Button>
                 <Button
@@ -140,20 +165,24 @@ export default function RoadMapComponent({
                         />
                     </div>
                 )}
-                {/*<AvailableAnalysisDialog*/}
-                {/*    onClose={() => setShowAnalysisDialog(false)}*/}
-                {/*    onChooseAnalysis={setChosenAnalysis}*/}
-                {/*    visible={showAnalysisDialog}*/}
-                {/*/>*/}
-                {/*{chosenAnalysis && (*/}
-                {/*    <AnalysisDialog*/}
-                {/*        visible={chosenAnalysis}*/}
-                {/*        projectId={projectId}*/}
-                {/*        mapId={mapId}*/}
-                {/*        analysis={chosenAnalysis}*/}
-                {/*        onClose={() => setChosenAnalysis(null)}*/}
-                {/*    />*/}
-                {/*)}*/}
+                {showAnalysisDialog && (
+                    <AvailableAnalysisDialog
+                        projectId={projectId}
+                        mapId={roadMap?.uuid}
+                        onClose={() => setShowAnalysisDialog(false)}
+                        onChooseAnalysis={setChosenAnalysis}
+                        visible={showAnalysisDialog}
+                    />
+                )}
+                {chosenAnalysis && (
+                    <AnalysisDialog
+                        visible={!!chosenAnalysis}
+                        projectId={projectId}
+                        mapId={roadMap?.uuid}
+                        analysis={chosenAnalysis}
+                        onClose={() => setChosenAnalysis(null)}
+                    />
+                )}
                 {/*{configurable && (*/}
                 {/*    <ConfigurableDialog*/}
                 {/*        visible={!!configurable}*/}

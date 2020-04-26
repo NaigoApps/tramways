@@ -1,27 +1,37 @@
 package tramways.core.model.roadmap.points;
 
 import tramways.core.model.AbstractConfigurable;
+import tramways.core.model.roadmap.lanes.LaneSegment;
+import tramways.core.model.roadmap.priority.PriorityManager;
+
+import java.util.List;
 
 /*
  * Example properties: weight of the link, crossingTime, ...
  */
 public class LaneSegmentLink extends AbstractConfigurable {
 
-	private String destination;
+	private LaneSegment source;
+	private LaneSegment destination;
+	private List<PriorityManager> priorityManagers;
 
 	public LaneSegmentLink() {
 		//Nothing to do
 	}
-	
-	public LaneSegmentLink(String destination) {
-		this.destination = destination;
+
+	public LaneSegment getSource() {
+		return source;
 	}
 
-	public String getDestination() {
+	public LaneSegment getDestination() {
 		return destination;
 	}
-	
-	public void setDestination(String destination) {
+
+	public void setSource(LaneSegment source) {
+		this.source = source;
+	}
+
+	public void setDestination(LaneSegment destination) {
 		this.destination = destination;
 	}
 

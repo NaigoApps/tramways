@@ -1,15 +1,15 @@
 package tramways.core.model.analysis;
 
-import java.util.List;
-
-import tramways.core.model.properties.Property;
-import tramways.core.model.roadmap.RoadMap;
+import tramways.inbound.model.Property;
+import tramways.inbound.model.RoadMapContent;
 import tramways.services.MessageCollector;
 
+import java.util.List;
+
 public interface AnalysisType {
-	public abstract String getId();
-	public abstract String getName();
-	public abstract Analysis createAnalysis(List<Property> parameters);
-	public abstract boolean isApplicable(RoadMap map, List<Property> parameters, MessageCollector collector);
-	public abstract List<Property> getRequiredParameters(RoadMap map);
+	String getId();
+	String getName();
+	Analysis createAnalysis(List<Property> parameters);
+	boolean isApplicable(RoadMapContent map, List<Property> parameters, MessageCollector collector);
+	List<Property> getParameters(RoadMapContent map);
 }
