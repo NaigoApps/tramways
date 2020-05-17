@@ -12,11 +12,12 @@ import tramways.inbound.model.Property;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-26T14:37:23.351990800+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-05-08T22:58:22.447039+02:00[Europe/Berlin]")
 public class AnalysisType   {
   
   private String id;
   private String name;
+  private String warning;
   private List<Property> parameters = new ArrayList<Property>();
 
   /**
@@ -47,6 +48,18 @@ public class AnalysisType   {
    **/
   
   @ApiModelProperty(value = "")
+  @JsonProperty("warning")
+  public String getWarning() {
+    return warning;
+  }
+  public void setWarning(String warning) {
+    this.warning = warning;
+  }
+
+  /**
+   **/
+  
+  @ApiModelProperty(value = "")
   @JsonProperty("parameters")
   public List<Property> getParameters() {
     return parameters;
@@ -67,12 +80,13 @@ public class AnalysisType   {
     AnalysisType analysisType = (AnalysisType) o;
     return Objects.equals(id, analysisType.id) &&
         Objects.equals(name, analysisType.name) &&
+        Objects.equals(warning, analysisType.warning) &&
         Objects.equals(parameters, analysisType.parameters);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, parameters);
+    return Objects.hash(id, name, warning, parameters);
   }
 
   @Override
@@ -82,6 +96,7 @@ public class AnalysisType   {
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    warning: ").append(toIndentedString(warning)).append("\n");
     sb.append("    parameters: ").append(toIndentedString(parameters)).append("\n");
     sb.append("}");
     return sb.toString();

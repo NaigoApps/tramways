@@ -8,13 +8,14 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
+import tramways.inbound.model.ChoiceElement;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-26T14:37:23.351990800+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-05-08T22:58:22.447039+02:00[Europe/Berlin]")
 public class ChoicePropertyAllOf   {
   
-  private List<String> choices = new ArrayList<String>();
+  private List<ChoiceElement> choices = new ArrayList<ChoiceElement>();
   private String value;
 
   /**
@@ -22,10 +23,10 @@ public class ChoicePropertyAllOf   {
   
   @ApiModelProperty(value = "")
   @JsonProperty("choices")
-  public List<String> getChoices() {
+  public List<ChoiceElement> getChoices() {
     return choices;
   }
-  public void setChoices(List<String> choices) {
+  public void setChoices(List<ChoiceElement> choices) {
     this.choices = choices;
   }
 

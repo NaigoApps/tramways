@@ -26,7 +26,7 @@ public class ProjectsMongoRepository implements ProjectRepository {
     }
 
     @Override
-    public Project findByUuid(String id) {
+    public Project findById(String id) {
         return getCollection().find().first();
     }
 
@@ -42,7 +42,7 @@ public class ProjectsMongoRepository implements ProjectRepository {
 
     @Override
     public Project update(String id, String name) {
-        return findByUuid(id);
+        return findById(id);
     }
 
     @Override

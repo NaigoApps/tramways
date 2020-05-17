@@ -7,6 +7,7 @@ import {
 import React, {FunctionComponent} from "react";
 
 type OkCancelDialogProps = {
+    valid?: boolean
     large?: boolean;
     visible: boolean;
     onCancel: () => void;
@@ -17,6 +18,7 @@ type OkCancelDialogProps = {
 
 export const OkCancelDialog: FunctionComponent<OkCancelDialogProps> = (
     {
+        valid = true,
         children,
         large = false,
         visible,
@@ -26,13 +28,13 @@ export const OkCancelDialog: FunctionComponent<OkCancelDialogProps> = (
         okText = "Ok"
     }) => {
     return (
-        <Dialog open={visible} onClose={onCancel}>
+        <Dialog open={visible} onClose={onCancel} maxWidth={"lg"}>
             <DialogContent>{children}</DialogContent>
             <DialogActions>
                 <Button color="primary" onClick={onCancel}>
                     {cancelText}
                 </Button>
-                <Button variant="contained" color="primary" onClick={onOk}>
+                <Button variant="contained" color="primary" onClick={onOk} disabled={!valid}>
                     {okText}
                 </Button>
             </DialogActions>

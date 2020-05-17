@@ -1,7 +1,7 @@
 import {TextField} from "@material-ui/core";
 import React from "react";
-import useStyles from "../../utils/useStyles";
-import {StringProperty} from "../../api/generated";
+import useStyles from "../../../../utils/useStyles";
+import {StringProperty} from "../../../../api/generated";
 
 export interface StringPropertyInputProps {
     property: StringProperty;

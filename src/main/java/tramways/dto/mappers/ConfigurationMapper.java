@@ -1,14 +1,15 @@
 package tramways.dto.mappers;
 
 import org.mapstruct.Mapper;
-
+import org.mapstruct.Mapping;
 import tramways.core.model.persistable.configurations.Configuration;
+import tramways.inbound.model.ItemConfiguration;
 
-// TODO
-//@Mapper(config = MapperConfiguration.class, uses = { PropertyMapper.class })
+@Mapper(config = MapperConfiguration.class, uses = { })
 public interface ConfigurationMapper {
 
-//	public abstract Configuration map(ConfigurationDto dto);
-//	public abstract ConfigurationDto map(Configuration dto);
+    @Mapping(target = "props", source = "properties")
+    @Mapping(target = "resourceType", constant = "ItemConfiguration")
+    ItemConfiguration map(Configuration configuration);
 
 }

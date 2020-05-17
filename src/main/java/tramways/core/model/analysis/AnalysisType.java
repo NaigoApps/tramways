@@ -10,6 +10,6 @@ public interface AnalysisType {
 	String getId();
 	String getName();
 	Analysis createAnalysis(List<Property> parameters);
-	boolean isApplicable(RoadMapContent map, List<Property> parameters, MessageCollector collector);
+	void collectWarnings(RoadMapContent map, List<Property> parameters, MessageCollector collector);
 	List<Property> getParameters(RoadMapContent map);
 }

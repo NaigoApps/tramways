@@ -1,7 +1,7 @@
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
 import React, {useContext, useEffect, useState} from "react";
-import PropertyInput from "../../../properties/PropertyInput";
+import PropertyInput from "../../../configurations/properties/inputs/PropertyInput";
 import {AnalysisType, Property} from "../../../../api/generated";
 import ApiContext from "../../../../ApiContext";
 

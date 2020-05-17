@@ -95,6 +95,12 @@ export interface AnalysisType {
     name?: string;
     /**
      * 
+     * @type {string}
+     * @memberof AnalysisType
+     */
+    warning?: string;
+    /**
+     * 
      * @type {Array<Property>}
      * @memberof AnalysisType
      */
@@ -135,6 +141,63 @@ export interface ChangePasswordRequest {
 /**
  * 
  * @export
+ * @interface ChoiceElement
+ */
+export interface ChoiceElement {
+    /**
+     * 
+     * @type {string}
+     * @memberof ChoiceElement
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChoiceElement
+     */
+    label?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ChoiceProperty
+ */
+export interface ChoiceProperty extends Property {
+    /**
+     * 
+     * @type {Array<ChoiceElement>}
+     * @memberof ChoiceProperty
+     */
+    choices?: Array<ChoiceElement>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChoiceProperty
+     */
+    value?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ChoicePropertyAllOf
+ */
+export interface ChoicePropertyAllOf {
+    /**
+     * 
+     * @type {Array<ChoiceElement>}
+     * @memberof ChoicePropertyAllOf
+     */
+    choices?: Array<ChoiceElement>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChoicePropertyAllOf
+     */
+    value?: string;
+}
+/**
+ * 
+ * @export
  * @interface Configurable
  */
 export interface Configurable {
@@ -149,11 +212,55 @@ export interface Configurable {
      * @type {string}
      * @memberof Configurable
      */
+    category?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Configurable
+     */
     configurableType?: string;
     /**
      * 
      * @type {Array<Property>}
      * @memberof Configurable
+     */
+    props?: Array<Property>;
+}
+/**
+ * 
+ * @export
+ * @interface ConfigurableCategory
+ */
+export interface ConfigurableCategory {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConfigurableCategory
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConfigurableCategory
+     */
+    description?: string;
+}
+/**
+ * 
+ * @export
+ * @interface CreateConfigurationRequest
+ */
+export interface CreateConfigurationRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateConfigurationRequest
+     */
+    name?: string;
+    /**
+     * 
+     * @type {Array<Property>}
+     * @memberof CreateConfigurationRequest
      */
     props?: Array<Property>;
 }
@@ -341,6 +448,56 @@ export interface IntegerPropertyAllOf {
      * @memberof IntegerPropertyAllOf
      */
     value?: number;
+}
+/**
+ * 
+ * @export
+ * @interface ItemConfiguration
+ */
+export interface ItemConfiguration extends Resource {
+    /**
+     * 
+     * @type {string}
+     * @memberof ItemConfiguration
+     */
+    category?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ItemConfiguration
+     */
+    name?: string;
+    /**
+     * 
+     * @type {Array<Property>}
+     * @memberof ItemConfiguration
+     */
+    props?: Array<Property>;
+}
+/**
+ * 
+ * @export
+ * @interface ItemConfigurationAllOf
+ */
+export interface ItemConfigurationAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof ItemConfigurationAllOf
+     */
+    category?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ItemConfigurationAllOf
+     */
+    name?: string;
+    /**
+     * 
+     * @type {Array<Property>}
+     * @memberof ItemConfigurationAllOf
+     */
+    props?: Array<Property>;
 }
 /**
  * 
@@ -685,6 +842,25 @@ export interface UniformDistributionAllOf {
      * @memberof UniformDistributionAllOf
      */
     right?: number;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateConfigurationRequest
+ */
+export interface UpdateConfigurationRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateConfigurationRequest
+     */
+    name?: string;
+    /**
+     * 
+     * @type {Array<Property>}
+     * @memberof UpdateConfigurationRequest
+     */
+    props?: Array<Property>;
 }
 /**
  * 
@@ -1075,6 +1251,455 @@ export class AnalysisApi extends BaseAPI {
      */
     public launchAnalysis(analysisLaunchRequest?: AnalysisLaunchRequest, options?: any) {
         return AnalysisApiFp(this.configuration).launchAnalysis(analysisLaunchRequest, options)(this.axios, this.basePath);
+    }
+
+}
+
+
+/**
+ * ConfigurationsApi - axios parameter creator
+ * @export
+ */
+export const ConfigurationsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Adds configuration to a category
+         * @param {string} category 
+         * @param {CreateConfigurationRequest} [createConfigurationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addConfiguration(category: string, createConfigurationRequest?: CreateConfigurationRequest, options: any = {}): RequestArgs {
+            // verify required parameter 'category' is not null or undefined
+            if (category === null || category === undefined) {
+                throw new RequiredError('category','Required parameter category was null or undefined when calling addConfiguration.');
+            }
+            const localVarPath = `/configurations/{category}`
+                .replace(`{${"category"}}`, encodeURIComponent(String(category)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof createConfigurationRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createConfigurationRequest !== undefined ? createConfigurationRequest : {}) : (createConfigurationRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Edits a configuration
+         * @param {string} configurationId 
+         * @param {UpdateConfigurationRequest} [updateConfigurationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editConfiguration(configurationId: string, updateConfigurationRequest?: UpdateConfigurationRequest, options: any = {}): RequestArgs {
+            // verify required parameter 'configurationId' is not null or undefined
+            if (configurationId === null || configurationId === undefined) {
+                throw new RequiredError('configurationId','Required parameter configurationId was null or undefined when calling editConfiguration.');
+            }
+            const localVarPath = `/configurations/{configurationId}`
+                .replace(`{${"configurationId"}}`, encodeURIComponent(String(configurationId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof updateConfigurationRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(updateConfigurationRequest !== undefined ? updateConfigurationRequest : {}) : (updateConfigurationRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Gets all configuration groups
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getConfigurationCategories(options: any = {}): RequestArgs {
+            const localVarPath = `/configurations/categories`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get configurations given category
+         * @param {string} category 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getConfigurations(category: string, options: any = {}): RequestArgs {
+            // verify required parameter 'category' is not null or undefined
+            if (category === null || category === undefined) {
+                throw new RequiredError('category','Required parameter category was null or undefined when calling getConfigurations.');
+            }
+            const localVarPath = `/configurations/{category}`
+                .replace(`{${"category"}}`, encodeURIComponent(String(category)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Removes a configuration
+         * @param {string} configurationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        removeConfiguration(configurationId: string, options: any = {}): RequestArgs {
+            // verify required parameter 'configurationId' is not null or undefined
+            if (configurationId === null || configurationId === undefined) {
+                throw new RequiredError('configurationId','Required parameter configurationId was null or undefined when calling removeConfiguration.');
+            }
+            const localVarPath = `/configurations/{configurationId}`
+                .replace(`{${"configurationId"}}`, encodeURIComponent(String(configurationId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ConfigurationsApi - functional programming interface
+ * @export
+ */
+export const ConfigurationsApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Adds configuration to a category
+         * @param {string} category 
+         * @param {CreateConfigurationRequest} [createConfigurationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addConfiguration(category: string, createConfigurationRequest?: CreateConfigurationRequest, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<StringWrapper> {
+            const localVarAxiosArgs = ConfigurationsApiAxiosParamCreator(configuration).addConfiguration(category, createConfigurationRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @summary Edits a configuration
+         * @param {string} configurationId 
+         * @param {UpdateConfigurationRequest} [updateConfigurationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editConfiguration(configurationId: string, updateConfigurationRequest?: UpdateConfigurationRequest, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<StringWrapper> {
+            const localVarAxiosArgs = ConfigurationsApiAxiosParamCreator(configuration).editConfiguration(configurationId, updateConfigurationRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @summary Gets all configuration groups
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getConfigurationCategories(options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ConfigurableCategory>> {
+            const localVarAxiosArgs = ConfigurationsApiAxiosParamCreator(configuration).getConfigurationCategories(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @summary Get configurations given category
+         * @param {string} category 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getConfigurations(category: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ItemConfiguration>> {
+            const localVarAxiosArgs = ConfigurationsApiAxiosParamCreator(configuration).getConfigurations(category, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @summary Removes a configuration
+         * @param {string} configurationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        removeConfiguration(configurationId: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<StringWrapper> {
+            const localVarAxiosArgs = ConfigurationsApiAxiosParamCreator(configuration).removeConfiguration(configurationId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * ConfigurationsApi - factory interface
+ * @export
+ */
+export const ConfigurationsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @summary Adds configuration to a category
+         * @param {string} category 
+         * @param {CreateConfigurationRequest} [createConfigurationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addConfiguration(category: string, createConfigurationRequest?: CreateConfigurationRequest, options?: any): AxiosPromise<StringWrapper> {
+            return ConfigurationsApiFp(configuration).addConfiguration(category, createConfigurationRequest, options)(axios, basePath);
+        },
+        /**
+         * 
+         * @summary Edits a configuration
+         * @param {string} configurationId 
+         * @param {UpdateConfigurationRequest} [updateConfigurationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editConfiguration(configurationId: string, updateConfigurationRequest?: UpdateConfigurationRequest, options?: any): AxiosPromise<StringWrapper> {
+            return ConfigurationsApiFp(configuration).editConfiguration(configurationId, updateConfigurationRequest, options)(axios, basePath);
+        },
+        /**
+         * 
+         * @summary Gets all configuration groups
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getConfigurationCategories(options?: any): AxiosPromise<Array<ConfigurableCategory>> {
+            return ConfigurationsApiFp(configuration).getConfigurationCategories(options)(axios, basePath);
+        },
+        /**
+         * 
+         * @summary Get configurations given category
+         * @param {string} category 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getConfigurations(category: string, options?: any): AxiosPromise<Array<ItemConfiguration>> {
+            return ConfigurationsApiFp(configuration).getConfigurations(category, options)(axios, basePath);
+        },
+        /**
+         * 
+         * @summary Removes a configuration
+         * @param {string} configurationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        removeConfiguration(configurationId: string, options?: any): AxiosPromise<StringWrapper> {
+            return ConfigurationsApiFp(configuration).removeConfiguration(configurationId, options)(axios, basePath);
+        },
+    };
+};
+
+/**
+ * ConfigurationsApi - object-oriented interface
+ * @export
+ * @class ConfigurationsApi
+ * @extends {BaseAPI}
+ */
+export class ConfigurationsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Adds configuration to a category
+     * @param {string} category 
+     * @param {CreateConfigurationRequest} [createConfigurationRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConfigurationsApi
+     */
+    public addConfiguration(category: string, createConfigurationRequest?: CreateConfigurationRequest, options?: any) {
+        return ConfigurationsApiFp(this.configuration).addConfiguration(category, createConfigurationRequest, options)(this.axios, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Edits a configuration
+     * @param {string} configurationId 
+     * @param {UpdateConfigurationRequest} [updateConfigurationRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConfigurationsApi
+     */
+    public editConfiguration(configurationId: string, updateConfigurationRequest?: UpdateConfigurationRequest, options?: any) {
+        return ConfigurationsApiFp(this.configuration).editConfiguration(configurationId, updateConfigurationRequest, options)(this.axios, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Gets all configuration groups
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConfigurationsApi
+     */
+    public getConfigurationCategories(options?: any) {
+        return ConfigurationsApiFp(this.configuration).getConfigurationCategories(options)(this.axios, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Get configurations given category
+     * @param {string} category 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConfigurationsApi
+     */
+    public getConfigurations(category: string, options?: any) {
+        return ConfigurationsApiFp(this.configuration).getConfigurations(category, options)(this.axios, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Removes a configuration
+     * @param {string} configurationId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConfigurationsApi
+     */
+    public removeConfiguration(configurationId: string, options?: any) {
+        return ConfigurationsApiFp(this.configuration).removeConfiguration(configurationId, options)(this.axios, this.basePath);
     }
 
 }

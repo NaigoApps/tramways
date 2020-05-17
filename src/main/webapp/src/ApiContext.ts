@@ -1,10 +1,11 @@
 import React from "react";
-import {AnalysisApi, DefaultApi, ProjectsApi, UsersApi} from "./api/generated";
+import {AnalysisApi, ConfigurationsApi, DefaultApi, ProjectsApi, UsersApi} from "./api/generated";
 
 type ApiContext = {
     defaultApi: DefaultApi;
     usersApi: UsersApi;
     projectsApi: ProjectsApi;
+    configurationsApi: ConfigurationsApi;
     analysisApi: AnalysisApi;
 
     updateToken: (token: string) => void

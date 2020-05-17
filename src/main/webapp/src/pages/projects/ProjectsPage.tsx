@@ -8,7 +8,6 @@ import {RouteComponentProps} from "@reach/router";
 import ApiContext from "../../ApiContext";
 import {Project, ProjectDescription} from "../../api/generated";
 import ProjectEditor from "./ProjectEditor";
-import {Simulate} from "react-dom/test-utils";
 
 export default function ProjectsPage({navigate}: RouteComponentProps) {
     const classes = useStyles();

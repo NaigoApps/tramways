@@ -29,7 +29,7 @@ export default function RoadMapPage({navigate, projectId, mapId}: RoadMapPagePro
             <RoadMapComponent
                 refresh={loadMap}
                 projectId={projectId}
-                networkMap={map}
+                roadMap={map}
                 navigate={navigate}
             />
         </Page>

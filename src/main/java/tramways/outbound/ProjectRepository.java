@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ProjectRepository {
 	Project create(Project p);
-	Project findByUuid(String id);
+	Project findById(String id);
 	List<Project> findByUser(String userUuid);
 	Project update(String id, String name);
 	void delete(String id);

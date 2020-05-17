@@ -1,14 +1,14 @@
 import {FormControl, FormControlProps, InputLabel, MenuItem, Select} from "@material-ui/core";
-import React from "react";
+import React, {useEffect, useRef} from "react";
+import useStyles from "../utils/useStyles";
 
 type SelectEditorProps<T> = {
-    optionId: (option: T) => string;
-    optionLabel: (option: T) => string;
+    optionId?: (option: T) => string;
+    optionLabel?: (option: T) => string;
     options: T[];
     value: T;
-    disabled: boolean;
     label: string;
-    multiSelect: boolean;
+    multiSelect?: boolean;
     onSelectOption: (option: T) => void;
 } & FormControlProps;
 
@@ -19,23 +19,38 @@ export default function SelectEditor<T>({
     value,
     className,
     label,
-    multiSelect,
+    multiSelect = false,
     onSelectOption,
 }: SelectEditorProps<T>) {
-    // const inputLabel = useRef<number>(null);
+
+    const {formControl} = useStyles();
+
+    const inputLabel = useRef<HTMLLabelElement>(null);
     const [labelWidth, setLabelWidth] = React.useState(0);
-    // React.useEffect(() => {
-    //     setLabelWidth(inputLabel.current && inputLabel.current.offsetWidth);
-    // }, []);
+    useEffect(() => {
+        setLabelWidth(inputLabel.current ? (inputLabel.current as HTMLLabelElement).offsetWidth : 0);
+    }, []);
+
+    const formClass = className ? `${formControl} ${className}` : formControl ;
 
     return (
-        <FormControl variant="outlined" className={className}>
-            {/*<InputLabel ref={inputLabel}>{label}</InputLabel>*/}
-            <InputLabel>{label}</InputLabel>
+        <FormControl variant="outlined" className={formClass}>
+            <InputLabel ref={inputLabel}>{label}</InputLabel>
             <Select
+                MenuProps={{
+                    anchorOrigin: {
+                        horizontal: "left",
+                        vertical: "bottom"
+                    },
+                    transformOrigin: {
+                        horizontal: "left",
+                        vertical: "top"
+                    },
+                    getContentAnchorEl: null
+                }}
                 multiple={multiSelect}
-                onChange={evt => onSelectOption(evt.target.value as T)}
-                value={value}
+                onChange={evt => onSelectOption(evt.target.value ? evt.target.value as T : null)}
+                value={value || ""}
                 labelWidth={labelWidth}>
                 {options.map(option => (
                     <MenuItem key={optionId(option)} value={option as any}>

@@ -1,6 +1,6 @@
 import {Button} from "@material-ui/core";
 import React, {useCallback, useContext, useEffect, useState} from "react";
-import {AnalysisType, RoadMap, RoadMapContent} from "../../api/generated";
+import {AnalysisType, Lane, RelevantPoint, RoadMap, RoadMapContent} from "../../api/generated";
 import ApiContext from "../../ApiContext";
 import {RouteComponentProps} from "@reach/router";
 import {JSONComponent} from "../../widgets/JSONComponent";
@@ -8,6 +8,9 @@ import cytoscape from "cytoscape";
 import {decimalProperty} from "./roadmap/properties";
 import AvailableAnalysisDialog from "./roadmap/analysis/AvailableAnalysisDialog";
 import AnalysisDialog from "./roadmap/analysis/AnalysisDialog";
+import RoadMapMenu from "./roadmap/RoadMapMenu";
+import RelevantPointEditorDialog from "./roadmap/RelevantPointEditorDialog";
+import LaneEditorDialog from "./roadmap/LaneEditorDialog";
 
 interface RoadMapComponentProps extends RouteComponentProps {
     projectId: string;
@@ -25,7 +28,7 @@ export default function RoadMapComponent({
     const {projectsApi} = useContext(ApiContext);
 
     const editMap = useCallback((mapContent: RoadMapContent) => {
-        projectsApi.updateMap(projectId, roadMap.uuid, {
+        return projectsApi.updateMap(projectId, roadMap.uuid, {
             map: {
                 ...roadMap,
                 content: mapContent
@@ -35,16 +38,54 @@ export default function RoadMapComponent({
         });
     }, [roadMap, projectId, projectsApi, refresh]);
 
+    function addNode(node: RelevantPoint) {
+        roadMap.content.points.push(node);
+        editMap(roadMap.content).then(() => setShowMenu(false));
+    }
+
+    function updateNode(node: RelevantPoint) {
+        const index = roadMap.content.points.findIndex(n => n.id === node.id);
+        roadMap.content.points[index] = node;
+        editMap(roadMap.content).then(() => setCurrentNode(null));
+    }
+
+    function deleteCurrentNode() {
+        const index = roadMap.content.points.findIndex(n => n.id === currentNode.id);
+        roadMap.content.points.splice(index, 1);
+        editMap(roadMap.content).then(() => setCurrentNode(null));
+    }
+
+    function addLane(lane: RelevantPoint) {
+        roadMap.content.lanes.push(lane);
+        editMap(roadMap.content).then(() => setShowMenu(false));
+    }
+
+    function updateLane(lane: RelevantPoint) {
+        const index = roadMap.content.lanes.findIndex(l => l.id === lane.id);
+        roadMap.content.lanes[index] = lane;
+        editMap(roadMap.content).then(() => setCurrentLane(null));
+    }
+
+    function deleteCurrentLane() {
+        const index = roadMap.content.lanes.findIndex(l => l.id === currentLane.id);
+        roadMap.content.lanes.splice(index, 1);
+        editMap(roadMap.content).then(() => setCurrentLane(null));
+    }
+
+    const [currentNode, setCurrentNode] = useState<RelevantPoint>(null);
+    const [currentLane, setCurrentLane] = useState<Lane>(null);
+
+    const [showMenu, setShowMenu] = useState(false);
     const [showEditor, setShowEditor] = useState(false);
     const [container, setContainer] = useState<HTMLElement>(null);
     const [showAnalysisDialog, setShowAnalysisDialog] = useState(false);
 
     const [chosenAnalysis, setChosenAnalysis] = useState<AnalysisType>(null);
 
-    const [configurable, setConfigurable] = useState(null);
+    const [eventX, setEventX] = useState<number>(0);
+    const [eventY, setEventY] = useState<number>(0);
 
     const [network, setNetwork] = useState<cytoscape.Core>(null);
-    const [smartMap, setSmartMap] = useState(null);
 
     const refreshNetwork = useCallback(() => {
         if (roadMap && container) {
@@ -64,6 +105,7 @@ export default function RoadMapComponent({
                         })),
                         edges: roadMap?.content?.lanes.map(lane => ({
                             data: {
+                                id: lane.id,
                                 source: lane.sourceId,
                                 target: lane.destinationId
                             }
@@ -94,13 +136,40 @@ export default function RoadMapComponent({
                     const newX = newPos.x / container.clientWidth;
                     const newY = newPos.y / container.clientHeight;
                     const points = roadMap.content.points;
-                    const pointProps = points.find(p => p.id === id).props;
+                    const point = points.find(p => p.id === id);
+                    const pointProps = point.props;
                     const oldX = decimalProperty(pointProps, 'x');
                     const oldY = decimalProperty(pointProps, 'y');
                     if (oldX.value !== newX && oldY.value !== newY) {
                         oldX.value = newX;
                         oldY.value = newY;
                         editMap(roadMap.content);
+                    }
+                });
+                net.on('cxttapend ', 'node', evt => {
+                    setTimeout(() => {
+                        const id = evt.target.id();
+                        const points = roadMap.content.points;
+                        const point = points.find(p => p.id === id);
+                        setCurrentNode(point);
+                    }, 0);
+                });
+                net.on('cxttapend ', 'edge', evt => {
+                    setTimeout(() => {
+                        const id = evt.target.id();
+                        const lanes = roadMap.content.lanes;
+                        const lane = lanes.find(l => l.id === id);
+                        setCurrentLane(lane);
+                    }, 0);
+                });
+                net.on('cxttapend', evt => {
+                    if (evt.target === net) {
+                        const evtPos = evt.position;
+                        setEventX(evtPos.x / container.clientWidth);
+                        setEventY(evtPos.y / container.clientHeight);
+                        setTimeout(() => {
+                            setShowMenu(true);
+                        }, 0);
                     }
                 });
                 setNetwork(net);
@@ -165,6 +234,17 @@ export default function RoadMapComponent({
                         />
                     </div>
                 )}
+                {showMenu && (
+                    <RoadMapMenu
+                        roadMap={roadMap}
+                        x={eventX}
+                        y={eventY}
+                        onCreateNode={node => addNode(node)}
+                        onCreateLane={lane => addLane(lane)}
+                        onClose={() => setShowMenu(false)}
+                        visible={showMenu}
+                    />
+                )}
                 {showAnalysisDialog && (
                     <AvailableAnalysisDialog
                         projectId={projectId}
@@ -181,6 +261,24 @@ export default function RoadMapComponent({
                         mapId={roadMap?.uuid}
                         analysis={chosenAnalysis}
                         onClose={() => setChosenAnalysis(null)}
+                    />
+                )}
+                {currentNode && (
+                    <RelevantPointEditorDialog
+                        roadMap={roadMap}
+                        onOk={node => updateNode(node)}
+                        onDelete={() => deleteCurrentNode()}
+                        onCancel={() => setCurrentNode(null)}
+                        element={currentNode}
+                    />
+                )}
+                {currentLane && (
+                    <LaneEditorDialog
+                        roadMap={roadMap}
+                        onOk={lane => updateLane(lane)}
+                        onDelete={() => deleteCurrentLane()}
+                        onCancel={() => setCurrentLane(null)}
+                        element={currentLane}
                     />
                 )}
                 {/*{configurable && (*/}

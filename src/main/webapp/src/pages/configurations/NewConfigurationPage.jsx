@@ -19,7 +19,7 @@ import useNetwork from "../../hooks/useNetwork";
 import SelectEditor from "../../inputs/SelectEditor";
 import useStyles from "../../utils/useStyles";
 import Page from "../Page";
-import PropertyInput from "../properties/PropertyInput";
+import PropertyInput from "./properties/inputs/PropertyInput";
 
 const types = [
   {

@@ -1,7 +1,7 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
-import useStyles from "../../utils/useStyles";
-import {DecimalProperty} from "../../api/generated";
+import useStyles from "../../../../utils/useStyles";
+import {DecimalProperty} from "../../../../api/generated";
 
 export interface DecimalPropertyInputProps {
     property: DecimalProperty;

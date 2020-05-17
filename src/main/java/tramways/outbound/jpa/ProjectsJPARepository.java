@@ -20,7 +20,7 @@ public class ProjectsJPARepository extends AbstractJPARepository<Project> implem
     }
 
     @Override
-    public Project findByUuid(String id) {
+    public Project findById(String id) {
         return super.findByUuid(id);
     }
 
@@ -37,7 +37,7 @@ public class ProjectsJPARepository extends AbstractJPARepository<Project> implem
 
     @Override
     public Project update(String uuid, String name) {
-        Project target = findByUuid(uuid);
+        Project target = findById(uuid);
         target.setName(name);
         return target;
     }

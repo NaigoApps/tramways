@@ -6,9 +6,10 @@ import tramways.core.model.persistable.configurations.Configuration;
 
 public interface ConfigurationRepository {
 
-	public List<Configuration> findAll();
-	public Configuration findByUuid(String uuid);
-	public Configuration create(Configuration conf);
-	public void delete(String uuid);
-	
+	List<Configuration> findAll();
+	Configuration findByUuid(String uuid);
+	List<Configuration> findByCategory(String category);
+	Configuration create(Configuration conf);
+	void delete(String uuid);
+
 }

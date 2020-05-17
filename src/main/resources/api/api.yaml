@@ -404,6 +404,90 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/Ok'
+  /configurations/categories:
+    get:
+      operationId: 'getConfigurationCategories'
+      summary: 'Gets all configuration groups'
+      tags: ['configurations']
+      responses:
+        '200':
+          description: 'List of configuration groups'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConfigurableCategory'
+  /configurations/{category}:
+    get:
+      operationId: 'getConfigurations'
+      summary: 'Get configurations given category'
+      tags: ['configurations']
+      parameters:
+        - in: path
+          name: category
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'List of configurations'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ItemConfiguration'
+    post:
+      operationId: 'addConfiguration'
+      summary: 'Adds configuration to a category'
+      tags: ['configurations']
+      parameters:
+        - in: path
+          name: category
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateConfigurationRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/Ok'
+  /configurations/{configurationId}:
+    put:
+      operationId: 'editConfiguration'
+      summary: 'Edits a configuration'
+      tags: ['configurations']
+      parameters:
+        - in: path
+          name: configurationId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateConfigurationRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/Ok'
+    delete:
+      operationId: 'removeConfiguration'
+      summary: 'Removes a configuration'
+      tags: ['configurations']
+      parameters:
+        - in: path
+          name: configurationId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Ok'
 components:
   securitySchemes:
     bearerAuth:
@@ -411,6 +495,24 @@ components:
       scheme: bearer
       bearerFormat: JWT
   schemas:
+    CreateConfigurationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        props:
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+    UpdateConfigurationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        props:
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
     CreateProjectRequest:
       type: object
       properties:
@@ -472,6 +574,13 @@ components:
     UserRole:
       type: string
       enum: [CLIENT, EXPERT, ADMIN]
+    ConfigurableCategory:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
     ProjectDescription:
       allOf:
         - $ref: '#/components/schemas/Resource'
@@ -553,7 +662,7 @@ components:
       properties:
         id:
           type: string
-        configurableId:
+        category:
           type: string
         configurableType:
           type: string
@@ -561,12 +670,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Property'
-    Configuration:
+    ItemConfiguration:
       allOf:
         - $ref: '#/components/schemas/Resource'
         - type: object
           properties:
-            configurableId:
+            category:
+              type: string
+            name:
               type: string
             props:
               type: array
@@ -604,9 +715,16 @@ components:
             choices:
               type: array
               items:
-                type: string
+                $ref: '#/components/schemas/ChoiceElement'
             value:
               type: string
+    ChoiceElement:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
     DecimalProperty:
       allOf:
         - $ref: '#/components/schemas/Property'
@@ -654,6 +772,8 @@ components:
         id:
           type: string
         name:
+          type: string
+        warning:
           type: string
         parameters:
           type: array

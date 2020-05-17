@@ -2,6 +2,10 @@
   margin-top: 10px;
 }
 
+.spaced-bot-10 {
+  margin-bottom: 10px;
+}
+
 .flex-row {
   display: flex;
   flex-direction: row;
@@ -21,11 +25,23 @@
   flex-basis: 0;
 }
 
-.align-stretch{
+.justify-space-between {
+  justify-content: space-between;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-stretch {
   align-items: stretch;
 }
 
-.button-row button{
+.button-row button {
   margin-left: 8px;
 }
 

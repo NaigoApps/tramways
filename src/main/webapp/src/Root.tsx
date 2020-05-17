@@ -29,6 +29,7 @@ import ProfilePage from "./pages/ProfilePage";
 import ProjectsPage from "./pages/projects/ProjectsPage";
 import ProjectPage from "./pages/projects/ProjectPage";
 import RoadMapPage from "./pages/projects/RoadMapPage";
+import ConfigurationsPage from "./pages/configurations/ConfigurationsPage";
 
 const Root = () => {
     const {
@@ -104,7 +105,7 @@ const Root = () => {
                     <RoadMapPage path="/projects/:projectId/:mapId"/>
                     {/*<AnalysisPage path="projects/:projectId/:mapId/analysis" />*/}
 
-                    {/*<ConfigurationsPage path="configurations" />*/}
+                    <ConfigurationsPage path="/configurations" />
                     {/*<NewConfigurationPage path="configurations/new" />*/}
                     {/*<ConfigurationPage path="configurations/:confId" />*/}
 

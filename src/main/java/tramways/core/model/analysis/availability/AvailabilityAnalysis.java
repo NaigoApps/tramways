@@ -13,7 +13,6 @@ import org.oristool.models.stpn.trees.DeterministicEnablingState;
 import org.oristool.petrinet.Marking;
 import org.slf4j.LoggerFactory;
 
-import tramways.analysis.CrossingPointPetriNetMapper;
 import tramways.core.model.AbstractIdentifiable;
 import tramways.core.model.analysis.Analysis;
 import tramways.core.model.analysis.result.XYAnalysisResult;
@@ -22,7 +21,7 @@ import tramways.core.model.analysis.result.XYPoint;
 public class AvailabilityAnalysis extends AbstractIdentifiable implements Analysis {
 
 	private static final int FPS = 1;
-	
+
 	private static RegTransient createAnalysis(int period) {
 		return RegTransient.builder()
 				.greedyPolicy(BigDecimal.valueOf(period), BigDecimal.ZERO)
@@ -42,14 +41,14 @@ public class AvailabilityAnalysis extends AbstractIdentifiable implements Analys
 				.timeStep(BigDecimal.valueOf(1.0 / FPS))
 				.build();
 	}
-	
+
 	@Override
 	public XYAnalysisResult run() {
 		CrossingPointPetriNetMapper mapper = new CrossingPointPetriNetMapper();
 //		TrafficLightCrossingPoint point = map.getPoints(TrafficLightCrossingPoint.class).iterator().next();
 //		mapper.setCrossingPoint(point);
-		mapper.map(null);
-		
+		mapper.map(null, null, null);
+
 		int analysisTime = 220;
 		int steps = analysisTime * FPS + 1;
 
@@ -61,16 +60,16 @@ public class AvailabilityAnalysis extends AbstractIdentifiable implements Analys
 				.asDoubleStream()
 				.map(v -> 1.0)
 				.toArray();
-		
+
 		RegTransient analysis = createAnalysis(220);
 		TransientSolution<DeterministicEnablingState, Marking> ssSolution = analysis.compute(mapper.getNet(), mapper.getMarking());
-		
+
 		LoggerFactory.getLogger(getClass()).info("Computing reward...");
 		TransientSolution<DeterministicEnablingState, RewardRate> reward = TransientSolution.computeRewards(false,
 				ssSolution, "1-red");
 		LoggerFactory.getLogger(getClass()).info("...Computed reward");
 
-		
+
 		for (int tick = 0; tick < steps; tick++) {
 			av[tick] *= reward.getSolution()[tick % (220 * FPS)][0][0];
 		}
@@ -84,7 +83,7 @@ public class AvailabilityAnalysis extends AbstractIdentifiable implements Analys
 			points.add(new XYPoint(time[i], av[i]));
 		}
 		result.setPoints(points);
-		
+
 		return result;
 	}
 }

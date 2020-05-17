@@ -14,7 +14,7 @@ import tramways.inbound.model.Property;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-26T14:37:23.351990800+02:00[Europe/Berlin]")@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "configurableType", visible = true)
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-05-08T22:58:22.447039+02:00[Europe/Berlin]")@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "configurableType", visible = true)
 @JsonSubTypes({
   @JsonSubTypes.Type(value = RelevantPoint.class, name = "RelevantPoint"),
   @JsonSubTypes.Type(value = Lane.class, name = "Lane"),
@@ -24,7 +24,7 @@ import io.swagger.annotations.*;
 public class Configurable   {
   
   private String id;
-  private String configurableId;
+  private String category;
   private String configurableType;
   private List<Property> props = new ArrayList<Property>();
 
@@ -44,12 +44,12 @@ public class Configurable   {
    **/
   
   @ApiModelProperty(value = "")
-  @JsonProperty("configurableId")
-  public String getConfigurableId() {
-    return configurableId;
+  @JsonProperty("category")
+  public String getCategory() {
+    return category;
   }
-  public void setConfigurableId(String configurableId) {
-    this.configurableId = configurableId;
+  public void setCategory(String category) {
+    this.category = category;
   }
 
   /**
@@ -87,14 +87,14 @@ public class Configurable   {
     }
     Configurable configurable = (Configurable) o;
     return Objects.equals(id, configurable.id) &&
-        Objects.equals(configurableId, configurable.configurableId) &&
+        Objects.equals(category, configurable.category) &&
         Objects.equals(configurableType, configurable.configurableType) &&
         Objects.equals(props, configurable.props);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, configurableId, configurableType, props);
+    return Objects.hash(id, category, configurableType, props);
   }
 
   @Override
@@ -103,7 +103,7 @@ public class Configurable   {
     sb.append("class Configurable {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    configurableId: ").append(toIndentedString(configurableId)).append("\n");
+    sb.append("    category: ").append(toIndentedString(category)).append("\n");
     sb.append("    configurableType: ").append(toIndentedString(configurableType)).append("\n");
     sb.append("    props: ").append(toIndentedString(props)).append("\n");
     sb.append("}");

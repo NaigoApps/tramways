@@ -30,7 +30,7 @@ export default function LoginPage({navigate}: RouteComponentProps) {
 
     return (
         <Page title="Login">
-            <form autoComplete="off" noValidate>
+            <div className={classes.centerContent}>
                 <div>
                     <TextField
                         className={classes.formControl}
@@ -61,7 +61,7 @@ export default function LoginPage({navigate}: RouteComponentProps) {
                         </Button>
                     </FormControl>
                 </div>
-            </form>
+            </div>
         </Page>
     );
 }

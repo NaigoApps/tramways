@@ -1,21 +1,23 @@
 package tramways.dto.mappers;
 
+import java.util.List;
 import javax.annotation.processing.Generated;
 import javax.enterprise.context.ApplicationScoped;
 import tramways.inbound.model.AnalysisType;
+import tramways.inbound.model.Property;
 import tramways.inbound.model.RoadMapContent;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-04-26T14:37:29+0200",
+    date = "2020-05-09T10:05:44+0200",
     comments = "version: 1.3.0.Final, compiler: javac, environment: Java 11 (Oracle Corporation)"
 )
 @ApplicationScoped
-public class AnalysisTypeMapperImpl implements AnalysisTypeMapper {
+public class AnalysisTypeMapperImpl extends AnalysisTypeMapper {
 
     @Override
-    public AnalysisType map(tramways.core.model.analysis.AnalysisType type, RoadMapContent roadMap) {
-        if ( type == null && roadMap == null ) {
+    public AnalysisType map(tramways.core.model.analysis.AnalysisType type, RoadMapContent roadMap, List<Property> properties) {
+        if ( type == null && roadMap == null && properties == null ) {
             return null;
         }
 
@@ -25,7 +27,8 @@ public class AnalysisTypeMapperImpl implements AnalysisTypeMapper {
             analysisType.setName( type.getName() );
             analysisType.setId( type.getId() );
         }
-        analysisType.setParameters( type.getParameters(roadMap) );
+
+        afterMapping( analysisType, type, roadMap, properties );
 
         return analysisType;
     }

@@ -13,10 +13,19 @@ import java.util.List;
 @Table(name = "configurations")
 public class Configuration extends BaseEntity {
 
+	private String category;
 	private String name;
 
 	@Lob
 	private String properties;
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
 
 	public List<Property> getProperties() {
 		return new Json2PropertyMapper().mapProperties(properties);

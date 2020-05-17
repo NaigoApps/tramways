@@ -24,6 +24,12 @@ const useStyles = makeStyles(({palette, spacing}: Theme) => createStyles({
         position: relative,
         marginTop: spacing(2)
     },
+    centerContent: {
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column'
+    },
     card: {
         padding: spacing(1)
     },

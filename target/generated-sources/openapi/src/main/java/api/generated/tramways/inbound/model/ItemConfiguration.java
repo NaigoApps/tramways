@@ -8,28 +8,41 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
-import tramways.inbound.model.ConfigurationAllOf;
+import tramways.inbound.model.ItemConfigurationAllOf;
 import tramways.inbound.model.Property;
 import tramways.inbound.model.Resource;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-26T14:37:23.351990800+02:00[Europe/Berlin]")
-public class ModelConfiguration extends Resource  {
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-05-08T22:58:22.447039+02:00[Europe/Berlin]")
+public class ItemConfiguration extends Resource  {
   
-  private String configurableId;
+  private String category;
+  private String name;
   private List<Property> props = new ArrayList<Property>();
 
   /**
    **/
   
   @ApiModelProperty(value = "")
-  @JsonProperty("configurableId")
-  public String getConfigurableId() {
-    return configurableId;
+  @JsonProperty("category")
+  public String getCategory() {
+    return category;
   }
-  public void setConfigurableId(String configurableId) {
-    this.configurableId = configurableId;
+  public void setCategory(String category) {
+    this.category = category;
+  }
+
+  /**
+   **/
+  
+  @ApiModelProperty(value = "")
+  @JsonProperty("name")
+  public String getName() {
+    return name;
+  }
+  public void setName(String name) {
+    this.name = name;
   }
 
   /**
@@ -53,22 +66,24 @@ public class ModelConfiguration extends Resource  {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ModelConfiguration _configuration = (ModelConfiguration) o;
-    return Objects.equals(configurableId, _configuration.configurableId) &&
-        Objects.equals(props, _configuration.props);
+    ItemConfiguration itemConfiguration = (ItemConfiguration) o;
+    return Objects.equals(category, itemConfiguration.category) &&
+        Objects.equals(name, itemConfiguration.name) &&
+        Objects.equals(props, itemConfiguration.props);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(configurableId, props);
+    return Objects.hash(category, name, props);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ModelConfiguration {\n");
+    sb.append("class ItemConfiguration {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    configurableId: ").append(toIndentedString(configurableId)).append("\n");
+    sb.append("    category: ").append(toIndentedString(category)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    props: ").append(toIndentedString(props)).append("\n");
     sb.append("}");
     return sb.toString();

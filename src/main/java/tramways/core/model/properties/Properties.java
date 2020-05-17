@@ -1,5 +1,6 @@
 package tramways.core.model.properties;
 
+import tramways.inbound.model.ChoiceElement;
 import tramways.inbound.model.ChoiceProperty;
 import tramways.inbound.model.DecimalProperty;
 import tramways.inbound.model.IntegerProperty;
@@ -36,12 +37,19 @@ public final class Properties {
         return property;
     }
 
-    public static ChoiceProperty choiceProperty(String name, String value, String...options) {
+    public static ChoiceProperty choiceProperty(String name, String value, ChoiceElement... elements) {
         ChoiceProperty property = new ChoiceProperty();
         property.setName(name);
         property.setValue(value);
-        property.setChoices(Arrays.asList(options));
-        property.setPropertyType(StringProperty.class.getSimpleName());
+        property.setChoices(Arrays.asList(elements));
+        property.setPropertyType(ChoiceProperty.class.getSimpleName());
         return property;
+    }
+
+    public static ChoiceElement choiceElement(String id, String label){
+        ChoiceElement element = new ChoiceElement();
+        element.setId(id);
+        element.setLabel(label);
+        return element;
     }
 }

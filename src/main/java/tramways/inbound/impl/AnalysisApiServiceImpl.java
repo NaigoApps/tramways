@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 @Transactional
@@ -32,18 +33,18 @@ public class AnalysisApiServiceImpl implements AnalysisApiService {
 
     @Override
     public Response getAnalysisParams(AnalysisParamsRequest request, SecurityContext securityContext) throws NotFoundException {
-        Project project = projectRepository.findByUuid(request.getProjectId());
+        Project project = projectRepository.findById(request.getProjectId());
         RoadMap map = project.getMap(request.getMapId());
         return RestUtils.ok(factory.getType(request.getAnalysisTypeId()).getParameters(map.getContent()));
     }
 
     @Override
     public Response getAvailableAnalysis(String projectId, String mapId, SecurityContext securityContext) throws NotFoundException {
-        Project project = projectRepository.findByUuid(projectId);
+        Project project = projectRepository.findById(projectId);
         RoadMap map = project.getMap(mapId);
         RoadMapContent mapContent = map.getContent();
         return RestUtils.ok(factory.getTypes().stream()
-                .map(type -> mapper.map(type, mapContent))
+                .map(type -> mapper.map(type, mapContent, Collections.emptyList()))
                 .collect(Collectors.toList()));
     }
 

@@ -45,6 +45,8 @@ public class RoadMapNetworkMapper {
     private NetworkPoint mapPoint(RelevantPoint relevantPoint) {
         return pointsMap.computeIfAbsent(relevantPoint, point -> {
             NetworkPoint networkPoint = new NetworkPoint();
+            networkPoint.setUuid(relevantPoint.getId());
+            networkPoint.apply(relevantPoint.getProps());
             List<LaneSegment> leavingLanes = findLeavingLanes(relevantPoint);
             List<LaneSegment> incomingLanes = findIncomingLanes(relevantPoint);
             for(LaneSegment lane : leavingLanes){
@@ -56,6 +58,8 @@ public class RoadMapNetworkMapper {
             Map<LaneSegment, Set<LaneSegmentLink>> linksMap = new HashMap<>();
             for (CrossingLink link : point.getLinks()) {
                 LaneSegmentLink segmentLink = new LaneSegmentLink();
+                segmentLink.apply(link.getProps());
+                segmentLink.setSource(findOrCreateLane(link.getSourceId()));
                 segmentLink.setDestination(findOrCreateLane(link.getDestinationId()));
                 Set<LaneSegmentLink> linksSet = linksMap.computeIfAbsent(findOrCreateLane(link.getSourceId()), l -> new HashSet<>());
                 linksSet.add(segmentLink);
@@ -86,9 +90,17 @@ public class RoadMapNetworkMapper {
 
     private LaneSegment findOrCreateLane(String laneId) {
         return lanesMap.computeIfAbsent(laneId, uuid -> {
-            LaneSegment segment = new LaneSegment();
-            segment.setUuid(uuid);
-            return segment;
+            Lane targetLane = mapContent.getLanes().stream()
+                    .filter(lane -> uuid != null && uuid.equals(lane.getId()))
+                    .findFirst()
+                    .orElse(null);
+            if (targetLane != null){
+                LaneSegment segment = new LaneSegment();
+                segment.setUuid(uuid);
+                segment.apply(targetLane.getProps());
+                return segment;
+            }
+            return NetworkPoint.VOID;
         });
     }
 }

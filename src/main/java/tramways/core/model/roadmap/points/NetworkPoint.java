@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class NetworkPoint extends AbstractConfigurable implements Node<LaneSegment> {
 
-    private static final LaneSegment VOID = new LaneSegment();
+    public static final LaneSegment VOID = new LaneSegment();
 
     private Map<LaneSegment, Set<LaneSegmentLink>> links;
 

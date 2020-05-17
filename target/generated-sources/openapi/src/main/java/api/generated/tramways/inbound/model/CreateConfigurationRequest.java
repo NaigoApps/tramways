@@ -12,22 +12,22 @@ import tramways.inbound.model.Property;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-04-26T14:37:23.351990800+02:00[Europe/Berlin]")
-public class ConfigurationAllOf   {
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-05-08T22:58:22.447039+02:00[Europe/Berlin]")
+public class CreateConfigurationRequest   {
   
-  private String configurableId;
+  private String name;
   private List<Property> props = new ArrayList<Property>();
 
   /**
    **/
   
   @ApiModelProperty(value = "")
-  @JsonProperty("configurableId")
-  public String getConfigurableId() {
-    return configurableId;
+  @JsonProperty("name")
+  public String getName() {
+    return name;
   }
-  public void setConfigurableId(String configurableId) {
-    this.configurableId = configurableId;
+  public void setName(String name) {
+    this.name = name;
   }
 
   /**
@@ -51,22 +51,22 @@ public class ConfigurationAllOf   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ConfigurationAllOf configurationAllOf = (ConfigurationAllOf) o;
-    return Objects.equals(configurableId, configurationAllOf.configurableId) &&
-        Objects.equals(props, configurationAllOf.props);
+    CreateConfigurationRequest createConfigurationRequest = (CreateConfigurationRequest) o;
+    return Objects.equals(name, createConfigurationRequest.name) &&
+        Objects.equals(props, createConfigurationRequest.props);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(configurableId, props);
+    return Objects.hash(name, props);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ConfigurationAllOf {\n");
+    sb.append("class CreateConfigurationRequest {\n");
     
-    sb.append("    configurableId: ").append(toIndentedString(configurableId)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    props: ").append(toIndentedString(props)).append("\n");
     sb.append("}");
     return sb.toString();

@@ -21,7 +21,7 @@ export default function AvailableAnalysisDialog({
 }: AvailableAnalysisDialogProps) {
     const {analysisApi} = useContext(ApiContext);
 
-    const [availableAnalysis, setAvailableAnalysis] = useState([]);
+    const [availableAnalysis, setAvailableAnalysis] = useState<AnalysisType[]>([]);
 
     useEffect(() => {
         if(projectId && mapId) {
@@ -45,7 +45,13 @@ export default function AvailableAnalysisDialog({
                                 <BarChartIcon/>
                             </Avatar>
                         </ListItemAvatar>
-                        <ListItemText primary={type.name}/>
+                        <ListItemText
+                            primary={type.name}
+                            secondary={type.warning}
+                            secondaryTypographyProps={{
+                                color: "error"
+                            }}
+                        />
                     </ListItem>
                 ))}
             </List>
