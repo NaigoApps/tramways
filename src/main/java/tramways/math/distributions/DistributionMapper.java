@@ -2,27 +2,32 @@ package tramways.math.distributions;
 
 import java.math.BigDecimal;
 
-import org.apache.commons.math3.distribution.ExponentialDistribution;
-import org.apache.commons.math3.distribution.UniformRealDistribution;
 import org.oristool.models.stpn.trees.StochasticTransitionFeature;
+import org.oristool.petrinet.TransitionFeature;
+import tramways.inbound.model.Distribution;
+import tramways.inbound.model.ExponentialDistribution;
+import tramways.inbound.model.UniformDistribution;
 
-/**
- *
- * @author naigo
- */
 public class DistributionMapper {
 
-	private DistributionMapper() {
-		
-	}
-	
-	public static StochasticTransitionFeature map(UniformRealDistribution u) {
-		return StochasticTransitionFeature.newUniformInstance(BigDecimal.valueOf(u.getSupportLowerBound()),
-				BigDecimal.valueOf(u.getSupportUpperBound()));
-	}
+    private DistributionMapper() {
 
-	public static StochasticTransitionFeature map(ExponentialDistribution d) {
-		return StochasticTransitionFeature.newExponentialInstance(BigDecimal.valueOf(d.getMean()));
-	}
+    }
 
+    public static StochasticTransitionFeature map(UniformDistribution u) {
+        return StochasticTransitionFeature.newUniformInstance(u.getLeft(), u.getRight());
+    }
+
+    public static StochasticTransitionFeature map(ExponentialDistribution d) {
+        return StochasticTransitionFeature.newExponentialInstance(d.getLambda());
+    }
+
+    public static TransitionFeature map(Distribution distribution) {
+        if (distribution instanceof ExponentialDistribution) {
+            return map((ExponentialDistribution) distribution);
+        } else if (distribution instanceof UniformDistribution) {
+            return map((UniformDistribution) distribution);
+        }
+        return null;
+    }
 }

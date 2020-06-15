@@ -3,6 +3,7 @@ import {IconButton, TextField, Typography} from "@material-ui/core";
 import {Add, Delete} from "@material-ui/icons"
 import {ChoiceElement, ChoiceProperty} from "../../../../api/generated";
 import useStyles from "../../../../utils/useStyles";
+import ChoicePropertyInput from "../inputs/ChoicePropertyInput";
 
 export interface ChoicePropertyEditorProps {
     property: ChoiceProperty;
@@ -15,14 +16,14 @@ export default function ChoicePropertyEditor({
 
     const classes = useStyles();
 
-    const [newItem, setNewItem] = useState<ChoiceElement>({id:"", label:""});
+    const [newItem, setNewItem] = useState<ChoiceElement>({id: "", label: ""});
 
     function addNewItem() {
         onChange({
             ...property,
             choices: property.choices.concat([newItem])
         });
-        setNewItem({id:"", label:""});
+        setNewItem({id: "", label: ""});
     }
 
     function updateItem(index: number, item: ChoiceElement) {
@@ -99,5 +100,7 @@ export default function ChoicePropertyEditor({
                 </IconButton>
             </div>
         ))}
+
+        <ChoicePropertyInput property={property} onChange={onChange}/>
     </div>
 }

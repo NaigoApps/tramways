@@ -9,11 +9,11 @@ import tramways.inbound.model.RoadMapContent;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-05-09T10:05:44+0200",
+    date = "2020-06-08T22:53:39+0200",
     comments = "version: 1.3.0.Final, compiler: javac, environment: Java 11 (Oracle Corporation)"
 )
 @ApplicationScoped
-public class AnalysisTypeMapperImpl extends AnalysisTypeMapper {
+public class AnalysisTypeMapperImpl implements AnalysisTypeMapper {
 
     @Override
     public AnalysisType map(tramways.core.model.analysis.AnalysisType type, RoadMapContent roadMap, List<Property> properties) {
@@ -27,8 +27,6 @@ public class AnalysisTypeMapperImpl extends AnalysisTypeMapper {
             analysisType.setName( type.getName() );
             analysisType.setId( type.getId() );
         }
-
-        afterMapping( analysisType, type, roadMap, properties );
 
         return analysisType;
     }

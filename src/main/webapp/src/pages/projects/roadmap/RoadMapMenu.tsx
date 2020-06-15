@@ -5,8 +5,8 @@ import ListItem from "@material-ui/core/ListItem";
 import {Add} from "@material-ui/icons";
 import {Lane, RelevantPoint, RoadMap} from "../../../api/generated";
 import NewNodeDialog from "./NewNodeDialog";
-import {createDecimal} from "./PropertyUtils";
 import NewLaneDialog from "./NewLaneDialog";
+import {createDecimal} from "../../configurations/properties/properties-utils";
 
 export interface RoadMapMenuProps {
     roadMap: RoadMap;

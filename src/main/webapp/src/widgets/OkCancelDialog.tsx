@@ -1,14 +1,10 @@
-import {
-    Dialog,
-    DialogActions,
-    DialogContent,
-    Button
-} from "@material-ui/core";
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@material-ui/core";
 import React, {FunctionComponent} from "react";
 
-type OkCancelDialogProps = {
+export type OkCancelDialogProps = {
+    title?: string;
     valid?: boolean
-    large?: boolean;
+    size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
     visible: boolean;
     onCancel: () => void;
     onOk: () => void;
@@ -18,18 +14,21 @@ type OkCancelDialogProps = {
 
 export const OkCancelDialog: FunctionComponent<OkCancelDialogProps> = (
     {
+        title,
         valid = true,
         children,
-        large = false,
+        size,
         visible,
         onCancel,
         onOk,
         cancelText = "Cancel",
         okText = "Ok"
     }) => {
+
     return (
-        <Dialog open={visible} onClose={onCancel} maxWidth={"lg"}>
-            <DialogContent>{children}</DialogContent>
+        <Dialog open={visible} onClose={onCancel} maxWidth={size} fullWidth={!!size}>
+            {title && <DialogTitle>{title}</DialogTitle>}
+            <DialogContent dividers={true}>{children}</DialogContent>
             <DialogActions>
                 <Button color="primary" onClick={onCancel}>
                     {cancelText}

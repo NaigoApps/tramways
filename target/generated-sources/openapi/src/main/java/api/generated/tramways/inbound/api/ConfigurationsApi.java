@@ -9,6 +9,7 @@ import io.swagger.jaxrs.*;
 import tramways.inbound.model.ConfigurableCategory;
 import tramways.inbound.model.CreateConfigurationRequest;
 import tramways.inbound.model.ItemConfiguration;
+import tramways.inbound.model.Property;
 import tramways.inbound.model.StringWrapper;
 import tramways.inbound.model.UpdateConfigurationRequest;
 
@@ -31,7 +32,7 @@ import javax.validation.Valid;
 
 
 @io.swagger.annotations.Api(description = "the configurations API")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-05-08T22:58:22.447039+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-06-08T22:53:33.850861900+02:00[Europe/Berlin]")
 public class ConfigurationsApi  {
 
     @Inject ConfigurationsApiService service;
@@ -76,7 +77,7 @@ public class ConfigurationsApi  {
         return service.getConfigurationCategories(securityContext);
     }
     @GET
-    @Path("/{category}")
+    
     
     @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Get configurations given category", notes = "", response = ItemConfiguration.class, responseContainer = "List", authorizations = {
@@ -84,9 +85,22 @@ public class ConfigurationsApi  {
     }, tags={ "configurations", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "List of configurations", response = ItemConfiguration.class, responseContainer = "List") })
-    public Response getConfigurations( @PathParam("category") String category,@Context SecurityContext securityContext)
+    public Response getConfigurations(  @QueryParam("category") String category,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.getConfigurations(category,securityContext);
+    }
+    @GET
+    @Path("/suggestions")
+    
+    @Produces({ "application/json" })
+    @io.swagger.annotations.ApiOperation(value = "Get properties given category", notes = "", response = Property.class, responseContainer = "List", authorizations = {
+        @io.swagger.annotations.Authorization(value = "bearerAuth")
+    }, tags={ "configurations", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "List of properties", response = Property.class, responseContainer = "List") })
+    public Response getPropertiesSuggestions(  @QueryParam("category") String category,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return service.getPropertiesSuggestions(category,securityContext);
     }
     @DELETE
     @Path("/{configurationId}")

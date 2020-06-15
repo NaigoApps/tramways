@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.slf4j.LoggerFactory;
 
-import tramways.services.MessageCollector;
+import tramways.services.MessagesCollector;
 
-public class LogsMessageCollector implements MessageCollector{
+public class LogsMessagesCollector implements MessagesCollector {
 
 	@Override
 	public boolean addMessage(String message) {

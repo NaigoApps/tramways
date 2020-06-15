@@ -1,12 +1,13 @@
-import {Divider, IconButton, TextField} from "@material-ui/core";
-import React, {useContext, useState} from "react";
+import {Button, IconButton, TextField, Typography} from "@material-ui/core";
+import React, {useContext, useEffect, useState} from "react";
 import {ItemConfiguration, Property} from "../../api/generated";
 import ApiContext from "../../ApiContext";
 import {OkCancelDialog} from "../../widgets/OkCancelDialog";
-import PropertyEditor, {newStringProperty} from "./properties/editors/PropertyEditor";
+import PropertyEditor from "./properties/editors/PropertyEditor";
 import useStyles from "../../utils/useStyles";
 import AddIcon from "@material-ui/icons/Add"
 import DeleteIcon from "@material-ui/icons/Delete"
+import PropertyEditorDialog from "./properties/editors/PropertyEditorDialog";
 
 export type ConfigurationEditorProps = {
     category: string;
@@ -25,9 +26,14 @@ export default function ConfigurationEditor(
     const {configurationsApi} = useContext(ApiContext);
     const {formControl} = useStyles();
 
-    const [newName, setNewName] = useState(configuration.name);
+    const [suggestions, setSuggestions] = useState<Array<Property>>([]);
+    useEffect(() => {
+        configurationsApi.getPropertiesSuggestions(category).then(result => setSuggestions(result.data));
+    }, [configurationsApi, category]);
 
-    const [newProp, setNewProp] = useState<Property>(newStringProperty());
+    const [creatingProp, setCreatingProp] = useState(false);
+
+    const [newName, setNewName] = useState(configuration.name);
 
     const [newProps, setNewProps] = useState<Array<Property>>(configuration.props);
 
@@ -45,9 +51,9 @@ export default function ConfigurationEditor(
         }
     }
 
-    function addNewProp() {
-        setNewProps(oldProps => oldProps.concat([newProp]));
-        setNewProp(newStringProperty());
+    function addNewProp(value: Property) {
+        setNewProps(oldProps => oldProps.concat([value]));
+        setCreatingProp(false);
     }
 
     function updateProp(index: number, prop: Property) {
@@ -64,31 +70,40 @@ export default function ConfigurationEditor(
     }
 
     return (
-        <OkCancelDialog onOk={confirm} onCancel={onAbort} visible>
-            <TextField
-                className={formControl}
-                variant={"outlined"}
-                label="Configuration name"
-                onChange={evt => setNewName(evt.target.value)}
-                value={newName}
-            />
-            <div className={"flex-row justify-space-between"}>
-                <PropertyEditor property={newProp} onChange={setNewProp}/>
-                <IconButton color={"primary"} onClick={addNewProp}>
-                    <AddIcon/>
-                </IconButton>
+        <OkCancelDialog onOk={confirm} onCancel={onAbort}
+                        title={configuration?.uuid ? 'Configuration editing' : 'Configuration creation'}
+                        visible>
+            <div>
+                <TextField
+                    className={formControl}
+                    variant={"outlined"}
+                    label="Configuration name"
+                    onChange={evt => setNewName(evt.target.value)}
+                    value={newName}
+                />
             </div>
-            <div className={"spaced-top-10 spaced-bot-10"}>
-                <Divider/>
+            <div className={formControl}>
+                <Button
+                    color={"primary"}
+                    variant={"outlined"}
+                    endIcon={<AddIcon/>}
+                    onClick={() => setCreatingProp(true)}>
+                    Add property
+                </Button>
             </div>
             {newProps.map((prop, index) => (
-                <div className={"flex-row justify-space-between"}>
-                    <PropertyEditor property={prop} onChange={prop => updateProp(index, prop)}/>
+                <div key={prop.name + "-" + prop.propertyType} className={"flex-row justify-space-between"}>
+                    <PropertyEditor property={prop} onChange={prop => updateProp(index, prop)}
+                                    suggestions={suggestions}/>
                     <IconButton color={"primary"} onClick={() => deleteProp(index)}>
                         <DeleteIcon/>
                     </IconButton>
                 </div>
             ))}
+            <PropertyEditorDialog onOk={value => addNewProp(value)}
+                                  onCancel={() => setCreatingProp(false)}
+                                  suggestions={suggestions}
+                                  visible={creatingProp}/>
         </OkCancelDialog>
     );
 }

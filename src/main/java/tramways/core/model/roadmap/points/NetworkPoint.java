@@ -35,7 +35,7 @@ public class NetworkPoint extends AbstractConfigurable implements Node<LaneSegme
         return links.get(segment);
     }
 
-    public void startLane(LaneSegment target){
+    public void startLane(LaneSegment target) {
         LaneSegmentLink link = new LaneSegmentLink();
         link.setSource(VOID);
         link.setDestination(target);
@@ -43,7 +43,7 @@ public class NetworkPoint extends AbstractConfigurable implements Node<LaneSegme
         links.computeIfAbsent(VOID, l -> new HashSet<>()).add(link);
     }
 
-    public void endLane(LaneSegment target){
+    public void endLane(LaneSegment target) {
         LaneSegmentLink link = new LaneSegmentLink();
         link.setSource(target);
         link.setDestination(VOID);
@@ -51,7 +51,7 @@ public class NetworkPoint extends AbstractConfigurable implements Node<LaneSegme
         links.computeIfAbsent(target, l -> new HashSet<>()).add(link);
     }
 
-    public void addLink(LaneSegment source, LaneSegment destination){
+    public void addLink(LaneSegment source, LaneSegment destination) {
         LaneSegmentLink link = new LaneSegmentLink();
         link.setSource(source);
         source.setDestination(this);
@@ -62,14 +62,14 @@ public class NetworkPoint extends AbstractConfigurable implements Node<LaneSegme
 
     @Override
     public List<LaneSegment> getSources() {
-        Set<LaneSegment> sources = links.keySet();
+        Set<LaneSegment> sources = new HashSet<>(links.keySet());
         sources.remove(VOID);
         return new ArrayList<>(sources);
     }
 
     @Override
     public List<LaneSegment> getDestinations() {
-        return links.values().stream()
+        return new ArrayList<>(links.values()).stream()
                 .flatMap(Collection::stream)
                 .map(LaneSegmentLink::getDestination)
                 .distinct()

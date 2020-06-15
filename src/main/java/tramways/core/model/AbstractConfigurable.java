@@ -43,4 +43,21 @@ public class AbstractConfigurable extends AbstractIdentifiable implements Config
     public List<Property> listProperties() {
         return new ArrayList<>(properties);
     }
+
+    @Override
+    public Property getProperty(String name) {
+        return properties.stream().filter(property -> property.getName().equals(name))
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
+    public <T extends Property> T getProperty(String name, Class<T> propertyClass) {
+        return properties.stream()
+                .filter(property -> property.getName().equals(name))
+                .filter(propertyClass::isInstance)
+                .map(propertyClass::cast)
+                .findFirst()
+                .orElse(null);
+    }
 }

@@ -1,10 +1,5 @@
 package tramways.core.model.analysis.availability;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.IntStream;
-
 import org.oristool.analyzer.log.AnalysisMonitor;
 import org.oristool.models.stpn.RewardRate;
 import org.oristool.models.stpn.TransientSolution;
@@ -12,15 +7,28 @@ import org.oristool.models.stpn.trans.RegTransient;
 import org.oristool.models.stpn.trees.DeterministicEnablingState;
 import org.oristool.petrinet.Marking;
 import org.slf4j.LoggerFactory;
-
 import tramways.core.model.AbstractIdentifiable;
 import tramways.core.model.analysis.Analysis;
 import tramways.core.model.analysis.result.XYAnalysisResult;
 import tramways.core.model.analysis.result.XYPoint;
+import tramways.core.model.properties.DefaultPropertySource;
+import tramways.core.model.roadmap.NetworkMap;
+import tramways.inbound.model.Property;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 
 public class AvailabilityAnalysis extends AbstractIdentifiable implements Analysis {
 
 	private static final int FPS = 1;
+	private final DefaultPropertySource source;
+
+	public AvailabilityAnalysis(List<Property> params) {
+		this.source = new DefaultPropertySource();
+		this.source.addProperties(params);
+	}
 
 	private static RegTransient createAnalysis(int period) {
 		return RegTransient.builder()
@@ -47,7 +55,7 @@ public class AvailabilityAnalysis extends AbstractIdentifiable implements Analys
 		CrossingPointPetriNetMapper mapper = new CrossingPointPetriNetMapper();
 //		TrafficLightCrossingPoint point = map.getPoints(TrafficLightCrossingPoint.class).iterator().next();
 //		mapper.setCrossingPoint(point);
-		mapper.map(null, null, null);
+		mapper.map(source);
 
 		int analysisTime = 220;
 		int steps = analysisTime * FPS + 1;

@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-05-08T22:58:22.447039+02:00[Europe/Berlin]")@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "propertyType", visible = true)
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-06-08T22:53:33.850861900+02:00[Europe/Berlin]")@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "propertyType", visible = true)
 @JsonSubTypes({
   @JsonSubTypes.Type(value = IntegerProperty.class, name = "IntegerProperty"),
   @JsonSubTypes.Type(value = StringProperty.class, name = "StringProperty"),
@@ -23,6 +23,7 @@ import io.swagger.annotations.*;
 public class Property   {
   
   private String name;
+  private String description;
   private String propertyType;
 
   /**
@@ -35,6 +36,18 @@ public class Property   {
   }
   public void setName(String name) {
     this.name = name;
+  }
+
+  /**
+   **/
+  
+  @ApiModelProperty(value = "")
+  @JsonProperty("description")
+  public String getDescription() {
+    return description;
+  }
+  public void setDescription(String description) {
+    this.description = description;
   }
 
   /**
@@ -61,12 +74,13 @@ public class Property   {
     }
     Property property = (Property) o;
     return Objects.equals(name, property.name) &&
+        Objects.equals(description, property.description) &&
         Objects.equals(propertyType, property.propertyType);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, propertyType);
+    return Objects.hash(name, description, propertyType);
   }
 
   @Override
@@ -75,6 +89,7 @@ public class Property   {
     sb.append("class Property {\n");
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    propertyType: ").append(toIndentedString(propertyType)).append("\n");
     sb.append("}");
     return sb.toString();

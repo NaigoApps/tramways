@@ -1,19 +1,37 @@
 import React, {useState} from "react";
-import {ChoiceProperty, DecimalProperty, IntegerProperty, Property, StringProperty} from "../../../../api/generated";
-import {PropertyTypes} from "../inputs/PropertyInput";
-import SelectEditor from "../../../../inputs/SelectEditor";
+import {Property} from "../../../../api/generated";
 import {IconButton, InputAdornment, TextField} from "@material-ui/core";
 import useStyles from "../../../../utils/useStyles";
 import {Search, Settings} from "@material-ui/icons";
 import PropertySelectionDialog from "../PropertySelectionDialog";
-import PropertyContentEditor from "./PropertyContentEditor";
 import Alert from "../../../../widgets/Alert";
+import {PropertyTypes} from "../inputs/PropertyTypes";
+import SelectEditor from "../../../../inputs/SelectEditor";
+import {
+    newChoiceProperty,
+    newDecimalProperty,
+    newIntegerProperty,
+    newStringProperty,
+    newUniformDistributionProperty
+} from "../properties-utils";
+import ChoicePropertyContentEditor from "./ChoicePropertyEditor";
+import DistributionPropertyEditor from "./DistributionPropertyEditor";
+import IntegerPropertyEditor from "./IntegerPropertyEditor";
+import DecimalPropertyEditor from "./DecimalPropertyEditor";
+import StringPropertyEditor from "./StringPropertyEditor";
 
 export interface PropertyEditorProps {
     property: Property;
     onChange: (prop: Property) => void,
     suggestions?: Property[]
 }
+
+const editorsMap = new Map<string, any>();
+editorsMap.set(PropertyTypes.INTEGER, IntegerPropertyEditor);
+editorsMap.set(PropertyTypes.DECIMAL, DecimalPropertyEditor);
+editorsMap.set(PropertyTypes.STRING, StringPropertyEditor);
+editorsMap.set(PropertyTypes.CHOICE, ChoicePropertyContentEditor);
+editorsMap.set(PropertyTypes.DISTRIBUTION, DistributionPropertyEditor);
 
 export default function PropertyEditor({property, onChange, suggestions = []}: PropertyEditorProps) {
 
@@ -22,6 +40,15 @@ export default function PropertyEditor({property, onChange, suggestions = []}: P
     const {formControl} = useStyles();
 
     const [showSuggestions, setShowSuggestions] = useState(false);
+
+    function selectSuggestion(prop: Property) {
+        if (prop) {
+            setShowSuggestions(false);
+            onChange({
+                ...prop
+            });
+        }
+    }
 
     function changePropertyType(type: string) {
         switch (type) {
@@ -34,6 +61,9 @@ export default function PropertyEditor({property, onChange, suggestions = []}: P
             case PropertyTypes.CHOICE:
                 onChange(newChoiceProperty());
                 break;
+            case PropertyTypes.DISTRIBUTION:
+                onChange(newUniformDistributionProperty());
+                break;
             case PropertyTypes.STRING:
             default:
                 onChange(newStringProperty());
@@ -41,14 +71,9 @@ export default function PropertyEditor({property, onChange, suggestions = []}: P
         }
     }
 
-    function selectSuggestion(prop: Property) {
-        if (prop) {
-            setShowSuggestions(false);
-            onChange({
-                name: prop.name,
-                propertyType: prop.propertyType
-            });
-        }
+    let SpecificEditor = editorsMap.get(property.propertyType);
+    if (!SpecificEditor) {
+        SpecificEditor = () => <p>Unsupported</p>;
     }
 
     return <div className={"flex-row flex-grow justify-space-between"}>
@@ -79,8 +104,12 @@ export default function PropertyEditor({property, onChange, suggestions = []}: P
         <IconButton onClick={() => setEditValue(true)}>
             <Settings/>
         </IconButton>
-        <Alert visible={editValue} onClose={() => setEditValue(false)} buttonColor={"default"}>
-            <PropertyContentEditor property={property} onChange={onChange}/>
+        <Alert
+            title={property?.name + " content editing"}
+            visible={editValue}
+            onClose={() => setEditValue(false)}
+            buttonColor={"default"}>
+            <SpecificEditor property={property} onChange={onChange}/>
         </Alert>
         {showSuggestions && (
             <PropertySelectionDialog
@@ -93,35 +122,3 @@ export default function PropertyEditor({property, onChange, suggestions = []}: P
 }
 
 
-export function newStringProperty(): StringProperty {
-    return {
-        name: "",
-        value: "",
-        propertyType: PropertyTypes.STRING
-    };
-}
-
-export function newIntegerProperty(): IntegerProperty {
-    return {
-        name: "",
-        value: 0,
-        propertyType: PropertyTypes.INTEGER
-    };
-}
-
-export function newDecimalProperty(): DecimalProperty {
-    return {
-        name: "",
-        value: 0,
-        propertyType: PropertyTypes.DECIMAL
-    };
-}
-
-export function newChoiceProperty(): ChoiceProperty {
-    return {
-        name: "",
-        value: null,
-        choices: [],
-        propertyType: PropertyTypes.CHOICE
-    };
-}

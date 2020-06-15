@@ -2,7 +2,7 @@ package tramways.services;
 
 import java.util.List;
 
-public interface MessageCollector {
+public interface MessagesCollector {
 	public boolean addMessage(String message);
 	public List<String> listMessages();
 }

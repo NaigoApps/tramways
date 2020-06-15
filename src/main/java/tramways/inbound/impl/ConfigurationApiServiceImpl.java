@@ -1,34 +1,24 @@
 package tramways.inbound.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import tramways.core.model.analysis.AnalysisTypeFactory;
+import tramways.core.model.persistable.configurations.Configuration;
+import tramways.dto.mappers.ConfigurationMapper;
+import tramways.inbound.RestUtils;
+import tramways.inbound.api.ConfigurationsApiService;
+import tramways.inbound.model.ConfigurableCategory;
+import tramways.inbound.model.CreateConfigurationRequest;
+import tramways.inbound.model.CrossingLink;
+import tramways.inbound.model.Lane;
+import tramways.inbound.model.RelevantPoint;
+import tramways.inbound.model.UpdateConfigurationRequest;
+import tramways.outbound.ConfigurationRepository;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
-
-import tramways.core.model.Configurable;
-import tramways.core.model.persistable.configurations.Configuration;
-import tramways.core.model.roadmap.lanes.LaneSegment;
-import tramways.core.model.roadmap.points.LaneSegmentLink;
-import tramways.core.model.roadmap.points.NetworkPoint;
-import tramways.core.model.roadmap.priority.SensorPriorityManager;
-import tramways.core.model.roadmap.priority.TimedPriorityManager;
-import tramways.dto.mappers.ConfigurationMapper;
-import tramways.inbound.RestUtils;
-import tramways.inbound.api.ConfigurationsApiService;
-import tramways.inbound.api.NotFoundException;
-import tramways.inbound.model.ConfigurableCategory;
-import tramways.inbound.model.CreateConfigurationRequest;
-import tramways.inbound.model.CrossingLink;
-import tramways.inbound.model.ItemConfiguration;
-import tramways.inbound.model.Lane;
-import tramways.inbound.model.RelevantPoint;
-import tramways.inbound.model.UpdateConfigurationRequest;
-import tramways.outbound.ConfigurationRepository;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @Transactional
 public class ConfigurationApiServiceImpl implements ConfigurationsApiService {
@@ -39,8 +29,11 @@ public class ConfigurationApiServiceImpl implements ConfigurationsApiService {
     @Inject
     private ConfigurationMapper mapper;
 
+    @Inject
+    private AnalysisTypeFactory factory;
+
     @Override
-    public Response addConfiguration(String category, CreateConfigurationRequest request, SecurityContext securityContext) throws NotFoundException {
+    public Response addConfiguration(String category, CreateConfigurationRequest request, SecurityContext securityContext) {
         Configuration conf = new Configuration();
         conf.setName(request.getName());
         conf.setCategory(category);
@@ -50,7 +43,7 @@ public class ConfigurationApiServiceImpl implements ConfigurationsApiService {
     }
 
     @Override
-    public Response editConfiguration(String configurationId, UpdateConfigurationRequest request, SecurityContext securityContext) throws NotFoundException {
+    public Response editConfiguration(String configurationId, UpdateConfigurationRequest request, SecurityContext securityContext) {
         Configuration conf = repository.findByUuid(configurationId);
         conf.setName(request.getName());
         conf.setProperties(request.getProps());
@@ -58,7 +51,7 @@ public class ConfigurationApiServiceImpl implements ConfigurationsApiService {
     }
 
     @Override
-    public Response getConfigurationCategories(SecurityContext securityContext) throws NotFoundException {
+    public Response getConfigurationCategories(SecurityContext securityContext) {
         return RestUtils.ok(Arrays.asList(
                 category(RelevantPoint.class.getSimpleName(), "Network point"),
                 category(Lane.class.getSimpleName(), "Lane segment"),
@@ -67,7 +60,7 @@ public class ConfigurationApiServiceImpl implements ConfigurationsApiService {
     }
 
     @Override
-    public Response getConfigurations(String category, SecurityContext securityContext) throws NotFoundException {
+    public Response getConfigurations(String category, SecurityContext securityContext) {
         return RestUtils.ok(
                 repository.findByCategory(category).stream()
                         .map(mapper::map)
@@ -76,7 +69,16 @@ public class ConfigurationApiServiceImpl implements ConfigurationsApiService {
     }
 
     @Override
-    public Response removeConfiguration(String configurationId, SecurityContext securityContext) throws NotFoundException {
+    public Response getPropertiesSuggestions(String category, SecurityContext securityContext) {
+        return RestUtils.ok(
+                factory.getTypes().stream()
+                .flatMap(analysisType -> analysisType.prepareAnalysis(category).stream())
+                .collect(Collectors.toList())
+        );
+    }
+
+    @Override
+    public Response removeConfiguration(String configurationId, SecurityContext securityContext) {
         repository.delete(configurationId);
         return RestUtils.ok("Ok");
     }

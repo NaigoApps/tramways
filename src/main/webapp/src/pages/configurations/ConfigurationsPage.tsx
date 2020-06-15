@@ -5,10 +5,10 @@ import AddIcon from "@material-ui/icons/Add";
 import useStyles from "../../utils/useStyles";
 import {RouteComponentProps} from "@reach/router";
 import ApiContext from "../../ApiContext";
-import {ConfigurableCategory, ItemConfiguration, Property} from "../../api/generated";
+import {ConfigurableCategory, ItemConfiguration} from "../../api/generated";
 import SelectEditor from "../../inputs/SelectEditor";
 import ConfigurationEditor from "./ConfigurationEditor";
-import PropertyInput, {renderProperty} from "./properties/inputs/PropertyInput";
+import {renderProperty} from "./properties/inputs/PropertyInput";
 
 export default function ConfigurationsPage({navigate}: RouteComponentProps) {
     const classes = useStyles();
@@ -27,15 +27,13 @@ export default function ConfigurationsPage({navigate}: RouteComponentProps) {
     }, [configurationsApi]);
 
     const loadConfigurations = useCallback((category) => {
-        configurationsApi.getConfigurations(category.name).then(response => {
+        configurationsApi.getConfigurations(category?.name).then(response => {
             setConfigurations(response.data);
         });
     }, [configurationsApi]);
 
     useEffect(() => {
-        if (category) {
-            loadConfigurations(category);
-        }
+        loadConfigurations(category);
     }, [category, loadConfigurations]);
 
     async function deleteConfiguration(config: ItemConfiguration) {
@@ -60,6 +58,7 @@ export default function ConfigurationsPage({navigate}: RouteComponentProps) {
                 className={classes.fab}
                 onClick={() => setConfiguration({
                     name: "",
+                    category: category.name,
                     props: []
                 })}>
                 <AddIcon/>
@@ -71,7 +70,7 @@ export default function ConfigurationsPage({navigate}: RouteComponentProps) {
                             <CardContent>
                                 <Typography variant="h5">{conf.name}</Typography>
                                 {conf.props.map(property => (
-                                    <Typography variant="h6">
+                                    <Typography key={property.name + property.propertyType} variant="h6">
                                         {`${property.name}: ${renderProperty(property)}`}
                                     </Typography>
                                 ))}
@@ -90,7 +89,7 @@ export default function ConfigurationsPage({navigate}: RouteComponentProps) {
             </Grid>
             {configuration && (
                 <ConfigurationEditor
-                    category={category.name}
+                    category={configuration?.category}
                     configuration={configuration}
                     onConfirm={() => {
                         setConfiguration(null);

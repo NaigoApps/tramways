@@ -22,58 +22,58 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 /**
  * 
  * @export
- * @interface AnalysisLaunchRequest
+ * @interface AnalysisRequest
  */
-export interface AnalysisLaunchRequest {
+export interface AnalysisRequest {
     /**
      * 
      * @type {string}
-     * @memberof AnalysisLaunchRequest
+     * @memberof AnalysisRequest
      */
     projectId?: string;
     /**
      * 
      * @type {string}
-     * @memberof AnalysisLaunchRequest
+     * @memberof AnalysisRequest
      */
     mapId?: string;
     /**
      * 
      * @type {string}
-     * @memberof AnalysisLaunchRequest
+     * @memberof AnalysisRequest
      */
     analysisTypeId?: string;
     /**
      * 
      * @type {Array<Property>}
-     * @memberof AnalysisLaunchRequest
+     * @memberof AnalysisRequest
      */
-    parametes?: Array<Property>;
+    parameters?: Array<Property>;
 }
 /**
  * 
  * @export
- * @interface AnalysisParamsRequest
+ * @interface AnalysisResponse
  */
-export interface AnalysisParamsRequest {
+export interface AnalysisResponse {
     /**
      * 
-     * @type {string}
-     * @memberof AnalysisParamsRequest
+     * @type {Array<string>}
+     * @memberof AnalysisResponse
      */
-    projectId?: string;
+    warnings?: Array<string>;
     /**
      * 
-     * @type {string}
-     * @memberof AnalysisParamsRequest
+     * @type {Array<Property>}
+     * @memberof AnalysisResponse
      */
-    mapId?: string;
+    parameters?: Array<Property>;
     /**
      * 
-     * @type {string}
-     * @memberof AnalysisParamsRequest
+     * @type {boolean}
+     * @memberof AnalysisResponse
      */
-    analysisTypeId?: string;
+    ok?: boolean;
 }
 /**
  * 
@@ -93,18 +93,6 @@ export interface AnalysisType {
      * @memberof AnalysisType
      */
     name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnalysisType
-     */
-    warning?: string;
-    /**
-     * 
-     * @type {Array<Property>}
-     * @memberof AnalysisType
-     */
-    parameters?: Array<Property>;
 }
 /**
  * 
@@ -649,6 +637,12 @@ export interface Property {
      * @type {string}
      * @memberof Property
      */
+    description?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Property
+     */
     propertyType: string;
 }
 /**
@@ -971,50 +965,6 @@ export const AnalysisApiAxiosParamCreator = function (configuration?: Configurat
     return {
         /**
          * 
-         * @summary Gets analysis parameters for chosen type
-         * @param {AnalysisParamsRequest} [analysisParamsRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAnalysisParams(analysisParamsRequest?: AnalysisParamsRequest, options: any = {}): RequestArgs {
-            const localVarPath = `/analysis/parameters`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            if (configuration && configuration.accessToken) {
-                const accessToken = typeof configuration.accessToken === 'function'
-                    ? configuration.accessToken()
-                    : configuration.accessToken;
-                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
-            }
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof analysisParamsRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(analysisParamsRequest !== undefined ? analysisParamsRequest : {}) : (analysisParamsRequest || "");
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Gets available analysis for map
          * @param {string} projectId 
          * @param {string} mapId 
@@ -1073,12 +1023,56 @@ export const AnalysisApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * 
          * @summary Launch selected analysis
-         * @param {AnalysisLaunchRequest} [analysisLaunchRequest] 
+         * @param {AnalysisRequest} [analysisRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        launchAnalysis(analysisLaunchRequest?: AnalysisLaunchRequest, options: any = {}): RequestArgs {
+        launchAnalysis(analysisRequest?: AnalysisRequest, options: any = {}): RequestArgs {
             const localVarPath = `/analysis/launch`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof analysisRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(analysisRequest !== undefined ? analysisRequest : {}) : (analysisRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Prepare analysis
+         * @param {AnalysisRequest} [analysisRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        prepareAnalysis(analysisRequest?: AnalysisRequest, options: any = {}): RequestArgs {
+            const localVarPath = `/analysis/prepare`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -1106,8 +1100,8 @@ export const AnalysisApiAxiosParamCreator = function (configuration?: Configurat
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof analysisLaunchRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(analysisLaunchRequest !== undefined ? analysisLaunchRequest : {}) : (analysisLaunchRequest || "");
+            const needsSerialization = (typeof analysisRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(analysisRequest !== undefined ? analysisRequest : {}) : (analysisRequest || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -1123,20 +1117,6 @@ export const AnalysisApiAxiosParamCreator = function (configuration?: Configurat
  */
 export const AnalysisApiFp = function(configuration?: Configuration) {
     return {
-        /**
-         * 
-         * @summary Gets analysis parameters for chosen type
-         * @param {AnalysisParamsRequest} [analysisParamsRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAnalysisParams(analysisParamsRequest?: AnalysisParamsRequest, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Property>> {
-            const localVarAxiosArgs = AnalysisApiAxiosParamCreator(configuration).getAnalysisParams(analysisParamsRequest, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
         /**
          * 
          * @summary Gets available analysis for map
@@ -1155,12 +1135,26 @@ export const AnalysisApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Launch selected analysis
-         * @param {AnalysisLaunchRequest} [analysisLaunchRequest] 
+         * @param {AnalysisRequest} [analysisRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        launchAnalysis(analysisLaunchRequest?: AnalysisLaunchRequest, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<StringWrapper> {
-            const localVarAxiosArgs = AnalysisApiAxiosParamCreator(configuration).launchAnalysis(analysisLaunchRequest, options);
+        launchAnalysis(analysisRequest?: AnalysisRequest, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisResponse> {
+            const localVarAxiosArgs = AnalysisApiAxiosParamCreator(configuration).launchAnalysis(analysisRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @summary Prepare analysis
+         * @param {AnalysisRequest} [analysisRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        prepareAnalysis(analysisRequest?: AnalysisRequest, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisResponse> {
+            const localVarAxiosArgs = AnalysisApiAxiosParamCreator(configuration).prepareAnalysis(analysisRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1177,16 +1171,6 @@ export const AnalysisApiFactory = function (configuration?: Configuration, baseP
     return {
         /**
          * 
-         * @summary Gets analysis parameters for chosen type
-         * @param {AnalysisParamsRequest} [analysisParamsRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAnalysisParams(analysisParamsRequest?: AnalysisParamsRequest, options?: any): AxiosPromise<Array<Property>> {
-            return AnalysisApiFp(configuration).getAnalysisParams(analysisParamsRequest, options)(axios, basePath);
-        },
-        /**
-         * 
          * @summary Gets available analysis for map
          * @param {string} projectId 
          * @param {string} mapId 
@@ -1199,12 +1183,22 @@ export const AnalysisApiFactory = function (configuration?: Configuration, baseP
         /**
          * 
          * @summary Launch selected analysis
-         * @param {AnalysisLaunchRequest} [analysisLaunchRequest] 
+         * @param {AnalysisRequest} [analysisRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        launchAnalysis(analysisLaunchRequest?: AnalysisLaunchRequest, options?: any): AxiosPromise<StringWrapper> {
-            return AnalysisApiFp(configuration).launchAnalysis(analysisLaunchRequest, options)(axios, basePath);
+        launchAnalysis(analysisRequest?: AnalysisRequest, options?: any): AxiosPromise<AnalysisResponse> {
+            return AnalysisApiFp(configuration).launchAnalysis(analysisRequest, options)(axios, basePath);
+        },
+        /**
+         * 
+         * @summary Prepare analysis
+         * @param {AnalysisRequest} [analysisRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        prepareAnalysis(analysisRequest?: AnalysisRequest, options?: any): AxiosPromise<AnalysisResponse> {
+            return AnalysisApiFp(configuration).prepareAnalysis(analysisRequest, options)(axios, basePath);
         },
     };
 };
@@ -1216,18 +1210,6 @@ export const AnalysisApiFactory = function (configuration?: Configuration, baseP
  * @extends {BaseAPI}
  */
 export class AnalysisApi extends BaseAPI {
-    /**
-     * 
-     * @summary Gets analysis parameters for chosen type
-     * @param {AnalysisParamsRequest} [analysisParamsRequest] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AnalysisApi
-     */
-    public getAnalysisParams(analysisParamsRequest?: AnalysisParamsRequest, options?: any) {
-        return AnalysisApiFp(this.configuration).getAnalysisParams(analysisParamsRequest, options)(this.axios, this.basePath);
-    }
-
     /**
      * 
      * @summary Gets available analysis for map
@@ -1244,13 +1226,25 @@ export class AnalysisApi extends BaseAPI {
     /**
      * 
      * @summary Launch selected analysis
-     * @param {AnalysisLaunchRequest} [analysisLaunchRequest] 
+     * @param {AnalysisRequest} [analysisRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AnalysisApi
      */
-    public launchAnalysis(analysisLaunchRequest?: AnalysisLaunchRequest, options?: any) {
-        return AnalysisApiFp(this.configuration).launchAnalysis(analysisLaunchRequest, options)(this.axios, this.basePath);
+    public launchAnalysis(analysisRequest?: AnalysisRequest, options?: any) {
+        return AnalysisApiFp(this.configuration).launchAnalysis(analysisRequest, options)(this.axios, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Prepare analysis
+     * @param {AnalysisRequest} [analysisRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AnalysisApi
+     */
+    public prepareAnalysis(analysisRequest?: AnalysisRequest, options?: any) {
+        return AnalysisApiFp(this.configuration).prepareAnalysis(analysisRequest, options)(this.axios, this.basePath);
     }
 
 }
@@ -1404,17 +1398,12 @@ export const ConfigurationsApiAxiosParamCreator = function (configuration?: Conf
         /**
          * 
          * @summary Get configurations given category
-         * @param {string} category 
+         * @param {string} [category] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getConfigurations(category: string, options: any = {}): RequestArgs {
-            // verify required parameter 'category' is not null or undefined
-            if (category === null || category === undefined) {
-                throw new RequiredError('category','Required parameter category was null or undefined when calling getConfigurations.');
-            }
-            const localVarPath = `/configurations/{category}`
-                .replace(`{${"category"}}`, encodeURIComponent(String(category)));
+        getConfigurations(category?: string, options: any = {}): RequestArgs {
+            const localVarPath = `/configurations`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -1431,6 +1420,54 @@ export const ConfigurationsApiAxiosParamCreator = function (configuration?: Conf
                     ? configuration.accessToken()
                     : configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+            if (category !== undefined) {
+                localVarQueryParameter['category'] = category;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get properties given category
+         * @param {string} [category] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPropertiesSuggestions(category?: string, options: any = {}): RequestArgs {
+            const localVarPath = `/configurations/suggestions`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+            if (category !== undefined) {
+                localVarQueryParameter['category'] = category;
             }
 
 
@@ -1546,12 +1583,26 @@ export const ConfigurationsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get configurations given category
-         * @param {string} category 
+         * @param {string} [category] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getConfigurations(category: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ItemConfiguration>> {
+        getConfigurations(category?: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ItemConfiguration>> {
             const localVarAxiosArgs = ConfigurationsApiAxiosParamCreator(configuration).getConfigurations(category, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @summary Get properties given category
+         * @param {string} [category] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPropertiesSuggestions(category?: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Property>> {
+            const localVarAxiosArgs = ConfigurationsApiAxiosParamCreator(configuration).getPropertiesSuggestions(category, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1614,12 +1665,22 @@ export const ConfigurationsApiFactory = function (configuration?: Configuration,
         /**
          * 
          * @summary Get configurations given category
-         * @param {string} category 
+         * @param {string} [category] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getConfigurations(category: string, options?: any): AxiosPromise<Array<ItemConfiguration>> {
+        getConfigurations(category?: string, options?: any): AxiosPromise<Array<ItemConfiguration>> {
             return ConfigurationsApiFp(configuration).getConfigurations(category, options)(axios, basePath);
+        },
+        /**
+         * 
+         * @summary Get properties given category
+         * @param {string} [category] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPropertiesSuggestions(category?: string, options?: any): AxiosPromise<Array<Property>> {
+            return ConfigurationsApiFp(configuration).getPropertiesSuggestions(category, options)(axios, basePath);
         },
         /**
          * 
@@ -1681,13 +1742,25 @@ export class ConfigurationsApi extends BaseAPI {
     /**
      * 
      * @summary Get configurations given category
-     * @param {string} category 
+     * @param {string} [category] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ConfigurationsApi
      */
-    public getConfigurations(category: string, options?: any) {
+    public getConfigurations(category?: string, options?: any) {
         return ConfigurationsApiFp(this.configuration).getConfigurations(category, options)(this.axios, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Get properties given category
+     * @param {string} [category] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConfigurationsApi
+     */
+    public getPropertiesSuggestions(category?: string, options?: any) {
+        return ConfigurationsApiFp(this.configuration).getPropertiesSuggestions(category, options)(this.axios, this.basePath);
     }
 
     /**

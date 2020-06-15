@@ -3,8 +3,13 @@ package tramways.core.model.properties;
 import tramways.inbound.model.ChoiceElement;
 import tramways.inbound.model.ChoiceProperty;
 import tramways.inbound.model.DecimalProperty;
+import tramways.inbound.model.DistributionProperty;
+import tramways.inbound.model.DistributionType;
+import tramways.inbound.model.ExponentialDistribution;
 import tramways.inbound.model.IntegerProperty;
+import tramways.inbound.model.Property;
 import tramways.inbound.model.StringProperty;
+import tramways.inbound.model.UniformDistribution;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -51,5 +56,30 @@ public final class Properties {
         element.setId(id);
         element.setLabel(label);
         return element;
+    }
+
+    public static DistributionProperty uniformDistributionProperty(String name) {
+        UniformDistribution distribution = new UniformDistribution();
+        distribution.setLeft(BigDecimal.ZERO);
+        distribution.setRight(BigDecimal.ONE);
+        distribution.setDistributionType(DistributionType.UNIFORM);
+
+        DistributionProperty property = new DistributionProperty();
+        property.setName(name);
+        property.setPropertyType(DistributionProperty.class.getSimpleName());
+        property.setValue(distribution);
+        return property;
+    }
+
+    public static DistributionProperty exponentialDistributionProperty(String name) {
+        ExponentialDistribution distribution = new ExponentialDistribution();
+        distribution.setLambda(BigDecimal.ONE);
+        distribution.setDistributionType(DistributionType.EXPONENTIAL);
+
+        DistributionProperty property = new DistributionProperty();
+        property.setName(name);
+        property.setPropertyType(DistributionProperty.class.getSimpleName());
+        property.setValue(distribution);
+        return property;
     }
 }

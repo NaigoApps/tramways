@@ -19,10 +19,12 @@ export default function ConfigurableEditorDialog<C extends Configurable>({
 
     useEffect(() => setCurrentElement(element), [element]);
 
-    return <OkCancelDialog visible={visible}
-                           onOk={() => onOk(currentElement)}
-                           onCancel={() => onCancel()}>
-        <Typography variant={"h5"}>{element.id} configuration</Typography>
+    return <OkCancelDialog
+        title={element.id + ' configuration'}
+        size={"md"}
+        visible={visible}
+        onOk={() => onOk(currentElement)}
+        onCancel={() => onCancel()}>
         <ConfigurableEditor element={currentElement} onChange={e => setCurrentElement(e)}/>
     </OkCancelDialog>
 }

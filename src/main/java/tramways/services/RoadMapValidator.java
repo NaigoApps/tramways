@@ -17,9 +17,9 @@ public class RoadMapValidator {
 
 	private Map<LaneSegment, SourcePointType> lanesKindMap;
 
-	private MessageCollector collector;
+	private MessagesCollector collector;
 
-	public boolean validate(MessageCollector collector) {
+	public boolean validate(MessagesCollector collector) {
 		this.collector = collector;
 		lanes = new HashMap<>();
 		lanesKindMap = new HashMap<>();

@@ -1,5 +1,6 @@
 package tramways.core.model.roadmap;
 
+import org.apache.commons.lang3.StringUtils;
 import tramways.core.model.roadmap.lanes.LaneSegment;
 import tramways.core.model.roadmap.points.LaneSegmentLink;
 import tramways.core.model.roadmap.points.NetworkPoint;
@@ -89,9 +90,12 @@ public class RoadMapNetworkMapper {
     }
 
     private LaneSegment findOrCreateLane(String laneId) {
+        if(StringUtils.isEmpty(laneId)){
+            return NetworkPoint.VOID;
+        }
         return lanesMap.computeIfAbsent(laneId, uuid -> {
             Lane targetLane = mapContent.getLanes().stream()
-                    .filter(lane -> uuid != null && uuid.equals(lane.getId()))
+                    .filter(lane -> uuid.equals(lane.getId()))
                     .findFirst()
                     .orElse(null);
             if (targetLane != null){

@@ -2,7 +2,7 @@ package tramways.services;
 
 import org.junit.Test;
 import tramways.CDITest;
-import tramways.DefaultMessageCollector;
+import tramways.DefaultMessagesCollector;
 import tramways.Utils;
 import tramways.dto.mappers.Json2RoadMapMapper;
 import tramways.inbound.model.RoadMapContent;
@@ -24,42 +24,42 @@ public class NetworkMapValidatorTest extends CDITest {
 	public void testValidateOk01() {
 		RoadMapContent map = mapper.map(Utils.readJson("json/roads_01.json"));
 		validator.setMap(map);
-		assertTrue(validator.validate(new DefaultMessageCollector()));
+		assertTrue(validator.validate(new DefaultMessagesCollector()));
 	}
 
 	@Test
 	public void testValidateOk02() {
 		RoadMapContent map = mapper.map(Utils.readJson("json/roads_02.json"));
 		validator.setMap(map);
-		assertTrue(validator.validate(new DefaultMessageCollector()));
+		assertTrue(validator.validate(new DefaultMessagesCollector()));
 	}
 
 	@Test
 	public void testValidateOk03() {
 		RoadMapContent map = mapper.map(Utils.readJson("json/roads_03.json"));
 		validator.setMap(map);
-		assertTrue(validator.validate(new DefaultMessageCollector()));
+		assertTrue(validator.validate(new DefaultMessagesCollector()));
 	}
 
 	@Test
 	public void testValidateOk04() {
 		RoadMapContent map = mapper.map(Utils.readJson("json/roads_04.json"));
 		validator.setMap(map);
-		assertTrue(validator.validate(new DefaultMessageCollector()));
+		assertTrue(validator.validate(new DefaultMessagesCollector()));
 	}
 
 	@Test
 	public void testValidateFail01() {
 		RoadMapContent map = mapper.map(Utils.readJson("json/bad_map_01.json"));
 		validator.setMap(map);
-		assertFalse(validator.validate(new DefaultMessageCollector()));
+		assertFalse(validator.validate(new DefaultMessagesCollector()));
 	}
 
 	@Test
 	public void testValidateFail02() {
 		RoadMapContent map = mapper.map(Utils.readJson("json/bad_map_02.json"));
 		validator.setMap(map);
-		assertFalse(validator.validate(new DefaultMessageCollector()));
+		assertFalse(validator.validate(new DefaultMessagesCollector()));
 	}
 
 }

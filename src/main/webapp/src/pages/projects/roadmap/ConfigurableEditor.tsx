@@ -1,12 +1,14 @@
 import {Configurable, ItemConfiguration, Property} from "../../../api/generated";
 import React, {useContext, useEffect, useState} from "react";
-import {IconButton, Typography} from "@material-ui/core";
-import PropertyEditor, {newStringProperty} from "../../configurations/properties/editors/PropertyEditor";
+import {ButtonGroup, IconButton, Typography} from "@material-ui/core";
+import PropertyEditor from "../../configurations/properties/editors/PropertyEditor";
 import {Add, Delete, Search} from "@material-ui/icons"
 import ApiContext from "../../../ApiContext";
 import ConfigurationSelectionDialog from "../../configurations/properties/ConfigurationSelectionDialog";
 import Button from "@material-ui/core/Button";
 import PropertyInput from "../../configurations/properties/inputs/PropertyInput";
+import {newStringProperty} from "../../configurations/properties/properties-utils";
+import PropertyEditorDialog from "../../configurations/properties/editors/PropertyEditorDialog";
 
 export interface ConfigurableEditorProps<C extends Configurable> {
     element: C;
@@ -19,11 +21,10 @@ export default function ConfigurableEditor<C extends Configurable>({
 
     const {configurationsApi} = useContext(ApiContext);
 
-    const [newProp, setNewProp] = useState<Property>(newStringProperty());
-
     const [presets, setPresets] = useState<Array<ItemConfiguration>>([]);
 
     const [showConfigurations, setShowConfigurations] = useState(false);
+    const [creatingProp, setCreatingProp] = useState(false);
 
     useEffect(() => {
         if (element?.category) {
@@ -38,12 +39,12 @@ export default function ConfigurableEditor<C extends Configurable>({
     suggestedProps = suggestedProps
         .filter((prop, i) => suggestedProps.findIndex(p => p.name === prop.name) === i);
 
-    function addNewProp() {
+    function addNewProp(prop: Property) {
         onChange({
             ...element,
-            props: element.props.concat([newProp])
+            props: element.props.concat([prop])
         });
-        setNewProp(newStringProperty());
+        setCreatingProp(false);
     }
 
     function updateProp(index: number, prop: Property) {
@@ -88,22 +89,23 @@ export default function ConfigurableEditor<C extends Configurable>({
     }
 
     return <div>
-        <Typography variant={"h6"}>New property</Typography>
         <div className={"flex-row justify-space-between"}>
-            <PropertyEditor property={newProp} onChange={setNewProp} suggestions={suggestedProps}/>
-            <IconButton color={"primary"} onClick={addNewProp}>
-                <Add/>
-            </IconButton>
-        </div>
-        <div className={"flex-row justify-space-between"}>
-            <Typography variant={"h6"}>Existing properties</Typography>
-            <Button
-                color={"primary"}
-                variant={"outlined"}
-                onClick={() => setShowConfigurations(true)}
-                endIcon={<Search/>}>
-                Search presets
-            </Button>
+            <ButtonGroup>
+                <Button
+                    color={"primary"}
+                    variant={"outlined"}
+                    onClick={() => setCreatingProp(true)}
+                    endIcon={<Add/>}>
+                    Add
+                </Button>
+                <Button
+                    color={"primary"}
+                    variant={"outlined"}
+                    onClick={() => setShowConfigurations(true)}
+                    endIcon={<Search/>}>
+                    Add from preset
+                </Button>
+            </ButtonGroup>
         </div>
         {element.props.map((prop, index) => (
             <div key={prop.name + index} className={"flex-row justify-space-between"}>
@@ -119,6 +121,13 @@ export default function ConfigurableEditor<C extends Configurable>({
                 onCancel={() => setShowConfigurations(false)}
                 onOk={conf => applyConfiguration(conf)}
             />
+        )}
+        {creatingProp && (
+            <PropertyEditorDialog
+                suggestions={suggestedProps}
+                onOk={addNewProp}
+                onCancel={() => setCreatingProp(false)}
+                visible={creatingProp}/>
         )}
     </div>
 }

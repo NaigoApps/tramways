@@ -59,7 +59,7 @@ export default function RelevantPointLinksEditor({
     }
 
     function isNewLinkValid() {
-        return newLink.destinationId && newLink.sourceId && newLink.id && newLink.destinationId !== newLink.sourceId;
+        return (newLink.destinationId || newLink.sourceId) && newLink.id && newLink.destinationId !== newLink.sourceId;
     }
 
     return <div>
