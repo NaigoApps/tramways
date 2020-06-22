@@ -372,27 +372,25 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/AnalysisType'
-  /analysis/parameters:
+  /analysis/prepare:
     get:
-      summary: 'Gets analysis parameters for chosen type'
-      operationId: 'getAnalysisParams'
+      summary: 'Prepare analysis'
+      operationId: 'prepareAnalysis'
       tags: ['analysis']
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AnalysisParamsRequest'
+              $ref: '#/components/schemas/AnalysisRequest'
       responses:
         '200':
           description: Ok
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Property'
+                $ref: '#/components/schemas/AnalysisResponse'
   /analysis/launch:
-    get:
+    post:
       summary: 'Launch selected analysis'
       operationId: 'launchAnalysis'
       tags: ['analysis']
@@ -400,10 +398,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AnalysisLaunchRequest'
+              $ref: '#/components/schemas/AnalysisRequest'
       responses:
         '200':
-          $ref: '#/components/responses/Ok'
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalysisResponse'
   /configurations/categories:
     get:
       operationId: 'getConfigurationCategories'
@@ -418,15 +420,15 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ConfigurableCategory'
-  /configurations/{category}:
+  /configurations:
     get:
       operationId: 'getConfigurations'
       summary: 'Get configurations given category'
       tags: ['configurations']
       parameters:
-        - in: path
+        - in: query
           name: category
-          required: true
+          required: false
           schema:
             type: string
       responses:
@@ -438,6 +440,27 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ItemConfiguration'
+  /configurations/suggestions:
+    get:
+      operationId: 'getPropertiesSuggestions'
+      summary: 'Get properties given category'
+      tags: ['configurations']
+      parameters:
+        - in: query
+          name: category
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'List of properties'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Property'
+  /configurations/{category}:
     post:
       operationId: 'addConfiguration'
       summary: 'Adds configuration to a category'
@@ -690,6 +713,8 @@ components:
       properties:
         name:
           type: string
+        description:
+          type: string
         propertyType:
           type: string
       required: [propertyType]
@@ -743,6 +768,9 @@ components:
       type: object
       discriminator:
         propertyName: distributionType
+        mapping:
+          UNIFORM: '#/components/schemas/UniformDistribution'
+          EXPONENTIAL: '#/components/schemas/ExponentialDistribution'
       properties:
         distributionType:
           $ref: '#/components/schemas/DistributionType'
@@ -773,12 +801,6 @@ components:
           type: string
         name:
           type: string
-        warning:
-          type: string
-        parameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/Property'
     Resource:
       type: object
       discriminator:
@@ -803,7 +825,7 @@ components:
       properties:
         message:
           type: string
-    AnalysisParamsRequest:
+    AnalysisRequest:
       type: object
       properties:
         projectId:
@@ -812,19 +834,23 @@ components:
           type: string
         analysisTypeId:
           type: string
-    AnalysisLaunchRequest:
-      type: object
-      properties:
-        projectId:
-          type: string
-        mapId:
-          type: string
-        analysisTypeId:
-          type: string
-        parametes:
+        parameters:
           type: array
           items:
             $ref: '#/components/schemas/Property'
+    AnalysisResponse:
+      type: object
+      properties:
+        warnings:
+          type: array
+          items:
+            type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+        ok:
+          type: boolean
   responses:
     Created:
       description: 'Resource created'

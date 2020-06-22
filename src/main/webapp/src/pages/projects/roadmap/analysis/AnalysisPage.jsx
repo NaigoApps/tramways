@@ -28,9 +28,6 @@ export default function AnalysisPage({ navigate, projectId, mapId }) {
 
   const map = project.maps.find(m => m.uuid === mapId);
 
-  console.log(project);
-  console.log(map);
-
   return (
     <Page title={`Analysis of ${map && map.name}`}>
       <Grid container spacing={1}>

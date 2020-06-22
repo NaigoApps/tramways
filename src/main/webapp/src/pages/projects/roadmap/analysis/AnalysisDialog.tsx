@@ -1,9 +1,10 @@
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@material-ui/core";
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography} from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import PropertyInput from "../../../configurations/properties/inputs/PropertyInput";
 import {AnalysisType, Property} from "../../../../api/generated";
 import ApiContext from "../../../../ApiContext";
+import useStyles from "../../../../utils/useStyles";
 
 export interface AnalysisDialogProps {
     visible: boolean;
@@ -21,23 +22,45 @@ export default function AnalysisDialog({
     mapId
 }: AnalysisDialogProps) {
 
+    const {formControl} = useStyles();
     const {analysisApi} = useContext(ApiContext);
 
     const [name, setName] = useState("");
     const [parameters, setParameters] = useState<Array<Property>>([]);
+    const [warnings, setWarnings] = useState([]);
 
-    useEffect(() => {
-        setParameters([...analysis?.parameters]);
-    }, [analysis]);
+    const prepareAnalysis = useCallback(() => {
+        analysisApi.prepareAnalysis({
+            analysisTypeId: analysis.id,
+            projectId: projectId,
+            mapId: mapId,
+            parameters: parameters
+        }).then(response => {
+            setParameters(response.data.parameters);
+            setWarnings(response.data.warnings);
+        })
+    }, [analysisApi, analysis.id, projectId, mapId, parameters]);
 
     function launchAnalysis() {
-        // const result = await post(
-        //     `analysis/${analysis}/launch/${projectId}/${mapId}?name=${name}`,
-        //     []
-        // );
-        // if (result !== null) {
-        //     onClose();
-        // }
+        analysisApi.prepareAnalysis({
+            analysisTypeId: analysis.id,
+            projectId: projectId,
+            mapId: mapId,
+            parameters: parameters
+        }).then(response => {
+            setParameters(response.data.parameters);
+            setWarnings(response.data.warnings);
+            if (response.data.ok) {
+                analysisApi.launchAnalysis({
+                    analysisTypeId: analysis.id,
+                    projectId: projectId,
+                    mapId: mapId,
+                    parameters: parameters
+                }).then(response => {
+                    if(response.data.)
+                });
+            }
+        });
     }
 
     function updateParameter(index: number, prop: Property) {
@@ -52,8 +75,12 @@ export default function AnalysisDialog({
         <Dialog onClose={onClose} open={visible}>
             <DialogTitle>Provide following parameters</DialogTitle>
             <DialogContent>
+                {warnings.map(warning => (
+                    <Typography key={warning} color={"error"}>warning</Typography>
+                ))}
                 <TextField
-                    label="Name"
+                    className={formControl}
+                    label="Analysis name"
                     variant="outlined"
                     value={name}
                     onChange={evt => setName(evt.target.value)}
@@ -74,8 +101,7 @@ export default function AnalysisDialog({
                     variant="contained"
                     color="primary"
                     startIcon={<CheckIcon/>}
-                    onClick={launchAnalysis}
-                >
+                    onClick={launchAnalysis}>
                     Launch analysis
                 </Button>
             </DialogActions>
