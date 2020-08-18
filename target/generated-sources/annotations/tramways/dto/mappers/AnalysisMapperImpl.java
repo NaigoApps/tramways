@@ -3,43 +3,48 @@ package tramways.dto.mappers;
 import javax.annotation.processing.Generated;
 import javax.enterprise.context.ApplicationScoped;
 import tramways.core.model.persistable.projects.Analysis;
-import tramways.dto.AnalysisDto;
+import tramways.inbound.model.AnalysisDescription;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-06-08T22:53:39+0200",
-    comments = "version: 1.3.0.Final, compiler: javac, environment: Java 11 (Oracle Corporation)"
+    date = "2020-08-02T15:31:17+0200",
+    comments = "version: 1.3.0.Final, compiler: javac, environment: Java 11.0.7 (Ubuntu)"
 )
 @ApplicationScoped
-public class AnalysisMapperImpl extends AnalysisMapper {
+public class AnalysisMapperImpl implements AnalysisMapper {
 
     @Override
-    public AnalysisDto map(Analysis a) {
+    public tramways.inbound.model.Analysis map(Analysis a) {
         if ( a == null ) {
             return null;
         }
 
-        AnalysisDto analysisDto = new AnalysisDto();
+        tramways.inbound.model.Analysis analysis = new tramways.inbound.model.Analysis();
 
-        analysisDto.setUuid( a.getUuid() );
-        analysisDto.setName( a.getName() );
-        analysisDto.setAnalysisResult( a.getAnalysisResult() );
+        analysis.setUuid( a.getUuid() );
+        analysis.setName( a.getName() );
+        analysis.setStatus( a.getStatus() );
+        analysis.setResult( a.getResult() );
 
-        return analysisDto;
+        analysis.setResourceType( "Analysis" );
+
+        return analysis;
     }
 
     @Override
-    public Analysis map(AnalysisDto m) {
-        if ( m == null ) {
+    public AnalysisDescription description(Analysis analysis) {
+        if ( analysis == null ) {
             return null;
         }
 
-        Analysis analysis = new Analysis();
+        AnalysisDescription analysisDescription = new AnalysisDescription();
 
-        analysis.setUuid( m.getUuid() );
-        analysis.setAnalysisResult( m.getAnalysisResult() );
-        analysis.setName( m.getName() );
+        analysisDescription.setUuid( analysis.getUuid() );
+        analysisDescription.setName( analysis.getName() );
+        analysisDescription.setStatus( analysis.getStatus() );
 
-        return analysis;
+        analysisDescription.setResourceType( "AnalysisDescription" );
+
+        return analysisDescription;
     }
 }

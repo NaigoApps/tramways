@@ -29,7 +29,7 @@ import javax.validation.Valid;
 
 
 @io.swagger.annotations.Api(description = "the analysis API")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-06-08T22:53:33.850861900+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-08-02T15:31:12.408197+02:00[Europe/Rome]")
 public class AnalysisApi  {
 
     @Inject AnalysisApiService service;
@@ -59,18 +59,5 @@ public class AnalysisApi  {
     public Response launchAnalysis(@ApiParam(value = "" ) @Valid AnalysisRequest analysisRequest,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.launchAnalysis(analysisRequest,securityContext);
-    }
-    @GET
-    @Path("/prepare")
-    @Consumes({ "application/json" })
-    @Produces({ "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Prepare analysis", notes = "", response = AnalysisResponse.class, authorizations = {
-        @io.swagger.annotations.Authorization(value = "bearerAuth")
-    }, tags={ "analysis", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "Ok", response = AnalysisResponse.class) })
-    public Response prepareAnalysis(@ApiParam(value = "" ) @Valid AnalysisRequest analysisRequest,@Context SecurityContext securityContext)
-    throws NotFoundException {
-        return service.prepareAnalysis(analysisRequest,securityContext);
     }
 }

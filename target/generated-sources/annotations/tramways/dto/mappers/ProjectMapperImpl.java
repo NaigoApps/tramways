@@ -7,13 +7,14 @@ import javax.annotation.processing.Generated;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import tramways.core.model.persistable.projects.Project;
+import tramways.core.model.persistable.projects.RoadMap;
 import tramways.inbound.model.ProjectDescription;
-import tramways.inbound.model.RoadMap;
+import tramways.inbound.model.RoadMapDescription;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-06-08T22:53:39+0200",
-    comments = "version: 1.3.0.Final, compiler: javac, environment: Java 11 (Oracle Corporation)"
+    date = "2020-08-02T15:31:17+0200",
+    comments = "version: 1.3.0.Final, compiler: javac, environment: Java 11.0.7 (Ubuntu)"
 )
 @ApplicationScoped
 public class ProjectMapperImpl implements ProjectMapper {
@@ -29,7 +30,7 @@ public class ProjectMapperImpl implements ProjectMapper {
 
         tramways.inbound.model.Project project = new tramways.inbound.model.Project();
 
-        project.setRoadMaps( roadMapSetToRoadMapList( p.getMaps() ) );
+        project.setRoadMaps( roadMapSetToRoadMapDescriptionList( p.getMaps() ) );
         project.setUuid( p.getUuid() );
         project.setName( p.getName() );
 
@@ -66,14 +67,14 @@ public class ProjectMapperImpl implements ProjectMapper {
         return list;
     }
 
-    protected List<RoadMap> roadMapSetToRoadMapList(Set<tramways.core.model.persistable.projects.RoadMap> set) {
+    protected List<RoadMapDescription> roadMapSetToRoadMapDescriptionList(Set<RoadMap> set) {
         if ( set == null ) {
             return null;
         }
 
-        List<RoadMap> list = new ArrayList<RoadMap>( set.size() );
-        for ( tramways.core.model.persistable.projects.RoadMap roadMap : set ) {
-            list.add( roadMapMapper.map( roadMap ) );
+        List<RoadMapDescription> list = new ArrayList<RoadMapDescription>( set.size() );
+        for ( RoadMap roadMap : set ) {
+            list.add( roadMapMapper.description( roadMap ) );
         }
 
         return list;

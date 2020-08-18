@@ -17,10 +17,10 @@ export default function ChoicePropertyInput({property, onChange}: ChoiceProperty
         <SelectEditor<ChoiceElement>
             optionId={option => option.id}
             optionLabel={option => option.label}
-            options={property.choices}
+            options={property?.choices}
             value={findValue()}
             disabled={false}
-            label={property.name}
+            label={property?.description}
             multiSelect={false}
             onSelectOption={v => onChange({
                 ...property,

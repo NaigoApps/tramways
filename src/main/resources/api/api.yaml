@@ -259,7 +259,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Ok
+          $ref: '#/components/responses/Ok'
   /projects/{projectId}/maps:
     post:
       summary: 'Creates a map'
@@ -347,6 +347,57 @@ paths:
       responses:
         '200':
           description: Ok
+  /projects/{projectId}/maps/{mapId}/{analysisId}:
+    get:
+      summary: 'Gets an analysis'
+      operationId: 'getAnalysis'
+      tags: ['projects']
+      parameters:
+        - in: path
+          name: projectId
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: mapId
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: analysisId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Analysis'
+    delete:
+      summary: 'Deletes an analysis'
+      operationId: 'deleteAnalysis'
+      tags: ['projects']
+      parameters:
+        - in: path
+          name: projectId
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: mapId
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: analysisId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Ok'
   /analysis/available:
     get:
       summary: 'Gets available analysis for map'
@@ -372,23 +423,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/AnalysisType'
-  /analysis/prepare:
-    get:
-      summary: 'Prepare analysis'
-      operationId: 'prepareAnalysis'
-      tags: ['analysis']
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AnalysisRequest'
-      responses:
-        '200':
-          description: Ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AnalysisResponse'
   /analysis/launch:
     post:
       summary: 'Launch selected analysis'
@@ -625,12 +659,14 @@ components:
             roadMaps:
               type: array
               items:
-                $ref: '#/components/schemas/RoadMap'
+                $ref: '#/components/schemas/RoadMapDescription'
     RoadMapDescription:
-      type: object
-      properties:
-        name:
-          type: string
+      allOf:
+        - $ref: '#/components/schemas/Resource'
+        - type: object
+          properties:
+            name:
+              type: string
     RoadMap:
       allOf:
         - $ref: '#/components/schemas/Resource'
@@ -640,6 +676,10 @@ components:
               type: string
             content:
               $ref: '#/components/schemas/RoadMapContent'
+            analysis:
+              type: array
+              items:
+                $ref: '#/components/schemas/AnalysisDescription'
     RoadMapContent:
       type: object
       properties:
@@ -717,6 +757,8 @@ components:
           type: string
         propertyType:
           type: string
+        valid:
+          type: boolean
       required: [propertyType]
     IntegerProperty:
       allOf:
@@ -801,6 +843,70 @@ components:
           type: string
         name:
           type: string
+    Analysis:
+      allOf:
+        - $ref: '#/components/schemas/Resource'
+        - type: object
+          properties:
+            name:
+              type: string
+            status:
+              $ref: '#/components/schemas/AnalysisStatus'
+            result:
+              $ref: '#/components/schemas/AnalysisResult'
+    AnalysisDescription:
+      allOf:
+        - $ref: '#/components/schemas/Resource'
+        - type: object
+          properties:
+            name:
+              type: string
+            status:
+              $ref: '#/components/schemas/AnalysisStatus'
+    AnalysisStatus:
+      type: string
+      enum: [IN_PROGRESS, DONE, ERROR]
+    AnalysisResult:
+      type: object
+      discriminator:
+        propertyName: resultType
+        mapping:
+          XY: '#/components/schemas/XYAnalysisResult'
+          STRING: '#/components/schemas/StringAnalysisResult'
+      properties:
+        resultType:
+          $ref: '#/components/schemas/AnalysisResultType'
+      required: [distributionType]
+    AnalysisResultType:
+      type: string
+      enum: [XY, STRING]
+    XYAnalysisResult:
+      allOf:
+        - $ref: '#/components/schemas/AnalysisResult'
+        - type: object
+          properties:
+            xLabel:
+              type: string
+            yLabel:
+              type: string
+            points:
+              type: array
+              items:
+                $ref: '#/components/schemas/XYPoint'
+    StringAnalysisResult:
+      allOf:
+        - $ref: '#/components/schemas/AnalysisResult'
+        - type: object
+          properties:
+            message:
+              type: string
+    XYPoint:
+      type: object
+      properties:
+        x:
+          type: number
+        y:
+          type: number
     Resource:
       type: object
       discriminator:

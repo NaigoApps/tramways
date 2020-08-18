@@ -1,15 +1,17 @@
 package tramways.dto.mappers;
 
 import org.mapstruct.Mapper;
-
+import org.mapstruct.Mapping;
 import tramways.core.model.persistable.projects.Analysis;
-import tramways.dto.AnalysisDto;
+import tramways.inbound.model.AnalysisDescription;
 
 @Mapper(config = MapperConfiguration.class, uses = {})
-public abstract class AnalysisMapper {
+public interface AnalysisMapper {
 
-	public abstract AnalysisDto map(Analysis a);
+    @Mapping(target = "resourceType", constant = "Analysis")
+    tramways.inbound.model.Analysis map(Analysis a);
 
-	public abstract Analysis map(AnalysisDto m);
+    @Mapping(target = "resourceType", constant = "AnalysisDescription")
+    AnalysisDescription description(Analysis analysis);
 
 }

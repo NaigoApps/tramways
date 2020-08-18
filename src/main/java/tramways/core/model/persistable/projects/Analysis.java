@@ -1,45 +1,50 @@
 package tramways.core.model.persistable.projects;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Lob;
 import javax.persistence.Table;
-
-import tramways.core.model.analysis.result.AnalysisResult;
 import tramways.core.model.persistable.BaseEntity;
 import tramways.dto.mappers.AnalysisResultJsonMapper;
+import tramways.inbound.model.AnalysisResult;
+import tramways.inbound.model.AnalysisStatus;
 
 @Entity
 @Table(name = "analysis")
 public class Analysis extends BaseEntity {
 
-	private static final AnalysisResultJsonMapper ANALYSIS_RESULT_CONVERTER = new AnalysisResultJsonMapper();
+    private static final AnalysisResultJsonMapper ANALYSIS_RESULT_CONVERTER = new AnalysisResultJsonMapper();
 
-	private String name;
+    @Enumerated(EnumType.STRING)
+    private AnalysisStatus status;
 
-	@Lob
-	private String analysisResult;
+    private String name;
 
-	public String getAnalysisResult() {
-		return analysisResult;
-	}
+    @Lob
+    private String analysisResult;
 
-	public void setAnalysisResult(String analysisResult) {
-		this.analysisResult = analysisResult;
-	}
+    public void setResult(AnalysisResult result) {
+        this.analysisResult = ANALYSIS_RESULT_CONVERTER.map(result);
+    }
 
-	public void assignResult(AnalysisResult result) {
-		this.analysisResult = ANALYSIS_RESULT_CONVERTER.map(result);
-	}
+    public AnalysisResult getResult() {
+        return ANALYSIS_RESULT_CONVERTER.map(this.analysisResult);
+    }
 
-	public AnalysisResult retrieveResult() {
-		return ANALYSIS_RESULT_CONVERTER.map(this.analysisResult);
-	}
+    public void setStatus(AnalysisStatus status) {
+        this.status = status;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public AnalysisStatus getStatus() {
+        return status;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

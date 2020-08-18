@@ -14,7 +14,7 @@ export default function DecimalPropertyInput({property, onChange}: DecimalProper
         <TextField
             type={"number"}
             className={classes.formControl}
-            label={property?.name || "Value"}
+            label={property?.description || "Value"}
             variant="outlined"
             value={property?.value || 0}
             onChange={evt => onChange({

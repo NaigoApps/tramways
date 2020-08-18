@@ -1,21 +1,14 @@
-import {
-    Button,
-    Card,
-    CardActions,
-    CardContent,
-    TextField,
-    Typography
-} from "@material-ui/core";
+import {Button, Card, CardActions, CardContent, TextField, Typography} from "@material-ui/core";
 import React, {useContext, useEffect, useRef, useState} from "react";
 import useStyles from "../../utils/useStyles";
-import {Project, RoadMap} from "../../api/generated";
+import {Project, RoadMapDescription} from "../../api/generated";
 import {RouteComponentProps} from "@reach/router";
 import ApiContext from "../../ApiContext";
 import {OkCancelDialog} from "../../widgets/OkCancelDialog";
 
 interface RoadMapItemProps extends RouteComponentProps {
     project: Project;
-    map: RoadMap;
+    map: RoadMapDescription;
     refresh: () => void;
 }
 

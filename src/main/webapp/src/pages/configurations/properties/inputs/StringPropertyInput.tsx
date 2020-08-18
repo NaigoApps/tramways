@@ -14,7 +14,7 @@ export default function StringPropertyInput({property, onChange}: StringProperty
     return (
         <TextField
             className={classes.formControl}
-            label={property?.name || "Value"}
+            label={property?.description || "Value"}
             variant="outlined"
             value={property?.value || ''}
             onChange={evt => onChange({

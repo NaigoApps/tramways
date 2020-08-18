@@ -6,11 +6,13 @@ import tramways.inbound.api.ProjectsApiService;
 import io.swagger.annotations.ApiParam;
 import io.swagger.jaxrs.*;
 
+import tramways.inbound.model.Analysis;
 import tramways.inbound.model.CreateMapRequest;
 import tramways.inbound.model.CreateProjectRequest;
 import tramways.inbound.model.Project;
 import tramways.inbound.model.ProjectDescription;
 import tramways.inbound.model.RoadMap;
+import tramways.inbound.model.StringWrapper;
 import tramways.inbound.model.UpdateMapRequest;
 import tramways.inbound.model.UpdateProjectRequest;
 
@@ -33,7 +35,7 @@ import javax.validation.Valid;
 
 
 @io.swagger.annotations.Api(description = "the projects API")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-06-08T22:53:33.850861900+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-08-02T15:31:12.408197+02:00[Europe/Rome]")
 public class ProjectsApi  {
 
     @Inject ProjectsApiService service;
@@ -65,6 +67,19 @@ public class ProjectsApi  {
         return service.createProject(createProjectRequest,securityContext);
     }
     @DELETE
+    @Path("/{projectId}/maps/{mapId}/{analysisId}")
+    
+    @Produces({ "application/json" })
+    @io.swagger.annotations.ApiOperation(value = "Deletes an analysis", notes = "", response = StringWrapper.class, authorizations = {
+        @io.swagger.annotations.Authorization(value = "bearerAuth")
+    }, tags={ "projects", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "Request successful", response = StringWrapper.class) })
+    public Response deleteAnalysis( @PathParam("projectId") String projectId, @PathParam("mapId") String mapId, @PathParam("analysisId") String analysisId,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return service.deleteAnalysis(projectId,mapId,analysisId,securityContext);
+    }
+    @DELETE
     @Path("/{projectId}/maps/{mapId}")
     
     
@@ -80,15 +95,28 @@ public class ProjectsApi  {
     @DELETE
     @Path("/{id}")
     
-    
-    @io.swagger.annotations.ApiOperation(value = "Deletes a project", notes = "", response = Void.class, authorizations = {
+    @Produces({ "application/json" })
+    @io.swagger.annotations.ApiOperation(value = "Deletes a project", notes = "", response = StringWrapper.class, authorizations = {
         @io.swagger.annotations.Authorization(value = "bearerAuth")
     }, tags={ "projects", })
     @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "Ok", response = Void.class) })
+        @io.swagger.annotations.ApiResponse(code = 200, message = "Request successful", response = StringWrapper.class) })
     public Response deleteProject( @PathParam("id") String id,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.deleteProject(id,securityContext);
+    }
+    @GET
+    @Path("/{projectId}/maps/{mapId}/{analysisId}")
+    
+    @Produces({ "application/json" })
+    @io.swagger.annotations.ApiOperation(value = "Gets an analysis", notes = "", response = Analysis.class, authorizations = {
+        @io.swagger.annotations.Authorization(value = "bearerAuth")
+    }, tags={ "projects", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "Ok", response = Analysis.class) })
+    public Response getAnalysis( @PathParam("projectId") String projectId, @PathParam("mapId") String mapId, @PathParam("analysisId") String analysisId,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return service.getAnalysis(projectId,mapId,analysisId,securityContext);
     }
     @GET
     @Path("/{projectId}/maps/{mapId}")

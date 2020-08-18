@@ -1,9 +1,17 @@
 package tramways.inbound.impl;
 
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Collections;
+import javax.inject.Inject;
+import javax.transaction.Transactional;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import tramways.core.model.persistable.projects.Project;
 import tramways.core.model.persistable.projects.RoadMap;
 import tramways.core.model.persistable.users.User;
 import tramways.core.model.properties.Properties;
+import tramways.dto.mappers.AnalysisMapper;
 import tramways.dto.mappers.Json2RoadMapMapper;
 import tramways.dto.mappers.ProjectMapper;
 import tramways.dto.mappers.RoadMapMapper;
@@ -20,14 +28,6 @@ import tramways.inbound.model.UpdateProjectRequest;
 import tramways.outbound.ProjectRepository;
 import tramways.outbound.UserRepository;
 
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
-import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Collections;
-
 @Transactional
 public class ProjectsApiServiceImpl implements ProjectsApiService {
 
@@ -36,6 +36,9 @@ public class ProjectsApiServiceImpl implements ProjectsApiService {
 
     @Inject
     private RoadMapMapper roadMapMapper;
+
+    @Inject
+    private AnalysisMapper analysisMapper;
 
     @Inject
     private Json2RoadMapMapper jsonRoadMapMapper;
@@ -92,7 +95,8 @@ public class ProjectsApiServiceImpl implements ProjectsApiService {
     }
 
     @Override
-    public Response deleteMap(String projectId, String mapId, SecurityContext securityContext) throws NotFoundException {
+    public Response deleteMap(String projectId, String mapId, SecurityContext securityContext)
+        throws NotFoundException {
         Project project = repository.findById(projectId);
         project.removeMap(mapId);
         repository.deleteMap(mapId);
@@ -100,26 +104,47 @@ public class ProjectsApiServiceImpl implements ProjectsApiService {
     }
 
     @Override
-    public Response getProject(String id, SecurityContext securityContext) throws NotFoundException {
+    public Response deleteAnalysis(String projectId, String mapId, String analysisId,
+        SecurityContext securityContext) throws NotFoundException {
+        Project project = repository.findById(projectId);
+        RoadMap map = project.getMap(mapId);
+        map.removeAnalysis(analysisId);
+        repository.deleteAnalysis(analysisId);
+        return RestUtils.ok("Analysis deleted");
+    }
+
+    @Override
+    public Response getProject(String id, SecurityContext securityContext)
+        throws NotFoundException {
         return RestUtils.ok(mapper.map(repository.findById(id)));
     }
 
     @Override
-    public Response updateProject(String id, UpdateProjectRequest request, SecurityContext securityContext) throws NotFoundException {
+    public Response updateProject(String id, UpdateProjectRequest request,
+        SecurityContext securityContext) throws NotFoundException {
         Project project = repository.findById(id);
         project.setName(request.getName());
         return RestUtils.ok(mapper.map(project));
     }
 
     @Override
-    public Response deleteProject(String id, SecurityContext securityContext) throws NotFoundException {
+    public Response deleteProject(String id, SecurityContext securityContext)
+        throws NotFoundException {
         repository.delete(id);
         return RestUtils.ok("Project deleted");
     }
 
     @Override
-    public Response getMap(String projectId, String mapId, SecurityContext securityContext) throws NotFoundException {
+    public Response getMap(String projectId, String mapId, SecurityContext securityContext)
+        throws NotFoundException {
         return RestUtils.ok(roadMapMapper.map(repository.findById(projectId).getMap(mapId)));
+    }
+
+    @Override
+    public Response getAnalysis(String projectId, String mapId, String analysisId,
+        SecurityContext securityContext) {
+        return RestUtils.ok(analysisMapper
+            .map(repository.findById(projectId).getMap(mapId).getAnalysis(analysisId)));
     }
 
     @Override
@@ -129,7 +154,8 @@ public class ProjectsApiServiceImpl implements ProjectsApiService {
     }
 
     @Override
-    public Response updateMap(String projectId, String mapId, UpdateMapRequest request, SecurityContext securityContext) throws NotFoundException {
+    public Response updateMap(String projectId, String mapId, UpdateMapRequest request,
+        SecurityContext securityContext) throws NotFoundException {
         RoadMap map = repository.findById(projectId).getMap(mapId);
         map.setName(request.getMap().getName());
         map.setMap(jsonRoadMapMapper.map(request.getMap().getContent()));

@@ -1,14 +1,14 @@
 import {
-    AppBar,
-    Button,
-    Drawer,
-    IconButton,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    Toolbar,
-    Typography
+  AppBar,
+  Button,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+  Typography
 } from "@material-ui/core";
 import GroupIcon from "@material-ui/icons/Group";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -30,6 +30,7 @@ import ProjectsPage from "./pages/projects/ProjectsPage";
 import ProjectPage from "./pages/projects/ProjectPage";
 import RoadMapPage from "./pages/projects/RoadMapPage";
 import ConfigurationsPage from "./pages/configurations/ConfigurationsPage";
+import AnalysisListPage from "./pages/projects/roadmap/analysis/AnalysisListPage";
 
 const Root = () => {
     const {
@@ -102,8 +103,8 @@ const Root = () => {
 
                     <ProjectsPage path="/projects"/>
                     <ProjectPage path="/projects/:projectId"/>
-                    <RoadMapPage path="/projects/:projectId/:mapId"/>
-                    {/*<AnalysisPage path="projects/:projectId/:mapId/analysis" />*/}
+                  <RoadMapPage path="/projects/:projectId/:mapId"/>
+                  <AnalysisListPage path="projects/:projectId/:mapId/analysis"/>
 
                     <ConfigurationsPage path="/configurations" />
                     {/*<NewConfigurationPage path="configurations/new" />*/}

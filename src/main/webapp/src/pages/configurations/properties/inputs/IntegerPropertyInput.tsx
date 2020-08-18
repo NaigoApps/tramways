@@ -14,7 +14,7 @@ export default function IntegerPropertyInput({property, onChange}: IntegerProper
         <TextField
             type={"number"}
             className={classes.formControl}
-            label={property?.name || "Value"}
+            label={property?.description || "Value"}
             variant="outlined"
             value={property?.value || 0}
             onChange={evt => onChange({

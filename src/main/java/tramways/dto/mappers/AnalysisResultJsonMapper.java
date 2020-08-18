@@ -2,10 +2,9 @@ package tramways.dto.mappers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.LoggerFactory;
-import tramways.core.model.analysis.result.AnalysisResult;
-
 import java.io.IOException;
+import org.slf4j.LoggerFactory;
+import tramways.inbound.model.AnalysisResult;
 
 public class AnalysisResultJsonMapper {
 

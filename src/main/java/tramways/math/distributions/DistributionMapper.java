@@ -1,7 +1,5 @@
 package tramways.math.distributions;
 
-import java.math.BigDecimal;
-
 import org.oristool.models.stpn.trees.StochasticTransitionFeature;
 import org.oristool.petrinet.TransitionFeature;
 import tramways.inbound.model.Distribution;

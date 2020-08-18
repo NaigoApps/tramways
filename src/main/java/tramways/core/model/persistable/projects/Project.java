@@ -1,17 +1,14 @@
 package tramways.core.model.persistable.projects;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import tramways.core.model.persistable.BaseEntity;
 import tramways.core.model.persistable.users.User;
 
@@ -63,12 +60,7 @@ public class Project extends BaseEntity {
 	}
 
 	public void removeMap(String mapUuid) {
-		Iterator<RoadMap> it = maps.iterator();
-		while(it.hasNext()) {
-			if(it.next().getUuid().equals(mapUuid)) {
-				it.remove();
-			}
-		}
+		maps.removeIf(roadMap -> roadMap.getUuid().equals(mapUuid));
 	}
 
 	public List<RoadMap> listMaps() {

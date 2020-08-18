@@ -6,15 +6,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
+import java.util.List;
+import tramways.inbound.model.AnalysisDescription;
 import tramways.inbound.model.RoadMapContent;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-06-08T22:53:33.850861900+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-08-02T15:31:12.408197+02:00[Europe/Rome]")
 public class RoadMapAllOf   {
   
   private String name;
   private RoadMapContent content;
+  private List<AnalysisDescription> analysis = new ArrayList<AnalysisDescription>();
 
   /**
    **/
@@ -40,6 +44,18 @@ public class RoadMapAllOf   {
     this.content = content;
   }
 
+  /**
+   **/
+  
+  @ApiModelProperty(value = "")
+  @JsonProperty("analysis")
+  public List<AnalysisDescription> getAnalysis() {
+    return analysis;
+  }
+  public void setAnalysis(List<AnalysisDescription> analysis) {
+    this.analysis = analysis;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -51,12 +67,13 @@ public class RoadMapAllOf   {
     }
     RoadMapAllOf roadMapAllOf = (RoadMapAllOf) o;
     return Objects.equals(name, roadMapAllOf.name) &&
-        Objects.equals(content, roadMapAllOf.content);
+        Objects.equals(content, roadMapAllOf.content) &&
+        Objects.equals(analysis, roadMapAllOf.analysis);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, content);
+    return Objects.hash(name, content, analysis);
   }
 
   @Override
@@ -66,6 +83,7 @@ public class RoadMapAllOf   {
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
+    sb.append("    analysis: ").append(toIndentedString(analysis)).append("\n");
     sb.append("}");
     return sb.toString();
   }

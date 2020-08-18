@@ -11,13 +11,16 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-06-08T22:53:33.850861900+02:00[Europe/Berlin]")@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "resourceType", visible = true)
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-08-02T15:31:12.408197+02:00[Europe/Rome]")@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "resourceType", visible = true)
 @JsonSubTypes({
   @JsonSubTypes.Type(value = User.class, name = "User"),
   @JsonSubTypes.Type(value = ProjectDescription.class, name = "ProjectDescription"),
   @JsonSubTypes.Type(value = Project.class, name = "Project"),
+  @JsonSubTypes.Type(value = RoadMapDescription.class, name = "RoadMapDescription"),
   @JsonSubTypes.Type(value = RoadMap.class, name = "RoadMap"),
   @JsonSubTypes.Type(value = ItemConfiguration.class, name = "ItemConfiguration"),
+  @JsonSubTypes.Type(value = Analysis.class, name = "Analysis"),
+  @JsonSubTypes.Type(value = AnalysisDescription.class, name = "AnalysisDescription"),
 })
 
 public class Resource   {

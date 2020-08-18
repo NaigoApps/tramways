@@ -9,8 +9,8 @@ import tramways.inbound.model.RoadMapContent;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-06-08T22:53:39+0200",
-    comments = "version: 1.3.0.Final, compiler: javac, environment: Java 11 (Oracle Corporation)"
+    date = "2020-08-02T15:31:17+0200",
+    comments = "version: 1.3.0.Final, compiler: javac, environment: Java 11.0.7 (Ubuntu)"
 )
 @ApplicationScoped
 public class AnalysisTypeMapperImpl implements AnalysisTypeMapper {

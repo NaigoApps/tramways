@@ -1,10 +1,10 @@
 package tramways.core.model.analysis;
 
 import tramways.core.model.Identifiable;
-import tramways.core.model.analysis.result.AnalysisResult;
+import tramways.inbound.model.AnalysisResult;
 
-public interface Analysis extends Identifiable{
+public interface Analysis extends Identifiable {
 
-	public AnalysisResult run();
-	
+    AnalysisResult run();
+
 }

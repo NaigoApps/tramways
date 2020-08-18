@@ -10,6 +10,7 @@ public interface RoadMapMapper {
 
     @Mapping(target = "resourceType", constant = "RoadMap")
     tramways.inbound.model.RoadMap map(RoadMap m);
-    
+
+    @Mapping(target = "resourceType", constant = "RoadMapDescription")
     RoadMapDescription description(RoadMap map);
 }

@@ -1,15 +1,14 @@
 package tramways.core.model.persistable.projects;
 
-import tramways.core.model.persistable.BaseEntity;
-import tramways.dto.mappers.Json2RoadMapMapper;
-import tramways.inbound.model.RoadMapContent;
-
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.List;
+import tramways.core.model.persistable.BaseEntity;
+import tramways.dto.mappers.Json2RoadMapMapper;
+import tramways.inbound.model.RoadMapContent;
 
 @Entity
 @Table(name = "road_maps")
@@ -60,6 +59,12 @@ public class RoadMap extends BaseEntity implements Comparable<RoadMap> {
 		this.analysis.removeIf(a -> a.getUuid().equals(id));
 	}
 
+	public Analysis getAnalysis(String analysisId) {
+		return this.analysis.stream()
+			.filter(a -> a.getUuid().equals(analysisId))
+			.findFirst().orElse(null);
+	}
+
 	@Override
 	public int compareTo(RoadMap other) {
 		if (other == null) {
@@ -68,5 +73,4 @@ public class RoadMap extends BaseEntity implements Comparable<RoadMap> {
 
 		return name.compareTo(other.name);
 	}
-
 }

@@ -15,7 +15,7 @@
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: org.mongodb:mongo-java-driver:3.12.1" />
-          <element id="file-copy" path="$MAVEN_REPOSITORY$/org/oris-tool/sirio/2.0.0-SNAPSHOT/sirio-2.0.0-20200413.012547-37.jar" output-file-name="sirio-2.0.0-SNAPSHOT.jar" />
+          <element id="file-copy" path="$MAVEN_REPOSITORY$/org/oris-tool/sirio/2.0.0-SNAPSHOT/sirio-2.0.0-20200508.103039-38.jar" output-file-name="sirio-2.0.0-SNAPSHOT.jar" />
           <element id="library" level="project" name="Maven: com.google.auto.value:auto-value-annotations:1.7" />
           <element id="library" level="project" name="Maven: com.google.guava:guava:25.0-jre" />
           <element id="library" level="project" name="Maven: org.jfree:jfreechart:1.0.19" />

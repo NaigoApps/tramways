@@ -1,13 +1,12 @@
 package tramways.core.model.analysis;
 
-import tramways.inbound.model.Property;
-
 import java.util.ArrayList;
 import java.util.List;
+import tramways.inbound.model.Property;
 
 public class DefaultPropertiesCollector implements PropertiesCollector {
 
-    private List<Property> properties;
+    private final List<Property> properties;
 
     public DefaultPropertiesCollector() {
         properties = new ArrayList<>();
@@ -15,6 +14,12 @@ public class DefaultPropertiesCollector implements PropertiesCollector {
 
     @Override
     public void collectProperty(Property property) {
+        for (int i = 0; i < properties.size(); i++) {
+            if (properties.get(i).getName().equals(property.getName())) {
+                properties.set(i, property);
+                return;
+            }
+        }
         properties.add(property);
     }
 

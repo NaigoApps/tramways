@@ -8,17 +8,17 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
-import tramways.inbound.model.ProjectAllOf;
+import tramways.inbound.model.ProjectDescriptionAllOf;
 import tramways.inbound.model.Resource;
-import tramways.inbound.model.RoadMap;
+import tramways.inbound.model.RoadMapDescription;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-06-08T22:53:33.850861900+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-08-02T15:31:12.408197+02:00[Europe/Rome]")
 public class Project extends Resource  {
   
   private String name;
-  private List<RoadMap> roadMaps = new ArrayList<RoadMap>();
+  private List<RoadMapDescription> roadMaps = new ArrayList<RoadMapDescription>();
 
   /**
    **/
@@ -37,10 +37,10 @@ public class Project extends Resource  {
   
   @ApiModelProperty(value = "")
   @JsonProperty("roadMaps")
-  public List<RoadMap> getRoadMaps() {
+  public List<RoadMapDescription> getRoadMaps() {
     return roadMaps;
   }
-  public void setRoadMaps(List<RoadMap> roadMaps) {
+  public void setRoadMaps(List<RoadMapDescription> roadMaps) {
     this.roadMaps = roadMaps;
   }
 
