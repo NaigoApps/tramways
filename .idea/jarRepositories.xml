@@ -2,9 +2,9 @@
 <project version="4">
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
-      <option name="id" value="jboss-thirdparty-releases" />
-      <option name="name" value="jboss-thirdparty-releases" />
-      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/" />
+      <option name="id" value="oss-snapshots" />
+      <option name="name" value="oss-snapshots" />
+      <option name="url" value="https://oss.sonatype.org/content/repositories/snapshots" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="central" />
@@ -17,9 +17,9 @@
       <option name="url" value="https://repo1.maven.org/maven2" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="oss-snapshots" />
-      <option name="name" value="oss-snapshots" />
-      <option name="url" value="https://oss.sonatype.org/content/repositories/snapshots" />
+      <option name="id" value="jboss-thirdparty-releases" />
+      <option name="name" value="jboss-thirdparty-releases" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="jboss.community" />
