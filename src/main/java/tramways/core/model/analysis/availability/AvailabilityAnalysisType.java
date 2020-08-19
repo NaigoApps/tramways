@@ -99,25 +99,34 @@ public class AvailabilityAnalysisType extends BasicAnalysisType {
             return;
         }
 
-        String sourcePointId = Properties.findChoice(propertySource, TRAM_SOURCE);
-        NetworkPoint sourcePoint = networkMap.findPoint(sourcePointId);
-        List<LaneSegment> sources = crossingPoint.getSources().stream()
-            .filter(isTram())
-            .collect(Collectors.toList());
-
-        NetworkPoint tramSource = resolveTramSource(networkMap, propertySource, propertiesCollector,
-            messagesCollector);
-        NetworkPoint tramDestination = resolveTramDestination(networkMap, propertySource,
-            propertiesCollector, messagesCollector);
-        NetworkPoint crossingPoint = resolveCrossingPoint(networkMap, propertySource,
-            propertiesCollector, messagesCollector);
-
-        if (tramSource == null || tramDestination == null || crossingPoint == null) {
+        ChoiceProperty sourcePointProperty = propertySource
+            .findProperty(TRAM_SOURCE.name(), ChoiceProperty.class);
+        if (sourcePointProperty == null) {
+            propertiesCollector.collectProperty(createSourcePointProperty(networkMap));
+            return;
+        }
+        NetworkPoint sourcePoint = networkMap.findPoint(sourcePointProperty.getValue());
+        if (sourcePoint == null) {
+            sourcePointProperty.setValid(false);
+            propertiesCollector.collectProperty(sourcePointProperty);
             return;
         }
 
-        LaneSegment tramLaneA = tramSource.getDestinations().get(0);
-        LaneSegment tramLaneB = tramDestination.getSources().get(0);
+        ChoiceProperty destinationPointProperty = propertySource
+            .findProperty(TRAM_DESTINATION.name(), ChoiceProperty.class);
+        if (destinationPointProperty == null) {
+            propertiesCollector.collectProperty(createDestinationPointProperty(networkMap));
+            return;
+        }
+        NetworkPoint destinationPoint = networkMap.findPoint(destinationPointProperty.getValue());
+        if (destinationPoint == null) {
+            destinationPointProperty.setValid(false);
+            propertiesCollector.collectProperty(destinationPointProperty);
+            return;
+        }
+
+        LaneSegment tramLaneA = sourcePoint.getDestinations().get(0);
+        LaneSegment tramLaneB = destinationPoint.getSources().get(0);
         LaneSegmentLink tramLink =
             crossingPoint.getLinks(tramLaneA).stream()
                 .filter(link -> tramLaneB.equals(link.getDestination())).findFirst().orElse(null);
@@ -128,7 +137,7 @@ public class AvailabilityAnalysisType extends BasicAnalysisType {
             return;
         }
 
-        IntegerProperty periodProperty = tramSource
+        IntegerProperty periodProperty = sourcePoint
             .getProperty(PERIOD.name(), IntegerProperty.class);
         Property distributionDelayProperty = tramLaneA
             .getProperty(DELAY.name(), DistributionProperty.class);
@@ -174,14 +183,23 @@ public class AvailabilityAnalysisType extends BasicAnalysisType {
             .equals(Properties.findString(laneSegment.listProperties(), LANE_TYPE));
     }
 
-    private Predicate<LaneSegment> isCar() {
-        return laneSegment -> LaneType.CAR.name()
-            .equals(Properties.findString(laneSegment.listProperties(), LANE_TYPE));
-    }
-
     private Property createCrossingPointProperty(NetworkMap networkMap) {
         List<NetworkPoint> points = findCrossingPoints(networkMap.listPoints());
         return PropertyBuilder.choice(CROSSING_POINT, "Crossing point")
+            .options(points, point -> Properties.choiceElement(point.getUuid(), point.getUuid()))
+            .build();
+    }
+
+    private Property createSourcePointProperty(NetworkMap networkMap) {
+        List<NetworkPoint> points = findTramSources(networkMap.listPoints());
+        return PropertyBuilder.choice(TRAM_SOURCE, "Tram source")
+            .options(points, point -> Properties.choiceElement(point.getUuid(), point.getUuid()))
+            .build();
+    }
+
+    private Property createDestinationPointProperty(NetworkMap networkMap) {
+        List<NetworkPoint> points = findTramDestinations(networkMap.listPoints());
+        return PropertyBuilder.choice(TRAM_DESTINATION, "Tram destination")
             .options(points, point -> Properties.choiceElement(point.getUuid(), point.getUuid()))
             .build();
     }

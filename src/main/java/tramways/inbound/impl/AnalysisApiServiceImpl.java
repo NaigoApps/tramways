@@ -77,8 +77,9 @@ public class AnalysisApiServiceImpl implements AnalysisApiService {
 
         analysisType.prepareAnalysis(map.getContent(), request.getParameters(), propertiesCollector,
             messagesCollector);
-        if (propertiesCollector.listProperties().isEmpty() && messagesCollector.listMessages()
-            .isEmpty()) {
+        if (propertiesCollector.listProperties().stream()
+            .allMatch(prop -> Boolean.TRUE.equals(prop.getValid()))
+            && messagesCollector.listMessages().isEmpty()) {
             Analysis analysis = analysisType.createAnalysis(networkMap, request.getParameters());
 
             tramways.core.model.persistable.projects.Analysis persistable = new tramways.core.model.persistable.projects.Analysis();

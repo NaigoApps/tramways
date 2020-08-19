@@ -44,7 +44,6 @@ export interface Analysis extends Resource {
      */
     result?: AnalysisResult;
 }
-
 /**
  *
  * @export
@@ -70,7 +69,6 @@ export interface AnalysisAllOf {
      */
     result?: AnalysisResult;
 }
-
 /**
  *
  * @export
@@ -90,7 +88,6 @@ export interface AnalysisDescription extends Resource {
      */
     status?: AnalysisStatus;
 }
-
 /**
  *
  * @export
@@ -110,7 +107,6 @@ export interface AnalysisDescriptionAllOf {
      */
     status?: AnalysisStatus;
 }
-
 /**
  *
  * @export
@@ -167,7 +163,6 @@ export interface AnalysisResponse {
      */
     ok?: boolean;
 }
-
 /**
  *
  * @export
@@ -181,7 +176,6 @@ export interface AnalysisResult {
      */
     resultType?: AnalysisResultType;
 }
-
 /**
  *
  * @export
@@ -874,7 +868,6 @@ export interface RoadMapContent {
      */
     lanes?: Array<Lane>;
 }
-
 /**
  *
  * @export
@@ -888,7 +881,6 @@ export interface RoadMapDescription extends Resource {
      */
     name?: string;
 }
-
 /**
  *
  * @export
@@ -902,7 +894,6 @@ export interface RoadMapDescriptionAllOf {
      */
     name?: string;
 }
-
 /**
  *
  * @export
@@ -916,7 +907,6 @@ export interface StringAnalysisResult extends AnalysisResult {
      */
     message?: string;
 }
-
 /**
  *
  * @export
@@ -930,7 +920,6 @@ export interface StringAnalysisResultAllOf {
      */
     message?: string;
 }
-
 /**
  *
  * @export
@@ -1152,7 +1141,6 @@ export interface XYAnalysisResult extends AnalysisResult {
      */
     points?: Array<XYPoint>;
 }
-
 /**
  *
  * @export
@@ -1178,7 +1166,6 @@ export interface XYAnalysisResultAllOf {
      */
     points?: Array<XYPoint>;
 }
-
 /**
  *
  * @export
@@ -2204,6 +2191,7 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
             }
 
 
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
@@ -2262,6 +2250,7 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
                     : configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
             }
+
 
 
             localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
@@ -2359,6 +2348,7 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
             }
 
 
+
             localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
@@ -2413,6 +2403,7 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
                     : configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
             }
+
 
 
             localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
