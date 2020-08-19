@@ -1,0 +1,11 @@
+
+^
+java:S1854€";Remove this useless assignment to local variable "sources".(Äñ»øÿÿÿÿ8•èÃšÀ.
+O
+java:S1481€",Remove this unused "sources" local variable.(Äñ»øÿÿÿÿ8•èÃšÀ.
+\
+java:S1854"?Remove this useless assignment to local variable "sourcePoint".(š‘¾û8•èÃšÀ.
+M
+java:S1481"0Remove this unused "sourcePoint" local variable.(š‘¾û8•èÃšÀ.
+t
+java:S3776P"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(‡Í‹úùÿÿÿÿ8•èÃšÀ.

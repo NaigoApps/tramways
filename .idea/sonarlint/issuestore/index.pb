@@ -21,7 +21,7 @@ l
 j
 :src/main/java/tramways/outbound/jpa/JPAUserRepository.java,7\2\7247662d04520fe4dad4e2e76ecb3c7cf12e781b
 7
-pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
+pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 a
 1src/main/java/tramways/services/TokenManager.java,d\f\df886a0c07e41ef265c483a7fd879a65edce2fa7
 f
@@ -128,8 +128,6 @@ itarget/generated-sources/openapi/src/main/java/api/generated/tramways/inbound/a
 gtarget/generated-sources/openapi/src/main/java/api/generated/tramways/inbound/model/BooleanWrapper.java,e\c\ec18d6bd1e115e9233648a52aaf06fb936aa955e
 û
 ntarget/generated-sources/openapi/src/main/java/api/generated/tramways/inbound/model/ChangePasswordRequest.java,6\8\68f882be8f6e4e27294a52f6f73736e0df13405e
-ó
-gtarget/generated-sources/annotations/tramways/core/model/persistable/configurations/Configuration_.java,f\3\f3fee6546208d9e1dfd20697ac4020bdc0a7dd14
 ô
 itarget/generated-sources/openapi/src/main/java/api/generated/tramways/inbound/model/CreateMapRequest.java,0\9\09febcb36404a1e1b8fd88f490b11d1c043da8ea
 ù
@@ -196,8 +194,6 @@ mtarget/generated-sources/openapi/src/main/java/api/generated/tramways/inbound/m
 ]target/generated-sources/openapi/src/main/java/api/generated/tramways/inbound/model/User.java,4\0\40cdc543ed13b6fdacf2e48274228deeeee6b4ce
 í
 btarget/generated-sources/openapi/src/main/java/api/generated/tramways/inbound/model/UserAllOf.java,a\1\a1cc5110b8e5f2dbf6e6e875af2ea2a57541d76c
-}
-Mtarget/generated-sources/annotations/tramways/dto/mappers/UserMapperImpl.java,9\a\9a1505129cafb6282d648acece03c24c2f4f46df
 î
 dtarget/generated-sources/openapi/src/main/java/api/generated/tramways/inbound/model/UserRequest.java,f\4\f4b714b2d2331b28d81e04f913a16461f080d601
 è
@@ -211,7 +207,7 @@ Osrc/main/java/tramways/core/model/persistable/configurations/Configuration.java
 c
 3src/main/java/tramways/core/model/Configurable.java,b\1\b1913346f22f81f100dce424678cd8df5308bbd5
 Ö
-Usrc/main/java/tramways/core/model/analysis/availability/AvailabilityAnalysisType.java,8/1/818f390b9bfd9e048e7beeb4c3dc558fd35b86b2
+Usrc/main/java/tramways/core/model/analysis/availability/AvailabilityAnalysisType.java,8\1\818f390b9bfd9e048e7beeb4c3dc558fd35b86b2
 l
 <src/main/java/tramways/core/model/analysis/AnalysisType.java,2/e/2ee9a2fcff2722982d6082bc39c17620340f29ef
 k
@@ -306,8 +302,6 @@ w
 Gsrc/main/java/tramways/core/model/properties/DefaultPropertySource.java,4\8\4861d04ddf615709f43d5b12cc3ea99d4621ed08
 L
 src/main/webapp/package.json,0/d/0d44637b8f7bdb816935f1af20dc82577df7d597
-v
-Fsrc/main/webapp/src/pages/projects/roadmap/analysis/AnalysisDialog.tsx,b/1/b11cd801570e8a95f82c6c780063dade5f066d3d
 L
 src/main/webapp/src/Root.tsx,c/a/cad511d844b18c318ba52dc9a997e6dedbcc596b
 x
@@ -327,7 +321,7 @@ Lsrc/main/webapp/src/pages/projects/roadmap/analysis/AnalysisResultDialog.tsx,b
 y
 Isrc/main/java/tramways/core/model/analysis/DefaultAnalysisProperties.java,3/e/3ee69252c43b3fc6bf267b2ddcbafe1a8e902abb
 q
-Asrc/main/java/tramways/core/model/analysis/BasicAnalysisType.java,9/d/9d4d5933c564d28367fe8994c0fc00661d05cf6f
+Asrc/main/java/tramways/core/model/analysis/BasicAnalysisType.java,9\d\9d4d5933c564d28367fe8994c0fc00661d05cf6f
 ï
 esrc/main/webapp/src/pages/configurations/properties/inputs/distributions/UniformDistributionInput.tsx,8/6/8604377348dd86d420853d18b68196f369339c21
 à
