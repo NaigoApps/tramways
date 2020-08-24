@@ -2191,7 +2191,6 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
             }
 
 
-
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};

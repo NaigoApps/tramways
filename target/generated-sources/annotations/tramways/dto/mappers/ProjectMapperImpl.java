@@ -13,7 +13,7 @@ import tramways.inbound.model.RoadMapDescription;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-08-19T18:54:15+0200",
+    date = "2020-08-21T17:17:50+0200",
     comments = "version: 1.3.0.Final, compiler: javac, environment: Java 11.0.8 (Ubuntu)"
 )
 @ApplicationScoped

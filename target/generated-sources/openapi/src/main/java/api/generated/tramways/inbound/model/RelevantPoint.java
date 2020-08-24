@@ -15,7 +15,7 @@ import tramways.inbound.model.RelevantPointAllOf;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-08-19T18:54:09.902175+02:00[Europe/Rome]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaResteasyServerCodegen", date = "2020-08-21T17:17:38.852617+02:00[Europe/Rome]")
 public class RelevantPoint extends Configurable  {
   
   private List<CrossingLink> links = new ArrayList<CrossingLink>();

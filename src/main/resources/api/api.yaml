@@ -4,7 +4,7 @@ info:
   description: Tramways API
   version: 1.0.0
 servers:
-  - url: http://localhost:8080/tramways/rest
+  - url: http://localhost:8762/tramways/rest
 
 paths:
   # # # # # # #
