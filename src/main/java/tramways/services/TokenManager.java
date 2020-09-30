@@ -1,49 +1,43 @@
 package tramways.services;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
-
+import java.util.Arrays;
+import java.util.stream.Collectors;
 import tramways.core.model.persistable.users.Role;
-import tramways.core.model.persistable.users.User;
+import tramways.rs.TramwaysPrincipal;
 
 public class TokenManager {
 
-	public String token2User(String jwt) {
-		try {
-			JWTVerifier verifier = JWT.require(Algorithm.HMAC256("tramways")).build();
+    private static final String UUID_CLAIM = "uuid";
+    private static final String USER_CLAIM = "username";
+    private static final String ROLES_CLAIM = "roles";
 
-			DecodedJWT result = verifier.verify(jwt);
-			return result.getClaim("userId").asString();
-		} catch (JWTDecodeException ex) {
-			return null;
-		}
-	}
+    private static final String PASSWORD = "tramways";
 
-	public String requestToken(User user) {
-		return createJWT(user);
-	}
+    public TramwaysPrincipal token2Principal(String jwt) {
+        DecodedJWT decodedJWT = decodeJWT(jwt);
+        if (decodedJWT != null) {
+            return new TramwaysPrincipal(
+                decodedJWT.getClaim(UUID_CLAIM).asString(),
+                decodedJWT.getClaim(USER_CLAIM).asString(),
+                Arrays.stream(decodedJWT.getClaim(ROLES_CLAIM).asArray(String.class))
+                    .map(Role::valueOf)
+                    .collect(Collectors.toSet())
+            );
+        }
+        return null;
+    }
 
-	private String createJWT(User user) {
-		//@formatter:off
-		return JWT.create()
-				.withExpiresAt(nextDay())
-				.withClaim("userId", user.getUuid())
-				.withClaim("userName", user.getUsername())
-				.withArrayClaim("userRoles", user.listRoles().stream().map(Role::name).toArray(String[]::new))
-				.sign(Algorithm.HMAC256("tramways"));
-		//@formatter:on
-	}
-
-	private Date nextDay() {
-		Calendar c = Calendar.getInstance();
-		c.add(Calendar.DATE, 1);
-		return c.getTime();
-	}
-
+    private DecodedJWT decodeJWT(String jwt) {
+        try {
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(PASSWORD)).build();
+            return verifier.verify(jwt);
+        } catch (JWTDecodeException ex) {
+            return null;
+        }
+    }
 }

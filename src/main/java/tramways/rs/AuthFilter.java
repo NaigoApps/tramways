@@ -1,12 +1,7 @@
 package tramways.rs;
 
-import tramways.core.model.persistable.users.Role;
-import tramways.core.model.persistable.users.User;
-import tramways.outbound.UserRepository;
-import tramways.rs.annotations.Roles;
-import tramways.rs.annotations.Unsecure;
-import tramways.services.TokenManager;
-
+import java.util.Arrays;
+import java.util.Collection;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.BadRequestException;
@@ -18,8 +13,9 @@ import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.ext.Provider;
-import java.util.Arrays;
-import java.util.Set;
+import tramways.core.model.persistable.users.Role;
+import tramways.rs.annotations.Roles;
+import tramways.services.TokenManager;
 
 @Provider
 public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilter {
@@ -30,9 +26,6 @@ public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilt
     @Inject
     private TokenManager tokenManager;
 
-    @Inject
-    private UserRepository userRepository;
-
     @Override
     @Transactional
     public void filter(ContainerRequestContext requestContext) {
@@ -40,7 +33,7 @@ public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilt
             return;
         }
 
-        User user;
+        TramwaysPrincipal user;
         if ((user = extractUser(requestContext)) != null) {
             requestContext.setSecurityContext(new TramwaysSecurityContext(user));
             if (!hasPermission(user.listRoles())) {
@@ -51,7 +44,7 @@ public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilt
         }
     }
 
-    private boolean hasPermission(Set<Role> userRoles) {
+    private boolean hasPermission(Collection<Role> userRoles) {
         Roles methodAnnotation = resourceInfo.getResourceMethod().getAnnotation(Roles.class);
         Roles classAnnotation = resourceInfo.getResourceClass().getAnnotation(Roles.class);
 
@@ -70,11 +63,11 @@ public class AuthFilter implements ContainerRequestFilter, ContainerResponseFilt
         return resourceInfo.getResourceMethod().getName().equals("login");
     }
 
-    private User extractUser(ContainerRequestContext context) {
+    private TramwaysPrincipal extractUser(ContainerRequestContext context) {
         String authorizationHeader = context.getHeaderString(HttpHeaders.AUTHORIZATION);
         if (authorizationHeader != null) {
             String token = authorizationHeader.substring("Bearer".length()).trim();
-            return userRepository.findByUuid(tokenManager.token2User(token));
+            return tokenManager.token2Principal(token);
         }
         return null;
     }

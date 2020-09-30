@@ -1,22 +1,15 @@
 package tramways.rs;
 
-import tramways.core.model.persistable.users.Role;
-import tramways.core.model.persistable.users.User;
-
-import javax.ws.rs.core.SecurityContext;
 import java.security.Principal;
-import java.util.Set;
+import javax.ws.rs.core.SecurityContext;
+import tramways.core.model.persistable.users.Role;
 
 public class TramwaysSecurityContext implements SecurityContext {
 
-    private Principal principal;
-    private final String userName;
-    private final Set<Role> userRoles;
+    private final TramwaysPrincipal principal;
 
-    public TramwaysSecurityContext(User user) {
-        this.userName = user.getUsername();
-        this.userRoles = user.listRoles();
-        principal = () -> userName;
+    public TramwaysSecurityContext(TramwaysPrincipal user) {
+        this.principal = user;
     }
 
     @Override
@@ -26,7 +19,7 @@ public class TramwaysSecurityContext implements SecurityContext {
 
     @Override
     public boolean isUserInRole(String role) {
-        return userRoles.contains(Role.valueOf(role));
+        return principal.hasRole(Role.valueOf(role));
     }
 
     @Override

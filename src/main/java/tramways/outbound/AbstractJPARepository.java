@@ -17,7 +17,8 @@ import tramways.core.model.persistable.BaseEntity_;
 
 public abstract class AbstractJPARepository<E extends BaseEntity> {
 
-	@PersistenceContext
+	public static final String ERROR = "Error";
+	@PersistenceContext(unitName = "tramways")
 	private EntityManager em;
 
 	protected void persist(BaseEntity... entities) {
@@ -39,7 +40,7 @@ public abstract class AbstractJPARepository<E extends BaseEntity> {
 			query.where(cb().equal(root.get(BaseEntity_.uuid), uuid));
 			return getEntityManager().createQuery(query).getSingleResult();
 		} catch (Exception ex) {
-			LoggerFactory.getLogger(getClass()).error("Error", ex);
+			LoggerFactory.getLogger(getClass()).error(ERROR, ex);
 		}
 		return null;
 	}
@@ -51,7 +52,7 @@ public abstract class AbstractJPARepository<E extends BaseEntity> {
 			query.where(cb().equal(root.get(BaseEntity_.uuid), uuid));
 			return getEntityManager().createQuery(query).getSingleResult();
 		} catch (Exception ex) {
-			LoggerFactory.getLogger(getClass()).error("Error", ex);
+			LoggerFactory.getLogger(getClass()).error(ERROR, ex);
 		}
 		return null;
 	}
@@ -63,7 +64,7 @@ public abstract class AbstractJPARepository<E extends BaseEntity> {
 			query.where(cb().equal(root.get(BaseEntity_.id), id));
 			return getEntityManager().createQuery(query).getSingleResult();
 		} catch (Exception ex) {
-			LoggerFactory.getLogger(getClass()).error("Error", ex);
+			LoggerFactory.getLogger(getClass()).error(ERROR, ex);
 		}
 		return null;
 	}
@@ -75,7 +76,7 @@ public abstract class AbstractJPARepository<E extends BaseEntity> {
 			query.from(getEntityClass());
 			return getEntityManager().createQuery(query).getResultList();
 		} catch (Exception ex) {
-			LoggerFactory.getLogger(getClass()).error("Error", ex);
+			LoggerFactory.getLogger(getClass()).error(ERROR, ex);
 		}
 		return Collections.emptyList();
 	}

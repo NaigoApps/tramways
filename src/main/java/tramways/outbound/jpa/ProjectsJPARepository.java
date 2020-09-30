@@ -2,7 +2,6 @@ package tramways.outbound.jpa;
 
 import java.util.List;
 import javax.persistence.criteria.CriteriaQuery;
-import tramways.core.model.persistable.BaseEntity_;
 import tramways.core.model.persistable.projects.Analysis;
 import tramways.core.model.persistable.projects.Project;
 import tramways.core.model.persistable.projects.Project_;
@@ -33,7 +32,7 @@ public class ProjectsJPARepository extends AbstractJPARepository<Project> implem
   private List<Project> findByUserImpl(String userUuid) {
     CriteriaQuery<Project> query = query();
     query.where(
-        cb().equal(query.from(Project.class).get(Project_.owner).get(BaseEntity_.uuid), userUuid));
+        cb().equal(query.from(Project.class).get(Project_.ownerUuid), userUuid));
     return getEntityManager().createQuery(query).getResultList();
   }
 

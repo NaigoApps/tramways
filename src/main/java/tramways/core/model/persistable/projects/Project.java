@@ -6,11 +6,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import tramways.core.model.persistable.BaseEntity;
-import tramways.core.model.persistable.users.User;
 
 @Entity
 @Table(name = "projects")
@@ -18,8 +16,7 @@ public class Project extends BaseEntity {
 
 	private String name;
 
-	@ManyToOne
-	private User owner;
+	private String ownerUuid;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private Set<RoadMap> maps;
@@ -67,11 +64,11 @@ public class Project extends BaseEntity {
 		return this.maps.stream().sorted().collect(Collectors.toList());
 	}
 
-	public User getOwner() {
-		return owner;
+	public String getOwnerUuid() {
+		return ownerUuid;
 	}
 
-	public void setOwner(User owner) {
-		this.owner = owner;
+	public void setOwnerUuid(String owner) {
+		this.ownerUuid = owner;
 	}
 }

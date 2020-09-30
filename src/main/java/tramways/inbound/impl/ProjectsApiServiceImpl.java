@@ -9,14 +9,12 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import tramways.core.model.persistable.projects.Project;
 import tramways.core.model.persistable.projects.RoadMap;
-import tramways.core.model.persistable.users.User;
 import tramways.core.model.properties.Properties;
 import tramways.dto.mappers.AnalysisMapper;
 import tramways.dto.mappers.Json2RoadMapMapper;
 import tramways.dto.mappers.ProjectMapper;
 import tramways.dto.mappers.RoadMapMapper;
 import tramways.inbound.RestUtils;
-import tramways.inbound.api.NotFoundException;
 import tramways.inbound.api.ProjectsApiService;
 import tramways.inbound.model.CreateMapRequest;
 import tramways.inbound.model.CreateProjectRequest;
@@ -26,7 +24,7 @@ import tramways.inbound.model.RoadMapContent;
 import tramways.inbound.model.UpdateMapRequest;
 import tramways.inbound.model.UpdateProjectRequest;
 import tramways.outbound.ProjectRepository;
-import tramways.outbound.UserRepository;
+import tramways.rs.TramwaysPrincipal;
 
 @Transactional
 public class ProjectsApiServiceImpl implements ProjectsApiService {
@@ -46,18 +44,17 @@ public class ProjectsApiServiceImpl implements ProjectsApiService {
     @Inject
     private ProjectRepository repository;
 
-    @Inject
-    private UserRepository userRepository;
-
     @Override
-    public Response createMap(String projectId, CreateMapRequest request, SecurityContext securityContext) throws NotFoundException {
+    public Response createMap(String projectId, CreateMapRequest request,
+        SecurityContext securityContext) {
         Project project = repository.findById(projectId);
         tramways.core.model.persistable.projects.RoadMap newMap = new tramways.core.model.persistable.projects.RoadMap();
         newMap.setName(request.getMap().getName());
         createDemoMap(request);
         newMap.setMap(jsonRoadMapMapper.map(request.getMap().getContent()));
         project.addMap(newMap);
-        return RestUtils.created("projects/" + projectId + "/maps/" + newMap.getUuid(), roadMapMapper.map(newMap));
+        return RestUtils.created("projects/" + projectId + "/maps/" + newMap.getUuid(),
+            roadMapMapper.map(newMap));
     }
 
     private void createDemoMap(CreateMapRequest request) {
@@ -86,17 +83,21 @@ public class ProjectsApiServiceImpl implements ProjectsApiService {
     }
 
     @Override
-    public Response createProject(CreateProjectRequest createProjectRequest, SecurityContext securityContext) throws NotFoundException {
+    public Response createProject(CreateProjectRequest createProjectRequest,
+        SecurityContext securityContext) {
         Project project = new Project();
         project.setName(createProjectRequest.getName());
-        project.setOwner(getCurrentUser(securityContext));
+        project.setOwnerUuid(principal(securityContext).getUserUuid());
         repository.create(project);
         return RestUtils.created("projects/" + project.getUuid(), mapper.map(project));
     }
 
+    private TramwaysPrincipal principal(SecurityContext securityContext) {
+        return (TramwaysPrincipal) securityContext.getUserPrincipal();
+    }
+
     @Override
-    public Response deleteMap(String projectId, String mapId, SecurityContext securityContext)
-        throws NotFoundException {
+    public Response deleteMap(String projectId, String mapId, SecurityContext securityContext) {
         Project project = repository.findById(projectId);
         project.removeMap(mapId);
         repository.deleteMap(mapId);
@@ -105,7 +106,7 @@ public class ProjectsApiServiceImpl implements ProjectsApiService {
 
     @Override
     public Response deleteAnalysis(String projectId, String mapId, String analysisId,
-        SecurityContext securityContext) throws NotFoundException {
+        SecurityContext securityContext) {
         Project project = repository.findById(projectId);
         RoadMap map = project.getMap(mapId);
         map.removeAnalysis(analysisId);
@@ -114,29 +115,26 @@ public class ProjectsApiServiceImpl implements ProjectsApiService {
     }
 
     @Override
-    public Response getProject(String id, SecurityContext securityContext)
-        throws NotFoundException {
+    public Response getProject(String id, SecurityContext securityContext) {
         return RestUtils.ok(mapper.map(repository.findById(id)));
     }
 
     @Override
     public Response updateProject(String id, UpdateProjectRequest request,
-        SecurityContext securityContext) throws NotFoundException {
+        SecurityContext securityContext) {
         Project project = repository.findById(id);
         project.setName(request.getName());
         return RestUtils.ok(mapper.map(project));
     }
 
     @Override
-    public Response deleteProject(String id, SecurityContext securityContext)
-        throws NotFoundException {
+    public Response deleteProject(String id, SecurityContext securityContext) {
         repository.delete(id);
         return RestUtils.ok("Project deleted");
     }
 
     @Override
-    public Response getMap(String projectId, String mapId, SecurityContext securityContext)
-        throws NotFoundException {
+    public Response getMap(String projectId, String mapId, SecurityContext securityContext) {
         return RestUtils.ok(roadMapMapper.map(repository.findById(projectId).getMap(mapId)));
     }
 
@@ -148,22 +146,17 @@ public class ProjectsApiServiceImpl implements ProjectsApiService {
     }
 
     @Override
-    public Response getProjects(SecurityContext securityContext) throws NotFoundException {
-        User currentUser = getCurrentUser(securityContext);
-        return RestUtils.ok(mapper.description(repository.findByUser(currentUser.getUuid())));
+    public Response getProjects(SecurityContext securityContext) {
+        return RestUtils.ok(mapper
+            .description(repository.findByUser(principal(securityContext).getUserUuid())));
     }
 
     @Override
     public Response updateMap(String projectId, String mapId, UpdateMapRequest request,
-        SecurityContext securityContext) throws NotFoundException {
+        SecurityContext securityContext) {
         RoadMap map = repository.findById(projectId).getMap(mapId);
         map.setName(request.getMap().getName());
         map.setMap(jsonRoadMapMapper.map(request.getMap().getContent()));
         return RestUtils.ok(roadMapMapper.map(map));
-    }
-
-
-    private User getCurrentUser(SecurityContext securityContext) {
-        return userRepository.findByUsername(securityContext.getUserPrincipal().getName());
     }
 }
