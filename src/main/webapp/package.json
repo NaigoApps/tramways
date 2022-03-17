@@ -47,7 +47,7 @@
     "@types/chart.js": "^2.9.22",
     "@types/cytoscape": "^3.14.0",
     "axios": "^0.19.2",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "cytoscape": "^3.14.1",
     "js-cookie": "^2.2.1",
     "jsoneditor": "^8.6.4",
